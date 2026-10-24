@@ -1,0 +1,1512 @@
+{
+  "team_id": 9351740,
+  "team": "Yakult Brothers",
+  "league_id": 19102,
+  "games": [
+    {
+      "match_id": 9021972530,
+      "series_id": 1148484,
+      "start_time": 1790701261,
+      "opponent_id": 2163,
+      "opponent": "Team Liquid",
+      "side": "Dire",
+      "win": false,
+      "duration_sec": 2168,
+      "duration": "36:08",
+      "kills_for": 9,
+      "kills_against": 28,
+      "total_kills": 37,
+      "first_pick": true,
+      "first_blood": false,
+      "first_blood_time": 3,
+      "gold_adv_10min": -3593,
+      "max_gold_lead": 0,
+      "max_gold_deficit": -26817,
+      "roshans": 0,
+      "towers": 0,
+      "picks": [
+        "Hoodwink",
+        "Doom",
+        "Winter Wyvern",
+        "Storm Spirit",
+        "Clinkz"
+      ],
+      "bans": [
+        "Enigma",
+        "Bounty Hunter",
+        "Dark Willow",
+        "Ember Spirit",
+        "Undying",
+        "Lone Druid",
+        "Puck"
+      ],
+      "opp_picks": [
+        "Largo",
+        "Dragon Knight",
+        "Nature's Prophet",
+        "Windranger",
+        "Batrider"
+      ],
+      "opp_bans": [
+        "Earth Spirit",
+        "Timbersaw",
+        "Mirana",
+        "Lion",
+        "Lifestealer",
+        "Tiny",
+        "Sven"
+      ],
+      "players": [
+        {
+          "account_id": 185908355,
+          "name": "Lou",
+          "hero": "Clinkz",
+          "position": 1,
+          "kills": 2,
+          "deaths": 7,
+          "assists": 3,
+          "last_hits": 386,
+          "denies": 13,
+          "gpm": 536,
+          "xpm": 737,
+          "net_worth": 16433,
+          "hero_damage": 12213,
+          "tower_damage": 346,
+          "hero_healing": 0,
+          "obs_placed": 1,
+          "sen_placed": 0,
+          "stuns": 0,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.5555556,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 202217968,
+          "name": "Emo",
+          "hero": "Storm Spirit",
+          "position": 2,
+          "kills": 3,
+          "deaths": 2,
+          "assists": 4,
+          "last_hits": 328,
+          "denies": 4,
+          "gpm": 506,
+          "xpm": 546,
+          "net_worth": 17274,
+          "hero_damage": 16363,
+          "tower_damage": 0,
+          "hero_healing": 147,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 20.499975,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.7777778,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 139031324,
+          "name": "Beyond",
+          "hero": "Doom",
+          "position": 3,
+          "kills": 2,
+          "deaths": 3,
+          "assists": 4,
+          "last_hits": 215,
+          "denies": 10,
+          "gpm": 470,
+          "xpm": 536,
+          "net_worth": 14587,
+          "hero_damage": 5454,
+          "tower_damage": 0,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 13.499974,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.6666667,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 139876032,
+          "name": "kaka",
+          "hero": "Winter Wyvern",
+          "position": 4,
+          "kills": 1,
+          "deaths": 6,
+          "assists": 7,
+          "last_hits": 56,
+          "denies": 2,
+          "gpm": 246,
+          "xpm": 386,
+          "net_worth": 8180,
+          "hero_damage": 10159,
+          "tower_damage": 0,
+          "hero_healing": 1795,
+          "obs_placed": 3,
+          "sen_placed": 4,
+          "stuns": 14.8165045,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.8888889,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 158847773,
+          "name": "天命",
+          "hero": "Hoodwink",
+          "position": 5,
+          "kills": 1,
+          "deaths": 10,
+          "assists": 5,
+          "last_hits": 55,
+          "denies": 2,
+          "gpm": 215,
+          "xpm": 272,
+          "net_worth": 5880,
+          "hero_damage": 8138,
+          "tower_damage": 11,
+          "hero_healing": 0,
+          "obs_placed": 12,
+          "sen_placed": 24,
+          "stuns": 32.266117,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.6666667,
+          "firstblood_claimed": 0
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9021972530"
+    },
+    {
+      "match_id": 9022076452,
+      "series_id": 1148484,
+      "start_time": 1790705332,
+      "opponent_id": 2163,
+      "opponent": "Team Liquid",
+      "side": "Radiant",
+      "win": true,
+      "duration_sec": 1867,
+      "duration": "31:07",
+      "kills_for": 30,
+      "kills_against": 12,
+      "total_kills": 42,
+      "first_pick": false,
+      "first_blood": false,
+      "first_blood_time": 170,
+      "gold_adv_10min": 1186,
+      "max_gold_lead": 20903,
+      "max_gold_deficit": -373,
+      "roshans": 1,
+      "towers": 0,
+      "picks": [
+        "Ember Spirit",
+        "Hoodwink",
+        "Brewmaster",
+        "Ring Master",
+        "Sven"
+      ],
+      "bans": [
+        "Largo",
+        "Enigma",
+        "Bounty Hunter",
+        "Nature's Prophet",
+        "Slark",
+        "Huskar",
+        "Dark Willow"
+      ],
+      "opp_picks": [
+        "Earth Spirit",
+        "Chaos Knight",
+        "Techies",
+        "Kez",
+        "Dark Seer"
+      ],
+      "opp_bans": [
+        "Timbersaw",
+        "Doom",
+        "Lion",
+        "Mirana",
+        "Underlord",
+        "Lifestealer",
+        "Lone Druid"
+      ],
+      "players": [
+        {
+          "account_id": 185908355,
+          "name": "Lou",
+          "hero": "Sven",
+          "position": 1,
+          "kills": 11,
+          "deaths": 2,
+          "assists": 7,
+          "last_hits": 429,
+          "denies": 3,
+          "gpm": 859,
+          "xpm": 936,
+          "net_worth": 26458,
+          "hero_damage": 22971,
+          "tower_damage": 16188,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 28.26648,
+          "roshans_killed": 1,
+          "teamfight_participation": 0.6,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 202217968,
+          "name": "Emo",
+          "hero": "Ember Spirit",
+          "position": 2,
+          "kills": 8,
+          "deaths": 0,
+          "assists": 14,
+          "last_hits": 249,
+          "denies": 5,
+          "gpm": 637,
+          "xpm": 770,
+          "net_worth": 19126,
+          "hero_damage": 25401,
+          "tower_damage": 1929,
+          "hero_healing": 320,
+          "obs_placed": 1,
+          "sen_placed": 0,
+          "stuns": 67.09917,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.73333335,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 139031324,
+          "name": "Beyond",
+          "hero": "Brewmaster",
+          "position": 3,
+          "kills": 7,
+          "deaths": 0,
+          "assists": 12,
+          "last_hits": 196,
+          "denies": 12,
+          "gpm": 590,
+          "xpm": 674,
+          "net_worth": 18107,
+          "hero_damage": 11826,
+          "tower_damage": 9837,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 19.566603,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.6333333,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 139876032,
+          "name": "kaka",
+          "hero": "Hoodwink",
+          "position": 4,
+          "kills": 2,
+          "deaths": 3,
+          "assists": 17,
+          "last_hits": 29,
+          "denies": 0,
+          "gpm": 286,
+          "xpm": 456,
+          "net_worth": 8513,
+          "hero_damage": 10746,
+          "tower_damage": 502,
+          "hero_healing": 656,
+          "obs_placed": 4,
+          "sen_placed": 7,
+          "stuns": 35.09968,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.6333333,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 158847773,
+          "name": "天命",
+          "hero": "Ring Master",
+          "position": 5,
+          "kills": 2,
+          "deaths": 7,
+          "assists": 18,
+          "last_hits": 36,
+          "denies": 2,
+          "gpm": 352,
+          "xpm": 376,
+          "net_worth": 9098,
+          "hero_damage": 10767,
+          "tower_damage": 121,
+          "hero_healing": 0,
+          "obs_placed": 10,
+          "sen_placed": 15,
+          "stuns": 22.800085,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.6666667,
+          "firstblood_claimed": 0
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9022076452"
+    },
+    {
+      "match_id": 9022165217,
+      "series_id": 1148484,
+      "start_time": 1790709040,
+      "opponent_id": 2163,
+      "opponent": "Team Liquid",
+      "side": "Radiant",
+      "win": false,
+      "duration_sec": 2218,
+      "duration": "36:58",
+      "kills_for": 21,
+      "kills_against": 38,
+      "total_kills": 59,
+      "first_pick": false,
+      "first_blood": true,
+      "first_blood_time": 81,
+      "gold_adv_10min": -809,
+      "max_gold_lead": 781,
+      "max_gold_deficit": -24294,
+      "roshans": 0,
+      "towers": 0,
+      "picks": [
+        "Storm Spirit",
+        "Hoodwink",
+        "Slark",
+        "Warlock",
+        "Undying"
+      ],
+      "bans": [
+        "Largo",
+        "Enigma",
+        "Nature's Prophet",
+        "Bounty Hunter",
+        "Puck",
+        "Disruptor",
+        "Techies"
+      ],
+      "opp_picks": [
+        "Earth Spirit",
+        "Brewmaster",
+        "Skywrath Mage",
+        "Tiny",
+        "Witch Doctor"
+      ],
+      "opp_bans": [
+        "Timbersaw",
+        "Doom",
+        "Ember Spirit",
+        "Lion",
+        "Mirana",
+        "Necrophos",
+        "Dawnbreaker"
+      ],
+      "players": [
+        {
+          "account_id": 185908355,
+          "name": "Lou",
+          "hero": "Slark",
+          "position": 1,
+          "kills": 5,
+          "deaths": 6,
+          "assists": 4,
+          "last_hits": 293,
+          "denies": 9,
+          "gpm": 511,
+          "xpm": 676,
+          "net_worth": 17477,
+          "hero_damage": 18114,
+          "tower_damage": 805,
+          "hero_healing": 0,
+          "obs_placed": 1,
+          "sen_placed": 0,
+          "stuns": 0,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.42857143,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 202217968,
+          "name": "Emo",
+          "hero": "Storm Spirit",
+          "position": 2,
+          "kills": 8,
+          "deaths": 8,
+          "assists": 7,
+          "last_hits": 283,
+          "denies": 4,
+          "gpm": 488,
+          "xpm": 642,
+          "net_worth": 14088,
+          "hero_damage": 22627,
+          "tower_damage": 175,
+          "hero_healing": 0,
+          "obs_placed": 1,
+          "sen_placed": 0,
+          "stuns": 25.233683,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.71428573,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 139031324,
+          "name": "Beyond",
+          "hero": "Undying",
+          "position": 3,
+          "kills": 5,
+          "deaths": 7,
+          "assists": 8,
+          "last_hits": 230,
+          "denies": 9,
+          "gpm": 463,
+          "xpm": 536,
+          "net_worth": 15107,
+          "hero_damage": 14348,
+          "tower_damage": 296,
+          "hero_healing": 636,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 0,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.61904764,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 139876032,
+          "name": "kaka",
+          "hero": "Hoodwink",
+          "position": 4,
+          "kills": 2,
+          "deaths": 8,
+          "assists": 8,
+          "last_hits": 48,
+          "denies": 3,
+          "gpm": 231,
+          "xpm": 319,
+          "net_worth": 7576,
+          "hero_damage": 12129,
+          "tower_damage": 0,
+          "hero_healing": 0,
+          "obs_placed": 4,
+          "sen_placed": 7,
+          "stuns": 36.633102,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.47619048,
+          "firstblood_claimed": 1
+        },
+        {
+          "account_id": 158847773,
+          "name": "天命",
+          "hero": "Warlock",
+          "position": 5,
+          "kills": 1,
+          "deaths": 9,
+          "assists": 13,
+          "last_hits": 87,
+          "denies": 1,
+          "gpm": 344,
+          "xpm": 315,
+          "net_worth": 9061,
+          "hero_damage": 16098,
+          "tower_damage": 90,
+          "hero_healing": 4873,
+          "obs_placed": 11,
+          "sen_placed": 23,
+          "stuns": 5.5000367,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.6666667,
+          "firstblood_claimed": 0
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9022165217"
+    },
+    {
+      "match_id": 9024614565,
+      "series_id": 1149096,
+      "start_time": 1790868066,
+      "opponent_id": 9964962,
+      "opponent": "GamerLegion",
+      "side": "Radiant",
+      "win": false,
+      "duration_sec": 2178,
+      "duration": "36:18",
+      "kills_for": 14,
+      "kills_against": 46,
+      "total_kills": 60,
+      "first_pick": false,
+      "first_blood": false,
+      "first_blood_time": 113,
+      "gold_adv_10min": -1103,
+      "max_gold_lead": 35,
+      "max_gold_deficit": -34576,
+      "roshans": 0,
+      "towers": 0,
+      "picks": [
+        "Tiny",
+        "Hoodwink",
+        "Rubick",
+        "Underlord",
+        "Puck"
+      ],
+      "bans": [
+        "Bounty Hunter",
+        "Brewmaster",
+        "Earth Spirit",
+        "Nature's Prophet",
+        "Lifestealer",
+        "Kez",
+        "Sven"
+      ],
+      "opp_picks": [
+        "Enigma",
+        "Dark Willow",
+        "Winter Wyvern",
+        "Pangolier",
+        "Windranger"
+      ],
+      "opp_bans": [
+        "Ember Spirit",
+        "Timbersaw",
+        "Doom",
+        "Dawnbreaker",
+        "Necrophos",
+        "Storm Spirit",
+        "Invoker"
+      ],
+      "players": [
+        {
+          "account_id": 185908355,
+          "name": "Lou",
+          "hero": "Tiny",
+          "position": 1,
+          "kills": 3,
+          "deaths": 12,
+          "assists": 1,
+          "last_hits": 344,
+          "denies": 4,
+          "gpm": 468,
+          "xpm": 517,
+          "net_worth": 15088,
+          "hero_damage": 11132,
+          "tower_damage": 0,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 16.832863,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.2857143,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 202217968,
+          "name": "Emo",
+          "hero": "Puck",
+          "position": 2,
+          "kills": 6,
+          "deaths": 5,
+          "assists": 7,
+          "last_hits": 296,
+          "denies": 9,
+          "gpm": 502,
+          "xpm": 637,
+          "net_worth": 17118,
+          "hero_damage": 18636,
+          "tower_damage": 28,
+          "hero_healing": 900,
+          "obs_placed": 1,
+          "sen_placed": 2,
+          "stuns": 6,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.9285714,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 139031324,
+          "name": "Beyond",
+          "hero": "Underlord",
+          "position": 3,
+          "kills": 2,
+          "deaths": 7,
+          "assists": 7,
+          "last_hits": 253,
+          "denies": 8,
+          "gpm": 435,
+          "xpm": 560,
+          "net_worth": 12420,
+          "hero_damage": 9933,
+          "tower_damage": 0,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 80.232285,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.64285713,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 139876032,
+          "name": "kaka",
+          "hero": "Rubick",
+          "position": 4,
+          "kills": 0,
+          "deaths": 10,
+          "assists": 7,
+          "last_hits": 73,
+          "denies": 3,
+          "gpm": 214,
+          "xpm": 330,
+          "net_worth": 6912,
+          "hero_damage": 8889,
+          "tower_damage": 0,
+          "hero_healing": 611,
+          "obs_placed": 7,
+          "sen_placed": 5,
+          "stuns": 15.733451,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.5,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 158847773,
+          "name": "天命",
+          "hero": "Hoodwink",
+          "position": 5,
+          "kills": 3,
+          "deaths": 12,
+          "assists": 6,
+          "last_hits": 75,
+          "denies": 5,
+          "gpm": 244,
+          "xpm": 328,
+          "net_worth": 5961,
+          "hero_damage": 14152,
+          "tower_damage": 0,
+          "hero_healing": 0,
+          "obs_placed": 9,
+          "sen_placed": 24,
+          "stuns": 60.23322,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.64285713,
+          "firstblood_claimed": 0
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9024614565"
+    },
+    {
+      "match_id": 9024712164,
+      "series_id": 1149096,
+      "start_time": 1790872085,
+      "opponent_id": 9964962,
+      "opponent": "GamerLegion",
+      "side": "Dire",
+      "win": false,
+      "duration_sec": 3968,
+      "duration": "66:08",
+      "kills_for": 16,
+      "kills_against": 42,
+      "total_kills": 58,
+      "first_pick": true,
+      "first_blood": true,
+      "first_blood_time": 332,
+      "gold_adv_10min": -3652,
+      "max_gold_lead": 0,
+      "max_gold_deficit": -41616,
+      "roshans": 0,
+      "towers": 0,
+      "picks": [
+        "Brewmaster",
+        "Winter Wyvern",
+        "Lion",
+        "Puck",
+        "Necrophos"
+      ],
+      "bans": [
+        "Bounty Hunter",
+        "Enigma",
+        "Nature's Prophet",
+        "Pangolier",
+        "Lone Druid",
+        "Night Stalker",
+        "Dark Seer"
+      ],
+      "opp_picks": [
+        "Dark Willow",
+        "Sven",
+        "Silencer",
+        "Outworld Devourer",
+        "Death Prophet"
+      ],
+      "opp_bans": [
+        "Timbersaw",
+        "Earth Spirit",
+        "Ember Spirit",
+        "Doom",
+        "Lifestealer",
+        "Windranger",
+        "Terrorblade"
+      ],
+      "players": [
+        {
+          "account_id": 185908355,
+          "name": "Lou",
+          "hero": "Necrophos",
+          "position": 1,
+          "kills": 3,
+          "deaths": 7,
+          "assists": 8,
+          "last_hits": 854,
+          "denies": 2,
+          "gpm": 674,
+          "xpm": 816,
+          "net_worth": 37921,
+          "hero_damage": 48399,
+          "tower_damage": 435,
+          "hero_healing": 2910,
+          "obs_placed": 1,
+          "sen_placed": 1,
+          "stuns": 21.349901,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.6875,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 202217968,
+          "name": "Emo",
+          "hero": "Puck",
+          "position": 2,
+          "kills": 3,
+          "deaths": 11,
+          "assists": 5,
+          "last_hits": 636,
+          "denies": 3,
+          "gpm": 550,
+          "xpm": 670,
+          "net_worth": 29155,
+          "hero_damage": 40685,
+          "tower_damage": 175,
+          "hero_healing": 1730,
+          "obs_placed": 2,
+          "sen_placed": 2,
+          "stuns": 20.1333,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.5,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 139031324,
+          "name": "Beyond",
+          "hero": "Brewmaster",
+          "position": 3,
+          "kills": 3,
+          "deaths": 6,
+          "assists": 7,
+          "last_hits": 426,
+          "denies": 8,
+          "gpm": 531,
+          "xpm": 567,
+          "net_worth": 29565,
+          "hero_damage": 23304,
+          "tower_damage": 1497,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 1,
+          "stuns": 87.700745,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.625,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 139876032,
+          "name": "kaka",
+          "hero": "Lion",
+          "position": 4,
+          "kills": 1,
+          "deaths": 10,
+          "assists": 13,
+          "last_hits": 78,
+          "denies": 5,
+          "gpm": 223,
+          "xpm": 355,
+          "net_worth": 12514,
+          "hero_damage": 16145,
+          "tower_damage": 11,
+          "hero_healing": 0,
+          "obs_placed": 6,
+          "sen_placed": 7,
+          "stuns": 164.79941,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.875,
+          "firstblood_claimed": 1
+        },
+        {
+          "account_id": 158847773,
+          "name": "天命",
+          "hero": "Winter Wyvern",
+          "position": 5,
+          "kills": 5,
+          "deaths": 8,
+          "assists": 10,
+          "last_hits": 99,
+          "denies": 1,
+          "gpm": 343,
+          "xpm": 375,
+          "net_worth": 15278,
+          "hero_damage": 23733,
+          "tower_damage": 36,
+          "hero_healing": 6599,
+          "obs_placed": 21,
+          "sen_placed": 45,
+          "stuns": 32.64946,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.875,
+          "firstblood_claimed": 0
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9024712164"
+    }
+  ],
+  "summary": {
+    "games": 5,
+    "wins": 1,
+    "losses": 4,
+    "winrate": 20.0,
+    "avg_duration": "41:20",
+    "avg_duration_win": "31:07",
+    "avg_duration_loss": "43:53",
+    "shortest": "31:07",
+    "longest": "66:08",
+    "avg_kills_for": 18.0,
+    "avg_kills_against": 33.2,
+    "avg_total_kills": 51.2,
+    "kills_per_min": 0.44,
+    "first_blood_rate": 40.0,
+    "avg_gold_adv_10min": -1594,
+    "avg_roshans": 0.2,
+    "radiant": {
+      "games": 3,
+      "wins": 1,
+      "winrate": 33.3
+    },
+    "dire": {
+      "games": 2,
+      "wins": 0,
+      "winrate": 0.0
+    },
+    "first_pick": {
+      "games": 2,
+      "wins": 0,
+      "winrate": 0.0
+    },
+    "second_pick": {
+      "games": 3,
+      "wins": 1,
+      "winrate": 33.3
+    },
+    "series": [
+      {
+        "series_id": 1148484,
+        "opponent": "Team Liquid",
+        "score": "1-2",
+        "won": false
+      },
+      {
+        "series_id": 1149096,
+        "opponent": "GamerLegion",
+        "score": "0-2",
+        "won": false
+      }
+    ],
+    "series_record": "0-2",
+    "hero_picks": [
+      {
+        "hero": "Hoodwink",
+        "games": 4,
+        "wins": 1,
+        "winrate": 25.0
+      },
+      {
+        "hero": "Brewmaster",
+        "games": 2,
+        "wins": 1,
+        "winrate": 50.0
+      },
+      {
+        "hero": "Winter Wyvern",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Storm Spirit",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Puck",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Ember Spirit",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Ring Master",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Sven",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Doom",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Clinkz",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Slark",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Warlock",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Undying",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Tiny",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Rubick",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Underlord",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Lion",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Necrophos",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      }
+    ],
+    "bans_by_team": [
+      [
+        "Bounty Hunter",
+        5
+      ],
+      [
+        "Enigma",
+        4
+      ],
+      [
+        "Nature's Prophet",
+        4
+      ],
+      [
+        "Dark Willow",
+        2
+      ],
+      [
+        "Lone Druid",
+        2
+      ],
+      [
+        "Puck",
+        2
+      ],
+      [
+        "Largo",
+        2
+      ],
+      [
+        "Ember Spirit",
+        1
+      ],
+      [
+        "Undying",
+        1
+      ],
+      [
+        "Slark",
+        1
+      ],
+      [
+        "Huskar",
+        1
+      ],
+      [
+        "Disruptor",
+        1
+      ],
+      [
+        "Techies",
+        1
+      ],
+      [
+        "Brewmaster",
+        1
+      ],
+      [
+        "Earth Spirit",
+        1
+      ],
+      [
+        "Lifestealer",
+        1
+      ],
+      [
+        "Kez",
+        1
+      ],
+      [
+        "Sven",
+        1
+      ],
+      [
+        "Pangolier",
+        1
+      ],
+      [
+        "Night Stalker",
+        1
+      ],
+      [
+        "Dark Seer",
+        1
+      ]
+    ],
+    "bans_against_team": [
+      [
+        "Timbersaw",
+        5
+      ],
+      [
+        "Doom",
+        4
+      ],
+      [
+        "Mirana",
+        3
+      ],
+      [
+        "Lion",
+        3
+      ],
+      [
+        "Lifestealer",
+        3
+      ],
+      [
+        "Ember Spirit",
+        3
+      ],
+      [
+        "Earth Spirit",
+        2
+      ],
+      [
+        "Necrophos",
+        2
+      ],
+      [
+        "Dawnbreaker",
+        2
+      ],
+      [
+        "Tiny",
+        1
+      ],
+      [
+        "Sven",
+        1
+      ],
+      [
+        "Underlord",
+        1
+      ],
+      [
+        "Lone Druid",
+        1
+      ],
+      [
+        "Storm Spirit",
+        1
+      ],
+      [
+        "Invoker",
+        1
+      ],
+      [
+        "Windranger",
+        1
+      ],
+      [
+        "Terrorblade",
+        1
+      ]
+    ],
+    "vs_heroes": [
+      {
+        "hero": "Windranger",
+        "games": 2,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Dark Willow",
+        "games": 2,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Earth Spirit",
+        "games": 2,
+        "our_wins": 1,
+        "our_winrate": 50.0
+      },
+      {
+        "hero": "Largo",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Dragon Knight",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Nature's Prophet",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Batrider",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Brewmaster",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Skywrath Mage",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Tiny",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Witch Doctor",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Enigma",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Winter Wyvern",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Pangolier",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Sven",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Silencer",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Outworld Devourer",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Death Prophet",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Chaos Knight",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Techies",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Kez",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Dark Seer",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      }
+    ],
+    "players": [
+      {
+        "account_id": 185908355,
+        "name": "Lou",
+        "position": 1,
+        "games": 5,
+        "avg_kills": 4.8,
+        "avg_deaths": 6.8,
+        "avg_assists": 4.6,
+        "kda": 1.38,
+        "avg_gpm": 610,
+        "avg_xpm": 736,
+        "avg_last_hits": 461,
+        "avg_hero_damage": 22566,
+        "avg_wards": 0.8,
+        "heroes": [
+          {
+            "hero": "Clinkz",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Sven",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Slark",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Tiny",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Necrophos",
+            "games": 1,
+            "wins": 0
+          }
+        ]
+      },
+      {
+        "account_id": 202217968,
+        "name": "Emo",
+        "position": 2,
+        "games": 5,
+        "avg_kills": 5.6,
+        "avg_deaths": 5.2,
+        "avg_assists": 7.4,
+        "kda": 2.5,
+        "avg_gpm": 537,
+        "avg_xpm": 653,
+        "avg_last_hits": 358,
+        "avg_hero_damage": 24742,
+        "avg_wards": 1.8,
+        "heroes": [
+          {
+            "hero": "Storm Spirit",
+            "games": 2,
+            "wins": 0
+          },
+          {
+            "hero": "Puck",
+            "games": 2,
+            "wins": 0
+          },
+          {
+            "hero": "Ember Spirit",
+            "games": 1,
+            "wins": 1
+          }
+        ]
+      },
+      {
+        "account_id": 139031324,
+        "name": "Beyond",
+        "position": 3,
+        "games": 5,
+        "avg_kills": 3.8,
+        "avg_deaths": 4.6,
+        "avg_assists": 7.6,
+        "kda": 2.48,
+        "avg_gpm": 498,
+        "avg_xpm": 575,
+        "avg_last_hits": 264,
+        "avg_hero_damage": 12973,
+        "avg_wards": 0.2,
+        "heroes": [
+          {
+            "hero": "Brewmaster",
+            "games": 2,
+            "wins": 1
+          },
+          {
+            "hero": "Doom",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Undying",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Underlord",
+            "games": 1,
+            "wins": 0
+          }
+        ]
+      },
+      {
+        "account_id": 139876032,
+        "name": "kaka",
+        "position": 4,
+        "games": 5,
+        "avg_kills": 1.2,
+        "avg_deaths": 7.4,
+        "avg_assists": 10.4,
+        "kda": 1.57,
+        "avg_gpm": 240,
+        "avg_xpm": 369,
+        "avg_last_hits": 57,
+        "avg_hero_damage": 11614,
+        "avg_wards": 10.8,
+        "heroes": [
+          {
+            "hero": "Hoodwink",
+            "games": 2,
+            "wins": 1
+          },
+          {
+            "hero": "Winter Wyvern",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Rubick",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Lion",
+            "games": 1,
+            "wins": 0
+          }
+        ]
+      },
+      {
+        "account_id": 158847773,
+        "name": "天命",
+        "position": 5,
+        "games": 5,
+        "avg_kills": 2.4,
+        "avg_deaths": 9.2,
+        "avg_assists": 10.4,
+        "kda": 1.39,
+        "avg_gpm": 300,
+        "avg_xpm": 333,
+        "avg_last_hits": 70,
+        "avg_hero_damage": 14578,
+        "avg_wards": 38.8,
+        "heroes": [
+          {
+            "hero": "Hoodwink",
+            "games": 2,
+            "wins": 0
+          },
+          {
+            "hero": "Ring Master",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Warlock",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Winter Wyvern",
+            "games": 1,
+            "wins": 0
+          }
+        ]
+      }
+    ]
+  }
+}

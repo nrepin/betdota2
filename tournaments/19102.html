@@ -1,0 +1,178 @@
+<!doctype html><html lang=ru><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>BLAST SLAM VIII: турнир, сетка и команды</title><meta name=description content='BLAST SLAM VIII: турнирная сетка, анализ плей-офф и статистика команд'><link rel=icon href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314161b'/%3E%3Cpath d='M10 23V9h5.5a7 7 0 010 14z' fill='none' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href='https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap'><style>
+:root{--bg:#f4f5f7;--card:#fff;--text:#14161b;--muted:#646b78;--line:#e4e6ea;--win:#1f63b5;--loss:#c23434;
+--win-bg:#e3eefc;--loss-bg:#fbe6e4;--accent:#14161b;--on-accent:#fff;--bar:#e6e8ec;--hover:#f7f8fa;
+--shadow:0 1px 2px rgba(20,24,34,.04),0 4px 14px -6px rgba(20,24,34,.08);--ring:0 0 0 3px rgba(20,22,27,.18);
+--v-win:#2a78d6;--v-loss:#e34948;--v-opp:#c9cbd1;--v-grid:#ebecef;--v-axis:#c3c2b7;--v-tick:#898781;
+--v-track:#cde2fb;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 "Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+:root{--mono:"Geist Mono",ui-monospace,"SF Mono",Consolas,monospace}
+.num,td.num,.kpi .v,.viz .gl span,.viz .cap,.tot input,.tot .res b,.tot .dot,.pill,.chip b,.mrow .vl,.prob,.fact{font-family:var(--mono)}
+a{color:inherit;text-underline-offset:3px}a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:6px}
+h1,h2,h3{text-wrap:balance}p,li{text-wrap:pretty}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 16px 48px}
+h1{margin:0;font-size:34px;line-height:1.1;letter-spacing:-.025em;font-weight:700}
+.head{display:flex;align-items:center;gap:14px}.logo{width:56px;height:56px;object-fit:contain}
+.logo.dark{background:#111;border-radius:12px;padding:6px}
+.tour{display:inline-block;margin-bottom:12px;padding:4px 10px;border-radius:6px;background:var(--bar);font-size:12.5px;font-weight:600}
+.back{display:block;width:max-content;margin-bottom:14px;color:var(--muted);text-decoration:none;font-weight:500;transition:color .2s}.back:hover{color:var(--text)}h2{font-size:20px;letter-spacing:-.015em;font-weight:650;margin:40px 0 14px}
+.sub{color:var(--muted);margin-top:6px}.sub a{color:var(--text)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));grid-auto-flow:dense;gap:1px;margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.kpi.wide{grid-column:span 2}.kpi .v{white-space:nowrap}
+.kpi .v small{font-size:.62em;font-weight:500;color:var(--muted);letter-spacing:0}
+.kpi{background:var(--card);padding:14px 16px;outline:1px solid var(--line)}
+.kpi.main{grid-column:span 2;background:var(--accent);color:var(--on-accent)}
+.kpi.main .l,.kpi.main .s{color:inherit;opacity:.7}.kpi.main .v{font-size:40px;letter-spacing:-.05em}
+.kpi .l{color:var(--muted);font-size:12.5px;font-weight:500}
+.kpi .v{font-size:24px;font-weight:600;letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .s{color:var(--muted);font-size:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;vertical-align:middle}
+th{font-size:12px;color:var(--muted);font-weight:500;position:sticky;top:0;background:var(--card);cursor:pointer;user-select:none;transition:color .2s}
+th[data-asc="1"]::after{content:" ↑"}th[data-asc="0"]::after{content:" ↓"}
+tbody tr{transition:background-color .15s}tbody tr:hover{background:var(--hover)}
+th:hover{color:var(--text)}th:active{transform:translateY(1px)}tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right}
+.w{color:var(--win);font-weight:650}.lo{color:var(--loss);font-weight:650}
+.pill{display:inline-block;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:650}
+.pill.w{background:var(--win-bg)}.pill.lo{background:var(--loss-bg)}
+.series{display:flex;flex-wrap:wrap;gap:8px}
+.ser{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px 12px;display:flex;gap:10px;align-items:center}
+.heroes{display:flex;gap:3px}
+td.links{white-space:nowrap;font-size:12.5px;line-height:1.7}
+.hero{width:44px;height:25px;border-radius:4px;object-fit:cover;background:var(--line)}
+.hero.ban{filter:grayscale(1);opacity:.55}
+.hcell{display:flex;align-items:center;gap:8px}
+.bar{height:8px;border-radius:4px;background:var(--v-track);position:relative;min-width:120px}
+.bar span{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--s1)}
+.viz{position:relative;padding:18px 18px 14px;overflow:visible}
+.viz .lg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin-bottom:14px}
+.viz .lg span{display:inline-flex;align-items:center;gap:6px}.viz .lg i{width:10px;height:10px;border-radius:2px;flex:none}
+.viz .sc{overflow-x:auto;overflow-y:hidden;padding:22px 6px 2px 58px;margin-left:-6px}
+.viz .in{min-width:calc(var(--n)*38px)}
+.viz .plot{position:relative;height:190px;border-bottom:1px solid var(--v-axis)}
+.viz .gl{position:absolute;left:0;right:0;border-top:1px solid var(--v-grid)}
+.viz .gl span{position:absolute;right:calc(100% + 8px);top:-8px;font-size:11px;color:var(--v-tick);font-variant-numeric:tabular-nums;white-space:nowrap}
+.viz .avg{position:absolute;left:0;right:0;border-top:1px solid var(--text);opacity:.5;z-index:2;pointer-events:none}
+.viz .avg span{position:absolute;right:0;bottom:2px;font-size:11px;font-weight:600;color:var(--text);background:var(--card);padding:0 4px}
+.viz .cols{position:absolute;inset:0;display:flex;z-index:1}
+.viz .c{flex:1;min-width:38px;position:relative;display:flex;justify-content:center;align-items:flex-end;outline:none;cursor:default}
+.viz .c:hover,.viz .c:focus-visible{background:color-mix(in srgb,var(--text) 5%,transparent)}
+.viz .c:focus-visible{box-shadow:inset var(--ring)}
+.viz .stk{width:min(24px,62%);display:flex;flex-direction:column;gap:2px}
+.viz .sg{width:100%}.viz .sg:first-child{border-radius:4px 4px 0 0}
+.viz .sg.w{background:var(--v-win)}.viz .sg.lo{background:var(--v-loss)}.viz .sg.opp{background:var(--v-opp)}
+.viz .cap{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:650;color:var(--text);padding-bottom:3px;font-variant-numeric:tabular-nums}
+.viz .xa{display:flex;margin-top:6px}
+.viz .xa div{flex:1;min-width:38px;text-align:center;font-size:10.5px;line-height:1.35;color:var(--muted);white-space:nowrap}
+.viz .xa b{display:block;font-size:10px;font-weight:700}.viz .xa b.w{color:var(--win)}.viz .xa b.lo{color:var(--loss)}
+.viz .tip{position:absolute;z-index:5;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:8px;
+box-shadow:var(--shadow);padding:8px 10px;font-size:12px;min-width:150px;opacity:0;transition:opacity .12s}
+.viz .tip.on{opacity:1}.viz .tip .h{color:var(--muted);margin-bottom:4px;font-size:11.5px}
+.viz .tip .r{display:flex;align-items:center;gap:8px;margin-top:2px}.viz .tip .r i{width:12px;height:2px;border-radius:1px;flex:none}
+.viz .tip .r b{font-weight:650;font-variant-numeric:tabular-nums}.viz .tip .r span{color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:800px){.grid2{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px}
+.chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:6px;padding:3px 8px 3px 3px;font-size:13px}
+.chip img{width:36px;height:20px;border-radius:4px;object-fit:cover}
+.chip b{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+
+.teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:16px}
+a.team{display:flex;gap:16px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;
+padding:16px;color:inherit;text-decoration:none;transition:border-color .2s,background-color .2s}
+a.team:hover{border-color:color-mix(in srgb,var(--text) 35%,transparent);background:var(--hover)}
+a.team:active{transform:scale(.98)}
+.team .logo{width:64px;height:64px;object-fit:contain;flex:none}
+.team .logo.dark{background:#111;border-radius:12px;padding:6px}
+.team .nologo{width:64px;height:64px;border-radius:12px;background:var(--line);display:grid;place-items:center;font-weight:700;flex:none}
+.team .nm{font-size:16px;font-weight:650;letter-spacing:-.01em}
+.team .st{font:11.5px/1.5 var(--mono);color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+a.team>div{min-width:0}
+.team .wr{margin-top:8px;display:flex;align-items:center;gap:8px;font:600 12px var(--mono)}
+.team .bar{flex:1;min-width:0}
+.team.off{opacity:.5;pointer-events:none}
+.nav{display:flex;flex-wrap:wrap;gap:4px;margin:16px 0 8px;background:var(--bar);padding:4px;border-radius:12px;width:100%}
+.nav a{font-size:13px;font-weight:600;padding:7px 14px;border-radius:6px;color:var(--muted);text-decoration:none;
+transition:background-color .2s,color .2s}
+.nav a:hover{color:var(--text)}.nav a:active{transform:scale(.98)}
+.nav a[aria-current=page]{background:var(--card);color:var(--text);box-shadow:var(--shadow)}
+.an{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:10px 18px;border-radius:6px;background:var(--accent);color:var(--on-accent);text-decoration:none;font-weight:650;transition:transform .15s,opacity .2s}.an:hover{opacity:.88}.an:active{transform:scale(.98)}
+.nav a.right{margin-left:auto}.nav a.arch{opacity:.55}.nav a.arch[aria-current=page]{opacity:1}
+.tours{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:12px}
+a.tour-c{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;color:inherit;text-decoration:none;
+transition:border-color .2s,background-color .2s}
+a.tour-c:hover{border-color:color-mix(in srgb,var(--text) 35%,transparent);background:var(--hover)}a.tour-c:active{transform:scale(.98)}
+a.tour-c.arch{opacity:.55}a.tour-c.arch:hover{opacity:.9}
+.tour-c .nm{font-size:16px;font-weight:650;letter-spacing:-.01em;margin:8px 0 4px}
+.tour-c .st{font:11.5px/1.5 var(--mono);color:var(--muted)}
+.badge{display:inline-block;font:600 11px var(--mono);text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:6px;background:var(--bar);color:var(--muted)}
+.badge.live{background:var(--accent);color:var(--on-accent)}
+.grp-h{margin:24px 0 0;font-size:13px;font-weight:600;color:var(--muted)}
+.page-h{margin-top:28px}.page-h h2{margin:0;font-size:26px;letter-spacing:-.02em}
+
+.bsec{margin-top:28px}.bsec>h3{margin:0 0 4px;font-size:18px;letter-spacing:-.01em}.bsec>.muted{font-size:12.5px;margin-bottom:12px}
+.br-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.br{position:relative;display:grid;grid-template-columns:repeat(var(--cols),minmax(196px,1fr));column-gap:40px;row-gap:6px;
+padding:18px 20px 20px;min-width:calc(var(--cols)*236px)}
+.br svg{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.br svg path{fill:none;stroke:var(--v-axis);stroke-width:1.5}
+.br .lane{font-size:12.5px;font-weight:600;color:var(--muted);padding-top:6px}
+.br .rnd{display:flex;flex-direction:column}
+.br .rnd h4{margin:0 0 8px;font-size:12px;font-weight:500;color:var(--muted)}
+.br .ms{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:12px}
+.bm{position:relative;z-index:1;background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.bm .bt{display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:8px;padding:6px 10px;font-size:13px}
+.bm .bt+.bt{border-top:1px solid var(--line)}
+.bm .bt img{width:22px;height:22px;object-fit:contain}.bm .bt img.dark{background:#111;border-radius:4px;padding:2px}
+.bm .bt .q{width:22px;height:22px;border-radius:4px;border:1px dashed var(--v-axis)}
+.bm .bt a,.bm .bt span.n{color:inherit;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bm .bt a:hover{text-decoration:underline}
+.bm .bt b{font:600 13px var(--mono,ui-monospace);min-width:12px;text-align:right}
+.bm .bt.w{font-weight:650}.bm .bt.w b{color:var(--win)}.bm .bt.l{color:var(--muted)}
+.bm .bt.tbd{color:var(--muted)}
+.bm .md{font-size:11px;color:var(--muted);padding:3px 10px 5px;border-top:1px solid var(--line);background:var(--hover)}
+.bm.next{border-color:color-mix(in srgb,var(--text) 40%,transparent)}
+.bdec{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.bgr{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.bg{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.bg h4{margin:0;padding:10px 14px;font-size:13px;border-bottom:1px solid var(--line)}
+.bg table{width:100%;border-collapse:collapse;font-size:13px}
+.bg td{padding:7px 14px;border-bottom:1px solid var(--line)}.bg tr:last-child td{border-bottom:0}
+.bg td.p{width:18px;color:var(--muted);font:500 12px var(--mono,ui-monospace)}
+.bg td.r{text-align:right;font-family:var(--mono,ui-monospace);color:var(--muted);white-space:nowrap}
+.bg tr.adv td.p{color:var(--win);font-weight:700}.bg tr.out td:not(.p){color:var(--muted)}
+.bg .tn{display:flex;align-items:center;gap:8px}.bg .tn img{width:20px;height:20px;object-fit:contain}
+.bg .tn img.dark{background:#111;border-radius:4px;padding:2px}.bg .tn a{color:inherit;text-decoration:none}.bg .tn a:hover{text-decoration:underline}
+
+.sch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;align-items:start}
+.sch-box{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.sch-box table{width:100%;border-collapse:collapse;font-size:13.5px}
+.sch-box th{font:600 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+.sch-box td{padding:9px 12px;border-bottom:1px solid var(--line)}.sch-box tr:last-child td{border-bottom:0}
+.sch-box td.n,.sch-box th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+.sch-box .tm{display:flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font-weight:600}
+.sch-box .tm img{width:22px;height:22px;object-fit:contain}.sch-box .tm img.dark{background:#111;border-radius:4px;padding:2px}
+.sch-box a.tm:hover span{text-decoration:underline}
+.sch-box tr.dim td{color:var(--muted)}
+.sch-day{padding:8px 12px;font:600 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--hover);border-bottom:1px solid var(--line)}
+.sch-m{display:grid;grid-template-columns:54px 1fr;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line)}
+.sch-m:last-child{border-bottom:0}.sch-m time{font:600 13px var(--mono)}
+.sch-m .vs{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}.sch-m .vs i{font-style:normal;color:var(--muted);font-size:12px}
+.sch-m.live time{color:var(--win)}.sch-m .live-b{font:600 11px var(--mono);color:var(--win);margin-left:auto}
+.sch-m{color:inherit;text-decoration:none}a.sch-m:hover{background:var(--hover)}a.sch-m:active{transform:scale(.995)}
+.sch-m .sc{font-family:var(--mono)}
+.sch-note{font-size:12.5px;color:var(--muted);margin-top:8px;max-width:80ch}
+</style></head><body><main class=wrap><h1>Статистика команд Dota 2</h1><nav class=nav aria-label='Турниры'><a href='../index.html'>Все турниры</a><a href='20395.html'>PARI UNIVERSE by FISSURE</a><a href='19102.html' aria-current=page class=arch>BLAST SLAM VIII</a><a href='../forecasts.html' class=right>Прогнозы ИИ</a><a href='../heroes.html'>Герои</a></nav><div class=page-h><h2>BLAST SLAM VIII</h2><div class=sub>16 команд, данные OpenDota, <a href='https://www.dotabuff.com/esports/leagues/19102'>Dotabuff</a></div></div><a class=an href='../reports/19102/analysis.html'>Анализ плей-офф →</a><div class=bsec><h3>Команды</h3></div><div class=teams><a class=team href='../reports/19102/team-yandex.html'><img class=logo src='../assets/teams/9823272.png' alt='Логотип Team Yandex' loading=lazy><div style='flex:1;min-width:0'><div class=nm>Team Yandex</div><div class=st>Серии 7-1, карты 14-5</div><div class=st>44:18 · фраги 34.4:27.4 (61.7)</div><div class=wr><div class=bar><span style='width:73.7%'></span></div>74%</div></div></a><a class=team href='../reports/19102/parivision.html'><img class=logo src='../assets/teams/9824702.png' alt='Логотип PARIVISION' loading=lazy><div style='flex:1;min-width:0'><div class=nm>PARIVISION</div><div class=st>Серии 5-2, карты 12-5</div><div class=st>44:44 · фраги 33.0:22.9 (55.9)</div><div class=wr><div class=bar><span style='width:70.6%'></span></div>71%</div></div></a><a class=team href='../reports/19102/team-spirit.html'><img class='logo dark' src='../assets/teams/7119388.png' alt='Логотип Team Spirit' loading=lazy><div style='flex:1;min-width:0'><div class=nm>Team Spirit</div><div class=st>Серии 5-3, карты 11-9</div><div class=st>43:29 · фраги 33.1:29.8 (62.9)</div><div class=wr><div class=bar><span style='width:55.0%'></span></div>55%</div></div></a><a class=team href='../reports/19102/aurora-gaming.html'><img class=logo src='../assets/teams/9467224.png' alt='Логотип Aurora Gaming' loading=lazy><div style='flex:1;min-width:0'><div class=nm>Aurora Gaming</div><div class=st>Серии 4-3, карты 9-7</div><div class=st>48:59 · фраги 30.8:33.9 (64.7)</div><div class=wr><div class=bar><span style='width:56.2%'></span></div>56%</div></div></a><a class=team href='../reports/19102/1win.html'><img class=logo src='../assets/teams/10182357.png' alt='Логотип 1win' loading=lazy><div style='flex:1;min-width:0'><div class=nm>1win</div><div class=st>Серии 3-3, карты 7-8</div><div class=st>44:48 · фраги 29.2:30.6 (59.8)</div><div class=wr><div class=bar><span style='width:46.7%'></span></div>47%</div></div></a><a class=team href='../reports/19102/lgd-gaming.html'><img class=logo src='../assets/teams/15.png' alt='Логотип LGD Gaming' loading=lazy><div style='flex:1;min-width:0'><div class=nm>LGD Gaming</div><div class=st>Серии 3-3, карты 7-9</div><div class=st>42:19 · фраги 23.4:27.0 (50.4)</div><div class=wr><div class=bar><span style='width:43.8%'></span></div>44%</div></div></a><a class=team href='../reports/19102/gamerlegion.html'><img class='logo dark' src='../assets/teams/9964962.png' alt='Логотип GamerLegion' loading=lazy><div style='flex:1;min-width:0'><div class=nm>GamerLegion</div><div class=st>Серии 2-2, карты 5-4</div><div class=st>44:42 · фраги 27.3:21.2 (48.6)</div><div class=wr><div class=bar><span style='width:55.6%'></span></div>56%</div></div></a><a class=team href='../reports/19102/og.html'><img class=logo src='../assets/teams/2586976.png' alt='Логотип OG' loading=lazy><div style='flex:1;min-width:0'><div class=nm>OG</div><div class=st>Серии 2-2, карты 6-5</div><div class=st>43:34 · фраги 23.7:25.7 (49.5)</div><div class=wr><div class=bar><span style='width:54.5%'></span></div>54%</div></div></a><a class=team href='../reports/19102/xtreme-gaming.html'><img class=logo src='../assets/teams/8261500.png' alt='Логотип Xtreme Gaming' loading=lazy><div style='flex:1;min-width:0'><div class=nm>Xtreme Gaming</div><div class=st>Серии 1-2, карты 4-4</div><div class=st>44:03 · фраги 26.2:28.4 (54.6)</div><div class=wr><div class=bar><span style='width:50.0%'></span></div>50%</div></div></a><a class=team href='../reports/19102/betboom-team.html'><img class=logo src='../assets/teams/8255888.png' alt='Логотип BETBOOM TEAM' loading=lazy><div style='flex:1;min-width:0'><div class=nm>BETBOOM TEAM</div><div class=st>Серии 1-2, карты 3-5</div><div class=st>47:13 · фраги 26.1:29.1 (55.2)</div><div class=wr><div class=bar><span style='width:37.5%'></span></div>38%</div></div></a><a class=team href='../reports/19102/team-liquid.html'><img class='logo dark' src='../assets/teams/2163.png' alt='Логотип Team Liquid' loading=lazy><div style='flex:1;min-width:0'><div class=nm>Team Liquid</div><div class=st>Серии 1-2, карты 3-5</div><div class=st>41:42 · фраги 27.4:27.6 (55.0)</div><div class=wr><div class=bar><span style='width:37.5%'></span></div>38%</div></div></a><a class=team href='../reports/19102/team-nemesis.html'><img class=logo src='../assets/teams/9691969.png' alt='Логотип Team Nemesis' loading=lazy><div style='flex:1;min-width:0'><div class=nm>Team Nemesis</div><div class=st>Серии 1-2, карты 3-5</div><div class=st>42:56 · фраги 25.6:34.6 (60.2)</div><div class=wr><div class=bar><span style='width:37.5%'></span></div>38%</div></div></a><a class=team href='../reports/19102/natus-vincere.html'><img class=logo src='../assets/teams/36.png' alt='Логотип Natus Vincere' loading=lazy><div style='flex:1;min-width:0'><div class=nm>Natus Vincere</div><div class=st>Серии 0-2, карты 2-4</div><div class=st>43:22 · фраги 27.2:29.8 (57.0)</div><div class=wr><div class=bar><span style='width:33.3%'></span></div>33%</div></div></a><a class=team href='../reports/19102/yakult-brothers.html'><img class=logo src='../assets/teams/9351740.png' alt='Логотип Yakult Brothers' loading=lazy><div style='flex:1;min-width:0'><div class=nm>Yakult Brothers</div><div class=st>Серии 0-2, карты 1-4</div><div class=st>41:20 · фраги 18.0:33.2 (51.2)</div><div class=wr><div class=bar><span style='width:20.0%'></span></div>20%</div></div></a><a class=team href='../reports/19102/level-up-esports.html'><img class=logo src='../assets/teams/9256405.png' alt='Логотип Level UP esports' loading=lazy><div style='flex:1;min-width:0'><div class=nm>Level UP esports</div><div class=st>Серии 0-2, карты 0-4</div><div class=st>42:00 · фраги 22.0:30.2 (52.2)</div><div class=wr><div class=bar><span style='width:0.0%'></span></div>0%</div></div></a><a class=team href='../reports/19102/mouz.html'><img class=logo src='../assets/teams/9338413.png' alt='Логотип MOUZ' loading=lazy><div style='flex:1;min-width:0'><div class=nm>MOUZ</div><div class=st>Серии 0-2, карты 0-4</div><div class=st>40:36 · фраги 21.5:30.8 (52.2)</div><div class=wr><div class=bar><span style='width:0.0%'></span></div>0%</div></div></a></div><div class=bsec><h3>Плей-офф</h3><div class=muted>Двойное выбывание. Счёт по сериям, клик по команде открывает её статистику.</div><div class=br-scroll><div class=br style='--cols:5'><svg aria-hidden=true><path/></svg><div class=lane style='grid-column:1 / 5;grid-row:1'>Верхняя сетка</div><div class=rnd style='grid-column:1;grid-row:2 / span 1'><h4>Четвертьфинал</h4><div class=ms><div class='bm' id='b19102-uq1' data-next='b19102-us1'><div class='bt w'><img src='../assets/teams/9823272.png' alt='Логотип Team Yandex'><a href='../reports/19102/team-yandex.html'>Team Yandex</a><b>2</b></div><div class='bt l'><img src='../assets/teams/15.png' alt='Логотип LGD Gaming'><a href='../reports/19102/lgd-gaming.html'>LGD Gaming</a><b>1</b></div><div class=md>08.10</div></div><div class='bm' id='b19102-uq2' data-next='b19102-us2'><div class='bt w'><img src='../assets/teams/9467224.png' alt='Логотип Aurora Gaming'><a href='../reports/19102/aurora-gaming.html'>Aurora Gaming</a><b>2</b></div><div class='bt l'><img src='../assets/teams/10182357.png' alt='Логотип 1win'><a href='../reports/19102/1win.html'>1win</a><b>0</b></div><div class=md>08.10</div></div></div></div><div class=rnd style='grid-column:2;grid-row:2 / span 1'><h4>Полуфинал</h4><div class=ms><div class='bm' id='b19102-us1' data-next='b19102-uf'><div class='bt l'><img src='../assets/teams/9824702.png' alt='Логотип PARIVISION'><a href='../reports/19102/parivision.html'>PARIVISION</a><b>1</b></div><div class='bt w'><img src='../assets/teams/9823272.png' alt='Логотип Team Yandex'><a href='../reports/19102/team-yandex.html'>Team Yandex</a><b>2</b></div><div class=md>08.10</div></div><div class='bm' id='b19102-us2' data-next='b19102-uf'><div class='bt w'><img class=dark src='../assets/teams/7119388.png' alt='Логотип Team Spirit'><a href='../reports/19102/team-spirit.html'>Team Spirit</a><b>2</b></div><div class='bt l'><img src='../assets/teams/9467224.png' alt='Логотип Aurora Gaming'><a href='../reports/19102/aurora-gaming.html'>Aurora Gaming</a><b>1</b></div><div class=md>09.10</div></div></div></div><div class=rnd style='grid-column:3;grid-row:2 / span 1'><h4>Финал верхней сетки</h4><div class=ms><div class='bm' id='b19102-uf' data-next='b19102-gf'><div class='bt w'><img src='../assets/teams/9823272.png' alt='Логотип Team Yandex'><a href='../reports/19102/team-yandex.html'>Team Yandex</a><b>2</b></div><div class='bt l'><img class=dark src='../assets/teams/7119388.png' alt='Логотип Team Spirit'><a href='../reports/19102/team-spirit.html'>Team Spirit</a><b>0</b></div><div class=md>10.10</div></div></div></div><div class=lane style='grid-column:1 / 5;grid-row:3'>Нижняя сетка</div><div class=rnd style='grid-column:2;grid-row:4 / span 1'><h4>1-й раунд</h4><div class=ms><div class='bm' id='b19102-l1' data-next='b19102-ls'><div class='bt w'><img src='../assets/teams/9824702.png' alt='Логотип PARIVISION'><a href='../reports/19102/parivision.html'>PARIVISION</a><b>2</b></div><div class='bt l'><img src='../assets/teams/10182357.png' alt='Логотип 1win'><a href='../reports/19102/1win.html'>1win</a><b>1</b></div><div class=md>09.10</div></div><div class='bm' id='b19102-l2' data-next='b19102-ls'><div class='bt w'><img src='../assets/teams/9467224.png' alt='Логотип Aurora Gaming'><a href='../reports/19102/aurora-gaming.html'>Aurora Gaming</a><b>2</b></div><div class='bt l'><img src='../assets/teams/15.png' alt='Логотип LGD Gaming'><a href='../reports/19102/lgd-gaming.html'>LGD Gaming</a><b>0</b></div><div class=md>09.10</div></div></div></div><div class=rnd style='grid-column:3;grid-row:4 / span 1'><h4>Полуфинал</h4><div class=ms><div class='bm' id='b19102-ls' data-next='b19102-lf'><div class='bt w'><img src='../assets/teams/9824702.png' alt='Логотип PARIVISION'><a href='../reports/19102/parivision.html'>PARIVISION</a><b>2</b></div><div class='bt l'><img src='../assets/teams/9467224.png' alt='Логотип Aurora Gaming'><a href='../reports/19102/aurora-gaming.html'>Aurora Gaming</a><b>0</b></div><div class=md>10.10</div></div></div></div><div class=rnd style='grid-column:4;grid-row:4 / span 1'><h4>Финал нижней сетки</h4><div class=ms><div class='bm' id='b19102-lf' data-next='b19102-gf'><div class='bt l'><img src='../assets/teams/9824702.png' alt='Логотип PARIVISION'><a href='../reports/19102/parivision.html'>PARIVISION</a><b>1</b></div><div class='bt w'><img class=dark src='../assets/teams/7119388.png' alt='Логотип Team Spirit'><a href='../reports/19102/team-spirit.html'>Team Spirit</a><b>2</b></div><div class=md>11.10</div></div></div></div><div class=rnd style='grid-column:5;grid-row:2 / span 3'><h4>Гранд-финал</h4><div class=ms><div class='bm' id='b19102-gf'><div class='bt w'><img src='../assets/teams/9823272.png' alt='Логотип Team Yandex'><a href='../reports/19102/team-yandex.html'>Team Yandex</a><b>2</b></div><div class='bt l'><img class=dark src='../assets/teams/7119388.png' alt='Логотип Team Spirit'><a href='../reports/19102/team-spirit.html'>Team Spirit</a><b>0</b></div><div class=md>10.10</div></div></div></div></div></div></div><div class=bsec><h3>Стыковые матчи</h3><div class=muted>Победители групп разыгрывают места в плей-офф, вторые места играют на вылет.</div><div class=bdec><div class='bm'><div class='bt w'><img src='../assets/teams/9824702.png' alt='Логотип PARIVISION'><a href='../reports/19102/parivision.html'>PARIVISION</a><b>2</b></div><div class='bt l'><img src='../assets/teams/9467224.png' alt='Логотип Aurora Gaming'><a href='../reports/19102/aurora-gaming.html'>Aurora Gaming</a><b>0</b></div><div class=md>03.10. 1-е места: победитель в полуфинал верхней сетки</div></div><div class='bm'><div class='bt w'><img class=dark src='../assets/teams/7119388.png' alt='Логотип Team Spirit'><a href='../reports/19102/team-spirit.html'>Team Spirit</a><b>2</b></div><div class='bt l'><img src='../assets/teams/9823272.png' alt='Логотип Team Yandex'><a href='../reports/19102/team-yandex.html'>Team Yandex</a><b>1</b></div><div class=md>03.10. 1-е места: победитель в полуфинал верхней сетки</div></div><div class='bm'><div class='bt w'><img src='../assets/teams/15.png' alt='Логотип LGD Gaming'><a href='../reports/19102/lgd-gaming.html'>LGD Gaming</a><b>2</b></div><div class='bt l'><img class=dark src='../assets/teams/9964962.png' alt='Логотип GamerLegion'><a href='../reports/19102/gamerlegion.html'>GamerLegion</a><b>1</b></div><div class=md>03.10. 2-е места: проигравший выбывает</div></div><div class='bm'><div class='bt w'><img src='../assets/teams/10182357.png' alt='Логотип 1win'><a href='../reports/19102/1win.html'>1win</a><b>2</b></div><div class='bt l'><img src='../assets/teams/2586976.png' alt='Логотип OG'><a href='../reports/19102/og.html'>OG</a><b>1</b></div><div class=md>03.10. 2-е места: проигравший выбывает</div></div></div></div><div class=bsec><h3>Групповой этап</h3><div class=muted>Двойное выбывание внутри группы (GSL). Серии и в скобках карты. Первые два места проходят дальше.</div><div class=bgr><div class=bg><h4>Группа A</h4><table><tr class=adv><td class=p>1</td><td><div class=tn><img class=dark src='../assets/teams/7119388.png' alt='Логотип Team Spirit'><a href='../reports/19102/team-spirit.html'>Team Spirit</a></div></td><td class=r>2-0 (4-1)</td></tr><tr class=adv><td class=p>2</td><td><div class=tn><img src='../assets/teams/10182357.png' alt='Логотип 1win'><a href='../reports/19102/1win.html'>1win</a></div></td><td class=r>2-1 (4-3)</td></tr><tr class=out><td class=p>3</td><td><div class=tn><img src='../assets/teams/9691969.png' alt='Логотип Team Nemesis'><a href='../reports/19102/team-nemesis.html'>Team Nemesis</a></div></td><td class=r>1-2 (3-5)</td></tr><tr class=out><td class=p>4</td><td><div class=tn><img src='../assets/teams/36.png' alt='Логотип Natus Vincere'><a href='../reports/19102/natus-vincere.html'>Natus Vincere</a></div></td><td class=r>0-2 (2-4)</td></tr></table></div><div class=bg><h4>Группа B</h4><table><tr class=adv><td class=p>1</td><td><div class=tn><img src='../assets/teams/9824702.png' alt='Логотип PARIVISION'><a href='../reports/19102/parivision.html'>PARIVISION</a></div></td><td class=r>2-0 (4-0)</td></tr><tr class=adv><td class=p>2</td><td><div class=tn><img src='../assets/teams/15.png' alt='Логотип LGD Gaming'><a href='../reports/19102/lgd-gaming.html'>LGD Gaming</a></div></td><td class=r>2-1 (4-4)</td></tr><tr class=out><td class=p>3</td><td><div class=tn><img src='../assets/teams/8261500.png' alt='Логотип Xtreme Gaming'><a href='../reports/19102/xtreme-gaming.html'>Xtreme Gaming</a></div></td><td class=r>1-2 (4-4)</td></tr><tr class=out><td class=p>4</td><td><div class=tn><img src='../assets/teams/9256405.png' alt='Логотип Level UP esports'><a href='../reports/19102/level-up-esports.html'>Level UP esports</a></div></td><td class=r>0-2 (0-4)</td></tr></table></div><div class=bg><h4>Группа C</h4><table><tr class=adv><td class=p>1</td><td><div class=tn><img src='../assets/teams/9467224.png' alt='Логотип Aurora Gaming'><a href='../reports/19102/aurora-gaming.html'>Aurora Gaming</a></div></td><td class=r>2-0 (4-1)</td></tr><tr class=adv><td class=p>2</td><td><div class=tn><img class=dark src='../assets/teams/9964962.png' alt='Логотип GamerLegion'><a href='../reports/19102/gamerlegion.html'>GamerLegion</a></div></td><td class=r>2-1 (4-2)</td></tr><tr class=out><td class=p>3</td><td><div class=tn><img class=dark src='../assets/teams/2163.png' alt='Логотип Team Liquid'><a href='../reports/19102/team-liquid.html'>Team Liquid</a></div></td><td class=r>1-2 (3-5)</td></tr><tr class=out><td class=p>4</td><td><div class=tn><img src='../assets/teams/9351740.png' alt='Логотип Yakult Brothers'><a href='../reports/19102/yakult-brothers.html'>Yakult Brothers</a></div></td><td class=r>0-2 (1-4)</td></tr></table></div><div class=bg><h4>Группа D</h4><table><tr class=adv><td class=p>1</td><td><div class=tn><img src='../assets/teams/9823272.png' alt='Логотип Team Yandex'><a href='../reports/19102/team-yandex.html'>Team Yandex</a></div></td><td class=r>2-0 (4-0)</td></tr><tr class=adv><td class=p>2</td><td><div class=tn><img src='../assets/teams/2586976.png' alt='Логотип OG'><a href='../reports/19102/og.html'>OG</a></div></td><td class=r>2-1 (5-3)</td></tr><tr class=out><td class=p>3</td><td><div class=tn><img src='../assets/teams/8255888.png' alt='Логотип BETBOOM TEAM'><a href='../reports/19102/betboom-team.html'>BETBOOM TEAM</a></div></td><td class=r>1-2 (3-5)</td></tr><tr class=out><td class=p>4</td><td><div class=tn><img src='../assets/teams/9338413.png' alt='Логотип MOUZ'><a href='../reports/19102/mouz.html'>MOUZ</a></div></td><td class=r>0-2 (0-4)</td></tr></table></div></div></div></main><script>
+document.querySelectorAll('.br').forEach(br=>{const path=br.querySelector('svg path');
+const draw=()=>{const r=br.getBoundingClientRect();let d='';
+ br.querySelectorAll('[data-next]').forEach(m=>{const n=document.getElementById(m.dataset.next);if(!n)return;
+  const a=m.getBoundingClientRect(),b=n.getBoundingClientRect();
+  const x1=a.right-r.left,y1=a.top+a.height/2-r.top,x2=b.left-r.left,y2=b.top+b.height/2-r.top,xm=x2-20;
+  d+=`M${x1} ${y1}H${xm}V${y2}H${x2}`});path.setAttribute('d',d)};
+draw();addEventListener('resize',draw);if(document.fonts)document.fonts.ready.then(draw);});
+</script></body></html>

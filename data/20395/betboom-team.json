@@ -1,0 +1,721 @@
+{
+  "team_id": 8255888,
+  "team": "BETBOOM TEAM",
+  "league_id": 20395,
+  "games": [
+    {
+      "match_id": 9058056916,
+      "series_id": 1158262,
+      "start_time": 1792765548,
+      "opponent_id": 10292107,
+      "opponent": "Astra Invicta",
+      "side": "Dire",
+      "win": false,
+      "duration_sec": 2377,
+      "duration": "39:37",
+      "kills_for": 17,
+      "kills_against": 32,
+      "total_kills": 49,
+      "first_pick": false,
+      "first_blood": true,
+      "first_blood_time": 368,
+      "gold_adv_10min": -380,
+      "max_gold_lead": 514,
+      "max_gold_deficit": -16332,
+      "roshans": 0,
+      "towers": 0,
+      "picks": [
+        "Witch Doctor",
+        "Techies",
+        "Earth Spirit",
+        "Kez",
+        "Lycan"
+      ],
+      "bans": [
+        "Bounty Hunter",
+        "Dazzle",
+        "Nature's Prophet",
+        "Windranger",
+        "Ember Spirit",
+        "Dark Willow",
+        "Ring Master"
+      ],
+      "opp_picks": [
+        "Enigma",
+        "Io",
+        "Pangolier",
+        "Lifestealer",
+        "Clockwerk"
+      ],
+      "opp_bans": [
+        "Keeper of the Light",
+        "Hoodwink",
+        "Doom",
+        "Gyrocopter",
+        "Rubick",
+        "Necrophos",
+        "Undying"
+      ],
+      "players": [
+        {
+          "account_id": 172099728,
+          "name": "Kiritych~",
+          "hero": "Kez",
+          "position": 1,
+          "kills": 5,
+          "deaths": 5,
+          "assists": 5,
+          "last_hits": 457,
+          "denies": 28,
+          "gpm": 606,
+          "xpm": 646,
+          "net_worth": 22023,
+          "hero_damage": 20662,
+          "tower_damage": 361,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 7.1997037,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.5882353,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 317880638,
+          "name": "Save-",
+          "hero": "Earth Spirit",
+          "position": 2,
+          "kills": 4,
+          "deaths": 7,
+          "assists": 7,
+          "last_hits": 231,
+          "denies": 11,
+          "gpm": 457,
+          "xpm": 503,
+          "net_worth": 16487,
+          "hero_damage": 27314,
+          "tower_damage": 667,
+          "hero_healing": 0,
+          "obs_placed": 1,
+          "sen_placed": 1,
+          "stuns": 12.033292,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.64705884,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 165564598,
+          "name": "MieRo",
+          "hero": "Lycan",
+          "position": 3,
+          "kills": 0,
+          "deaths": 2,
+          "assists": 11,
+          "last_hits": 469,
+          "denies": 7,
+          "gpm": 633,
+          "xpm": 590,
+          "net_worth": 23925,
+          "hero_damage": 10798,
+          "tower_damage": 1882,
+          "hero_healing": 1509,
+          "obs_placed": 1,
+          "sen_placed": 0,
+          "stuns": 0,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.5882353,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 175311897,
+          "name": "swedenstrong",
+          "hero": "Techies",
+          "position": 4,
+          "kills": 2,
+          "deaths": 8,
+          "assists": 12,
+          "last_hits": 84,
+          "denies": 0,
+          "gpm": 302,
+          "xpm": 366,
+          "net_worth": 11394,
+          "hero_damage": 29884,
+          "tower_damage": 160,
+          "hero_healing": 0,
+          "obs_placed": 5,
+          "sen_placed": 10,
+          "stuns": 16.234104,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.8235294,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 196878136,
+          "name": "Kataomi`",
+          "hero": "Witch Doctor",
+          "position": 5,
+          "kills": 5,
+          "deaths": 10,
+          "assists": 9,
+          "last_hits": 33,
+          "denies": 1,
+          "gpm": 323,
+          "xpm": 376,
+          "net_worth": 9228,
+          "hero_damage": 19524,
+          "tower_damage": 0,
+          "hero_healing": 2795,
+          "obs_placed": 12,
+          "sen_placed": 23,
+          "stuns": 29.698265,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.8235294,
+          "firstblood_claimed": 1
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9058056916"
+    },
+    {
+      "match_id": 9058178856,
+      "series_id": 1158262,
+      "start_time": 1792769876,
+      "opponent_id": 10292107,
+      "opponent": "Astra Invicta",
+      "side": "Radiant",
+      "win": false,
+      "duration_sec": 3537,
+      "duration": "58:57",
+      "kills_for": 20,
+      "kills_against": 35,
+      "total_kills": 55,
+      "first_pick": false,
+      "first_blood": false,
+      "first_blood_time": 179,
+      "gold_adv_10min": -3212,
+      "max_gold_lead": 0,
+      "max_gold_deficit": -33161,
+      "roshans": 1,
+      "towers": 0,
+      "picks": [
+        "Enigma",
+        "Earth Spirit",
+        "Spirit Breaker",
+        "Witch Doctor",
+        "Broodmother"
+      ],
+      "bans": [
+        "Bounty Hunter",
+        "Nature's Prophet",
+        "Lifestealer",
+        "Dark Willow",
+        "Ember Spirit",
+        "Outworld Devourer",
+        "Pangolier"
+      ],
+      "opp_picks": [
+        "Io",
+        "Hoodwink",
+        "Lone Druid",
+        "Brewmaster",
+        "Dragon Knight"
+      ],
+      "opp_bans": [
+        "Keeper of the Light",
+        "Doom",
+        "Gyrocopter",
+        "Anti-Mage",
+        "Slark",
+        "Kez",
+        "Sven"
+      ],
+      "players": [
+        {
+          "account_id": 172099728,
+          "name": "Kiritych~",
+          "hero": "Broodmother",
+          "position": 1,
+          "kills": 8,
+          "deaths": 3,
+          "assists": 6,
+          "last_hits": 753,
+          "denies": 10,
+          "gpm": 745,
+          "xpm": 856,
+          "net_worth": 40874,
+          "hero_damage": 47217,
+          "tower_damage": 3625,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 2.4334474,
+          "roshans_killed": 1,
+          "teamfight_participation": 0.7,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 317880638,
+          "name": "Save-",
+          "hero": "Earth Spirit",
+          "position": 2,
+          "kills": 4,
+          "deaths": 7,
+          "assists": 12,
+          "last_hits": 395,
+          "denies": 3,
+          "gpm": 512,
+          "xpm": 632,
+          "net_worth": 24310,
+          "hero_damage": 38032,
+          "tower_damage": 0,
+          "hero_healing": 0,
+          "obs_placed": 1,
+          "sen_placed": 1,
+          "stuns": 20.49905,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.8,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 165564598,
+          "name": "MieRo",
+          "hero": "Enigma",
+          "position": 3,
+          "kills": 3,
+          "deaths": 6,
+          "assists": 13,
+          "last_hits": 503,
+          "denies": 3,
+          "gpm": 569,
+          "xpm": 524,
+          "net_worth": 29499,
+          "hero_damage": 64536,
+          "tower_damage": 2573,
+          "hero_healing": 0,
+          "obs_placed": 1,
+          "sen_placed": 0,
+          "stuns": 70.434715,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.8,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 175311897,
+          "name": "swedenstrong",
+          "hero": "Spirit Breaker",
+          "position": 4,
+          "kills": 1,
+          "deaths": 8,
+          "assists": 12,
+          "last_hits": 136,
+          "denies": 2,
+          "gpm": 295,
+          "xpm": 586,
+          "net_worth": 12162,
+          "hero_damage": 18350,
+          "tower_damage": 0,
+          "hero_healing": 2888,
+          "obs_placed": 4,
+          "sen_placed": 9,
+          "stuns": 91.801575,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.65,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 196878136,
+          "name": "Kataomi`",
+          "hero": "Witch Doctor",
+          "position": 5,
+          "kills": 4,
+          "deaths": 11,
+          "assists": 11,
+          "last_hits": 29,
+          "denies": 4,
+          "gpm": 329,
+          "xpm": 432,
+          "net_worth": 12549,
+          "hero_damage": 39054,
+          "tower_damage": 62,
+          "hero_healing": 16184,
+          "obs_placed": 22,
+          "sen_placed": 43,
+          "stuns": 61.431747,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.75,
+          "firstblood_claimed": 0
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9058178856"
+    }
+  ],
+  "summary": {
+    "games": 2,
+    "wins": 0,
+    "losses": 2,
+    "winrate": 0.0,
+    "avg_duration": "49:17",
+    "avg_duration_win": "0:00",
+    "avg_duration_loss": "49:17",
+    "shortest": "39:37",
+    "longest": "58:57",
+    "avg_kills_for": 18.5,
+    "avg_kills_against": 33.5,
+    "avg_total_kills": 52.0,
+    "kills_per_min": 0.38,
+    "first_blood_rate": 50.0,
+    "avg_gold_adv_10min": -1796,
+    "avg_roshans": 0.5,
+    "radiant": {
+      "games": 1,
+      "wins": 0,
+      "winrate": 0.0
+    },
+    "dire": {
+      "games": 1,
+      "wins": 0,
+      "winrate": 0.0
+    },
+    "first_pick": {
+      "games": 0,
+      "wins": 0,
+      "winrate": 0
+    },
+    "second_pick": {
+      "games": 2,
+      "wins": 0,
+      "winrate": 0.0
+    },
+    "series": [
+      {
+        "series_id": 1158262,
+        "opponent": "Astra Invicta",
+        "score": "0-2",
+        "won": false
+      }
+    ],
+    "series_record": "0-1",
+    "hero_picks": [
+      {
+        "hero": "Witch Doctor",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Earth Spirit",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Techies",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Kez",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Lycan",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Enigma",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Spirit Breaker",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Broodmother",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      }
+    ],
+    "bans_by_team": [
+      [
+        "Bounty Hunter",
+        2
+      ],
+      [
+        "Nature's Prophet",
+        2
+      ],
+      [
+        "Ember Spirit",
+        2
+      ],
+      [
+        "Dark Willow",
+        2
+      ],
+      [
+        "Dazzle",
+        1
+      ],
+      [
+        "Windranger",
+        1
+      ],
+      [
+        "Ring Master",
+        1
+      ],
+      [
+        "Lifestealer",
+        1
+      ],
+      [
+        "Outworld Devourer",
+        1
+      ],
+      [
+        "Pangolier",
+        1
+      ]
+    ],
+    "bans_against_team": [
+      [
+        "Keeper of the Light",
+        2
+      ],
+      [
+        "Doom",
+        2
+      ],
+      [
+        "Gyrocopter",
+        2
+      ],
+      [
+        "Hoodwink",
+        1
+      ],
+      [
+        "Rubick",
+        1
+      ],
+      [
+        "Necrophos",
+        1
+      ],
+      [
+        "Undying",
+        1
+      ],
+      [
+        "Anti-Mage",
+        1
+      ],
+      [
+        "Slark",
+        1
+      ],
+      [
+        "Kez",
+        1
+      ],
+      [
+        "Sven",
+        1
+      ]
+    ],
+    "vs_heroes": [
+      {
+        "hero": "Io",
+        "games": 2,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Enigma",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Pangolier",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Lifestealer",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Clockwerk",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Hoodwink",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Lone Druid",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Brewmaster",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Dragon Knight",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      }
+    ],
+    "players": [
+      {
+        "account_id": 172099728,
+        "name": "Kiritych~",
+        "position": 1,
+        "games": 2,
+        "avg_kills": 6.5,
+        "avg_deaths": 4.0,
+        "avg_assists": 5.5,
+        "kda": 3.0,
+        "avg_gpm": 676,
+        "avg_xpm": 751,
+        "avg_last_hits": 605,
+        "avg_hero_damage": 33940,
+        "avg_wards": 0.0,
+        "heroes": [
+          {
+            "hero": "Kez",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Broodmother",
+            "games": 1,
+            "wins": 0
+          }
+        ]
+      },
+      {
+        "account_id": 317880638,
+        "name": "Save-",
+        "position": 2,
+        "games": 2,
+        "avg_kills": 4.0,
+        "avg_deaths": 7.0,
+        "avg_assists": 9.5,
+        "kda": 1.93,
+        "avg_gpm": 484,
+        "avg_xpm": 568,
+        "avg_last_hits": 313,
+        "avg_hero_damage": 32673,
+        "avg_wards": 2.0,
+        "heroes": [
+          {
+            "hero": "Earth Spirit",
+            "games": 2,
+            "wins": 0
+          }
+        ]
+      },
+      {
+        "account_id": 165564598,
+        "name": "MieRo",
+        "position": 3,
+        "games": 2,
+        "avg_kills": 1.5,
+        "avg_deaths": 4.0,
+        "avg_assists": 12.0,
+        "kda": 3.38,
+        "avg_gpm": 601,
+        "avg_xpm": 557,
+        "avg_last_hits": 486,
+        "avg_hero_damage": 37667,
+        "avg_wards": 1.0,
+        "heroes": [
+          {
+            "hero": "Lycan",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Enigma",
+            "games": 1,
+            "wins": 0
+          }
+        ]
+      },
+      {
+        "account_id": 175311897,
+        "name": "swedenstrong",
+        "position": 4,
+        "games": 2,
+        "avg_kills": 1.5,
+        "avg_deaths": 8.0,
+        "avg_assists": 12.0,
+        "kda": 1.69,
+        "avg_gpm": 298,
+        "avg_xpm": 476,
+        "avg_last_hits": 110,
+        "avg_hero_damage": 24117,
+        "avg_wards": 14.0,
+        "heroes": [
+          {
+            "hero": "Techies",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Spirit Breaker",
+            "games": 1,
+            "wins": 0
+          }
+        ]
+      },
+      {
+        "account_id": 196878136,
+        "name": "Kataomi`",
+        "position": 5,
+        "games": 2,
+        "avg_kills": 4.5,
+        "avg_deaths": 10.5,
+        "avg_assists": 10.0,
+        "kda": 1.38,
+        "avg_gpm": 326,
+        "avg_xpm": 404,
+        "avg_last_hits": 31,
+        "avg_hero_damage": 29289,
+        "avg_wards": 50.0,
+        "heroes": [
+          {
+            "hero": "Witch Doctor",
+            "games": 2,
+            "wins": 0
+          }
+        ]
+      }
+    ]
+  }
+}

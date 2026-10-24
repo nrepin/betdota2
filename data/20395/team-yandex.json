@@ -1,0 +1,740 @@
+{
+  "team_id": 9823272,
+  "team": "Team Yandex",
+  "league_id": 20395,
+  "games": [
+    {
+      "match_id": 9056215433,
+      "series_id": 1157834,
+      "start_time": 1792656791,
+      "opponent_id": 9964962,
+      "opponent": "GamerLegion",
+      "side": "Dire",
+      "win": true,
+      "duration_sec": 2223,
+      "duration": "37:03",
+      "kills_for": 34,
+      "kills_against": 14,
+      "total_kills": 48,
+      "first_pick": false,
+      "first_blood": true,
+      "first_blood_time": 52,
+      "gold_adv_10min": -4535,
+      "max_gold_lead": 25210,
+      "max_gold_deficit": -4541,
+      "roshans": 1,
+      "towers": 0,
+      "picks": [
+        "Earth Spirit",
+        "Winter Wyvern",
+        "Brewmaster",
+        "Rubick",
+        "Templar Assassin"
+      ],
+      "bans": [
+        "Bounty Hunter",
+        "Enigma",
+        "Largo",
+        "Meepo",
+        "Anti-Mage",
+        "Mirana",
+        "Silencer"
+      ],
+      "opp_picks": [
+        "Dragon Knight",
+        "Windranger",
+        "Necrophos",
+        "Lifestealer",
+        "Dazzle"
+      ],
+      "opp_bans": [
+        "Lone Druid",
+        "Slark",
+        "Nature's Prophet",
+        "Techies",
+        "Dark Willow",
+        "Io",
+        "Luna"
+      ],
+      "players": [
+        {
+          "account_id": 171262902,
+          "name": "医者watson`",
+          "hero": "Templar Assassin",
+          "position": 1,
+          "kills": 6,
+          "deaths": 3,
+          "assists": 14,
+          "last_hits": 525,
+          "denies": 16,
+          "gpm": 817,
+          "xpm": 1015,
+          "net_worth": 29086,
+          "hero_damage": 27506,
+          "tower_damage": 17147,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 1,
+          "stuns": 3.2664063,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.5882353,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 312436974,
+          "name": "CHIRA_JUNIOR",
+          "hero": "Earth Spirit",
+          "position": 2,
+          "kills": 14,
+          "deaths": 1,
+          "assists": 17,
+          "last_hits": 268,
+          "denies": 1,
+          "gpm": 663,
+          "xpm": 834,
+          "net_worth": 23808,
+          "hero_damage": 32596,
+          "tower_damage": 1504,
+          "hero_healing": 0,
+          "obs_placed": 1,
+          "sen_placed": 1,
+          "stuns": 20.733957,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.9117647,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 50580004,
+          "name": "Xibbe",
+          "hero": "Brewmaster",
+          "position": 3,
+          "kills": 6,
+          "deaths": 1,
+          "assists": 15,
+          "last_hits": 225,
+          "denies": 11,
+          "gpm": 580,
+          "xpm": 737,
+          "net_worth": 21315,
+          "hero_damage": 18605,
+          "tower_damage": 7622,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 37.632812,
+          "roshans_killed": 1,
+          "teamfight_participation": 0.5882353,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 103735745,
+          "name": "Saksa",
+          "hero": "Rubick",
+          "position": 4,
+          "kills": 5,
+          "deaths": 4,
+          "assists": 21,
+          "last_hits": 76,
+          "denies": 1,
+          "gpm": 380,
+          "xpm": 549,
+          "net_worth": 12937,
+          "hero_damage": 14455,
+          "tower_damage": 153,
+          "hero_healing": 1480,
+          "obs_placed": 8,
+          "sen_placed": 11,
+          "stuns": 51.79853,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.7352941,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 93817671,
+          "name": "Maladych",
+          "hero": "Winter Wyvern",
+          "position": 5,
+          "kills": 3,
+          "deaths": 5,
+          "assists": 10,
+          "last_hits": 53,
+          "denies": 1,
+          "gpm": 309,
+          "xpm": 506,
+          "net_worth": 11746,
+          "hero_damage": 14510,
+          "tower_damage": 1417,
+          "hero_healing": 4021,
+          "obs_placed": 8,
+          "sen_placed": 11,
+          "stuns": 13.166407,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.38235295,
+          "firstblood_claimed": 1
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9056215433"
+    },
+    {
+      "match_id": 9056271057,
+      "series_id": 1157834,
+      "start_time": 1792660804,
+      "opponent_id": 9964962,
+      "opponent": "GamerLegion",
+      "side": "Dire",
+      "win": true,
+      "duration_sec": 1988,
+      "duration": "33:08",
+      "kills_for": 30,
+      "kills_against": 20,
+      "total_kills": 50,
+      "first_pick": true,
+      "first_blood": true,
+      "first_blood_time": 5,
+      "gold_adv_10min": -503,
+      "max_gold_lead": 26761,
+      "max_gold_deficit": -1203,
+      "roshans": 0,
+      "towers": 0,
+      "picks": [
+        "Earth Spirit",
+        "Techies",
+        "Windranger",
+        "Lycan",
+        "Anti-Mage"
+      ],
+      "bans": [
+        "Brewmaster",
+        "Largo",
+        "Slark",
+        "Necrophos",
+        "Mirana",
+        "Naga Siren",
+        "Meepo"
+      ],
+      "opp_picks": [
+        "Dragon Knight",
+        "Winter Wyvern",
+        "Dark Willow",
+        "Pudge",
+        "Troll Warlord"
+      ],
+      "opp_bans": [
+        "Lone Druid",
+        "Bounty Hunter",
+        "Enigma",
+        "Nature's Prophet",
+        "Lifestealer",
+        "Ursa",
+        "Kez"
+      ],
+      "players": [
+        {
+          "account_id": 171262902,
+          "name": "医者watson`",
+          "hero": "Anti-Mage",
+          "position": 1,
+          "kills": 13,
+          "deaths": 1,
+          "assists": 9,
+          "last_hits": 464,
+          "denies": 25,
+          "gpm": 858,
+          "xpm": 990,
+          "net_worth": 28466,
+          "hero_damage": 27006,
+          "tower_damage": 11932,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 1,
+          "stuns": 11.366311,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.73333335,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 312436974,
+          "name": "CHIRA_JUNIOR",
+          "hero": "Earth Spirit",
+          "position": 2,
+          "kills": 9,
+          "deaths": 4,
+          "assists": 12,
+          "last_hits": 279,
+          "denies": 6,
+          "gpm": 627,
+          "xpm": 907,
+          "net_worth": 20193,
+          "hero_damage": 27964,
+          "tower_damage": 2236,
+          "hero_healing": 320,
+          "obs_placed": 2,
+          "sen_placed": 0,
+          "stuns": 21.333101,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.7,
+          "firstblood_claimed": 1
+        },
+        {
+          "account_id": 50580004,
+          "name": "Xibbe",
+          "hero": "Lycan",
+          "position": 3,
+          "kills": 0,
+          "deaths": 1,
+          "assists": 21,
+          "last_hits": 244,
+          "denies": 6,
+          "gpm": 591,
+          "xpm": 557,
+          "net_worth": 19993,
+          "hero_damage": 12527,
+          "tower_damage": 7388,
+          "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 4.600244,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.7,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 103735745,
+          "name": "Saksa",
+          "hero": "Windranger",
+          "position": 4,
+          "kills": 3,
+          "deaths": 4,
+          "assists": 20,
+          "last_hits": 50,
+          "denies": 7,
+          "gpm": 336,
+          "xpm": 590,
+          "net_worth": 11389,
+          "hero_damage": 14486,
+          "tower_damage": 2547,
+          "hero_healing": 1974,
+          "obs_placed": 6,
+          "sen_placed": 14,
+          "stuns": 52.432594,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.73333335,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 93817671,
+          "name": "Maladych",
+          "hero": "Techies",
+          "position": 5,
+          "kills": 5,
+          "deaths": 10,
+          "assists": 11,
+          "last_hits": 71,
+          "denies": 0,
+          "gpm": 404,
+          "xpm": 531,
+          "net_worth": 12234,
+          "hero_damage": 17466,
+          "tower_damage": 474,
+          "hero_healing": 0,
+          "obs_placed": 7,
+          "sen_placed": 10,
+          "stuns": 14.199803,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.53333336,
+          "firstblood_claimed": 0
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9056271057"
+    }
+  ],
+  "summary": {
+    "games": 2,
+    "wins": 2,
+    "losses": 0,
+    "winrate": 100.0,
+    "avg_duration": "35:06",
+    "avg_duration_win": "35:06",
+    "avg_duration_loss": "0:00",
+    "shortest": "33:08",
+    "longest": "37:03",
+    "avg_kills_for": 32.0,
+    "avg_kills_against": 17.0,
+    "avg_total_kills": 49.0,
+    "kills_per_min": 0.91,
+    "first_blood_rate": 100.0,
+    "avg_gold_adv_10min": -2519,
+    "avg_roshans": 0.5,
+    "radiant": {
+      "games": 0,
+      "wins": 0,
+      "winrate": 0
+    },
+    "dire": {
+      "games": 2,
+      "wins": 2,
+      "winrate": 100.0
+    },
+    "first_pick": {
+      "games": 1,
+      "wins": 1,
+      "winrate": 100.0
+    },
+    "second_pick": {
+      "games": 1,
+      "wins": 1,
+      "winrate": 100.0
+    },
+    "series": [
+      {
+        "series_id": 1157834,
+        "opponent": "GamerLegion",
+        "score": "2-0",
+        "won": true
+      }
+    ],
+    "series_record": "1-0",
+    "hero_picks": [
+      {
+        "hero": "Earth Spirit",
+        "games": 2,
+        "wins": 2,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Winter Wyvern",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Brewmaster",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Rubick",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Templar Assassin",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Techies",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Windranger",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Lycan",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Anti-Mage",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      }
+    ],
+    "bans_by_team": [
+      [
+        "Largo",
+        2
+      ],
+      [
+        "Meepo",
+        2
+      ],
+      [
+        "Mirana",
+        2
+      ],
+      [
+        "Bounty Hunter",
+        1
+      ],
+      [
+        "Enigma",
+        1
+      ],
+      [
+        "Anti-Mage",
+        1
+      ],
+      [
+        "Silencer",
+        1
+      ],
+      [
+        "Brewmaster",
+        1
+      ],
+      [
+        "Slark",
+        1
+      ],
+      [
+        "Necrophos",
+        1
+      ],
+      [
+        "Naga Siren",
+        1
+      ]
+    ],
+    "bans_against_team": [
+      [
+        "Lone Druid",
+        2
+      ],
+      [
+        "Nature's Prophet",
+        2
+      ],
+      [
+        "Slark",
+        1
+      ],
+      [
+        "Techies",
+        1
+      ],
+      [
+        "Dark Willow",
+        1
+      ],
+      [
+        "Io",
+        1
+      ],
+      [
+        "Luna",
+        1
+      ],
+      [
+        "Bounty Hunter",
+        1
+      ],
+      [
+        "Enigma",
+        1
+      ],
+      [
+        "Lifestealer",
+        1
+      ],
+      [
+        "Ursa",
+        1
+      ],
+      [
+        "Kez",
+        1
+      ]
+    ],
+    "vs_heroes": [
+      {
+        "hero": "Dragon Knight",
+        "games": 2,
+        "our_wins": 2,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Windranger",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Necrophos",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Lifestealer",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Dazzle",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Winter Wyvern",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Dark Willow",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Pudge",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Troll Warlord",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      }
+    ],
+    "players": [
+      {
+        "account_id": 171262902,
+        "name": "医者watson`",
+        "position": 1,
+        "games": 2,
+        "avg_kills": 9.5,
+        "avg_deaths": 2.0,
+        "avg_assists": 11.5,
+        "kda": 10.5,
+        "avg_gpm": 838,
+        "avg_xpm": 1002,
+        "avg_last_hits": 494,
+        "avg_hero_damage": 27256,
+        "avg_wards": 1.0,
+        "heroes": [
+          {
+            "hero": "Templar Assassin",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Anti-Mage",
+            "games": 1,
+            "wins": 1
+          }
+        ]
+      },
+      {
+        "account_id": 312436974,
+        "name": "CHIRA_JUNIOR",
+        "position": 2,
+        "games": 2,
+        "avg_kills": 11.5,
+        "avg_deaths": 2.5,
+        "avg_assists": 14.5,
+        "kda": 10.4,
+        "avg_gpm": 645,
+        "avg_xpm": 870,
+        "avg_last_hits": 274,
+        "avg_hero_damage": 30280,
+        "avg_wards": 2.0,
+        "heroes": [
+          {
+            "hero": "Earth Spirit",
+            "games": 2,
+            "wins": 2
+          }
+        ]
+      },
+      {
+        "account_id": 50580004,
+        "name": "Xibbe",
+        "position": 3,
+        "games": 2,
+        "avg_kills": 3.0,
+        "avg_deaths": 1.0,
+        "avg_assists": 18.0,
+        "kda": 21.0,
+        "avg_gpm": 586,
+        "avg_xpm": 647,
+        "avg_last_hits": 234,
+        "avg_hero_damage": 15566,
+        "avg_wards": 0.0,
+        "heroes": [
+          {
+            "hero": "Brewmaster",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Lycan",
+            "games": 1,
+            "wins": 1
+          }
+        ]
+      },
+      {
+        "account_id": 103735745,
+        "name": "Saksa",
+        "position": 4,
+        "games": 2,
+        "avg_kills": 4.0,
+        "avg_deaths": 4.0,
+        "avg_assists": 20.5,
+        "kda": 6.12,
+        "avg_gpm": 358,
+        "avg_xpm": 570,
+        "avg_last_hits": 63,
+        "avg_hero_damage": 14470,
+        "avg_wards": 19.5,
+        "heroes": [
+          {
+            "hero": "Rubick",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Windranger",
+            "games": 1,
+            "wins": 1
+          }
+        ]
+      },
+      {
+        "account_id": 93817671,
+        "name": "Maladych",
+        "position": 5,
+        "games": 2,
+        "avg_kills": 4.0,
+        "avg_deaths": 7.5,
+        "avg_assists": 10.5,
+        "kda": 1.93,
+        "avg_gpm": 356,
+        "avg_xpm": 518,
+        "avg_last_hits": 62,
+        "avg_hero_damage": 15988,
+        "avg_wards": 18.0,
+        "heroes": [
+          {
+            "hero": "Winter Wyvern",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Techies",
+            "games": 1,
+            "wins": 1
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,324 @@
+<!doctype html><html lang=ru><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>Анализ плей-офф, BLAST SLAM VIII</title><meta name=description content='PARIVISION, Team Spirit и Team Yandex — сильные и слабые стороны, очные встречи, драфт и тоталы'><link rel=icon href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314161b'/%3E%3Cpath d='M10 23V9h5.5a7 7 0 010 14z' fill='none' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href='https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap'><style>
+:root{--bg:#f4f5f7;--card:#fff;--text:#14161b;--muted:#646b78;--line:#e4e6ea;--win:#1f63b5;--loss:#c23434;
+--win-bg:#e3eefc;--loss-bg:#fbe6e4;--accent:#14161b;--on-accent:#fff;--bar:#e6e8ec;--hover:#f7f8fa;
+--shadow:0 1px 2px rgba(20,24,34,.04),0 4px 14px -6px rgba(20,24,34,.08);--ring:0 0 0 3px rgba(20,22,27,.18);
+--v-win:#2a78d6;--v-loss:#e34948;--v-opp:#c9cbd1;--v-grid:#ebecef;--v-axis:#c3c2b7;--v-tick:#898781;
+--v-track:#cde2fb;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 "Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+:root{--mono:"Geist Mono",ui-monospace,"SF Mono",Consolas,monospace}
+.num,td.num,.kpi .v,.viz .gl span,.viz .cap,.tot input,.tot .res b,.tot .dot,.pill,.chip b,.mrow .vl,.prob,.fact{font-family:var(--mono)}
+a{color:inherit;text-underline-offset:3px}a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:6px}
+h1,h2,h3{text-wrap:balance}p,li{text-wrap:pretty}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 16px 48px}
+h1{margin:0;font-size:34px;line-height:1.1;letter-spacing:-.025em;font-weight:700}
+.head{display:flex;align-items:center;gap:14px}.logo{width:56px;height:56px;object-fit:contain}
+.logo.dark{background:#111;border-radius:12px;padding:6px}
+.tour{display:inline-block;margin-bottom:12px;padding:4px 10px;border-radius:6px;background:var(--bar);font-size:12.5px;font-weight:600}
+.back{display:block;width:max-content;margin-bottom:14px;color:var(--muted);text-decoration:none;font-weight:500;transition:color .2s}.back:hover{color:var(--text)}h2{font-size:20px;letter-spacing:-.015em;font-weight:650;margin:40px 0 14px}
+.sub{color:var(--muted);margin-top:6px}.sub a{color:var(--text)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));grid-auto-flow:dense;gap:1px;margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.kpi.wide{grid-column:span 2}.kpi .v{white-space:nowrap}
+.kpi .v small{font-size:.62em;font-weight:500;color:var(--muted);letter-spacing:0}
+.kpi{background:var(--card);padding:14px 16px;outline:1px solid var(--line)}
+.kpi.main{grid-column:span 2;background:var(--accent);color:var(--on-accent)}
+.kpi.main .l,.kpi.main .s{color:inherit;opacity:.7}.kpi.main .v{font-size:40px;letter-spacing:-.05em}
+.kpi .l{color:var(--muted);font-size:12.5px;font-weight:500}
+.kpi .v{font-size:24px;font-weight:600;letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .s{color:var(--muted);font-size:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;vertical-align:middle}
+th{font-size:12px;color:var(--muted);font-weight:500;position:sticky;top:0;background:var(--card);cursor:pointer;user-select:none;transition:color .2s}
+th[data-asc="1"]::after{content:" ↑"}th[data-asc="0"]::after{content:" ↓"}
+tbody tr{transition:background-color .15s}tbody tr:hover{background:var(--hover)}
+th:hover{color:var(--text)}th:active{transform:translateY(1px)}tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right}
+.w{color:var(--win);font-weight:650}.lo{color:var(--loss);font-weight:650}
+.pill{display:inline-block;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:650}
+.pill.w{background:var(--win-bg)}.pill.lo{background:var(--loss-bg)}
+.series{display:flex;flex-wrap:wrap;gap:8px}
+.ser{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px 12px;display:flex;gap:10px;align-items:center}
+.heroes{display:flex;gap:3px}
+.hero{width:44px;height:25px;border-radius:4px;object-fit:cover;background:var(--line)}
+.hero.ban{filter:grayscale(1);opacity:.55}
+.hcell{display:flex;align-items:center;gap:8px}
+.bar{height:8px;border-radius:4px;background:var(--v-track);position:relative;min-width:120px}
+.bar span{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--s1)}
+.viz{position:relative;padding:18px 18px 14px;overflow:visible}
+.viz .lg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin-bottom:14px}
+.viz .lg span{display:inline-flex;align-items:center;gap:6px}.viz .lg i{width:10px;height:10px;border-radius:2px;flex:none}
+.viz .sc{overflow-x:auto;overflow-y:hidden;padding:22px 6px 2px 58px;margin-left:-6px}
+.viz .in{min-width:calc(var(--n)*38px)}
+.viz .plot{position:relative;height:190px;border-bottom:1px solid var(--v-axis)}
+.viz .gl{position:absolute;left:0;right:0;border-top:1px solid var(--v-grid)}
+.viz .gl span{position:absolute;right:calc(100% + 8px);top:-8px;font-size:11px;color:var(--v-tick);font-variant-numeric:tabular-nums;white-space:nowrap}
+.viz .avg{position:absolute;left:0;right:0;border-top:1px solid var(--text);opacity:.5;z-index:2;pointer-events:none}
+.viz .avg span{position:absolute;right:0;bottom:2px;font-size:11px;font-weight:600;color:var(--text);background:var(--card);padding:0 4px}
+.viz .cols{position:absolute;inset:0;display:flex;z-index:1}
+.viz .c{flex:1;min-width:38px;position:relative;display:flex;justify-content:center;align-items:flex-end;outline:none;cursor:default}
+.viz .c:hover,.viz .c:focus-visible{background:color-mix(in srgb,var(--text) 5%,transparent)}
+.viz .c:focus-visible{box-shadow:inset var(--ring)}
+.viz .stk{width:min(24px,62%);display:flex;flex-direction:column;gap:2px}
+.viz .sg{width:100%}.viz .sg:first-child{border-radius:4px 4px 0 0}
+.viz .sg.w{background:var(--v-win)}.viz .sg.lo{background:var(--v-loss)}.viz .sg.opp{background:var(--v-opp)}
+.viz .cap{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:650;color:var(--text);padding-bottom:3px;font-variant-numeric:tabular-nums}
+.viz .xa{display:flex;margin-top:6px}
+.viz .xa div{flex:1;min-width:38px;text-align:center;font-size:10.5px;line-height:1.35;color:var(--muted);white-space:nowrap}
+.viz .xa b{display:block;font-size:10px;font-weight:700}.viz .xa b.w{color:var(--win)}.viz .xa b.lo{color:var(--loss)}
+.viz .tip{position:absolute;z-index:5;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:8px;
+box-shadow:var(--shadow);padding:8px 10px;font-size:12px;min-width:150px;opacity:0;transition:opacity .12s}
+.viz .tip.on{opacity:1}.viz .tip .h{color:var(--muted);margin-bottom:4px;font-size:11.5px}
+.viz .tip .r{display:flex;align-items:center;gap:8px;margin-top:2px}.viz .tip .r i{width:12px;height:2px;border-radius:1px;flex:none}
+.viz .tip .r b{font-weight:650;font-variant-numeric:tabular-nums}.viz .tip .r span{color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:800px){.grid2{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px}
+.chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:6px;padding:3px 8px 3px 3px;font-size:13px}
+.chip img{width:36px;height:20px;border-radius:4px;object-fit:cover}
+.chip b{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+
+.tot{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:800px){.tot{grid-template-columns:1fr}}
+.tot .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tot label{font-size:12.5px;color:var(--muted);font-weight:500}
+.tot .in{display:flex;align-items:center;gap:8px;margin:6px 0 10px}
+.tot input{font-size:20px;font-weight:600;width:110px;padding:6px 10px;border-radius:6px;
+border:1px solid var(--line);background:var(--bg);color:var(--text);transition:border-color .2s}
+.tot input:focus{outline:none;border-color:var(--text);box-shadow:var(--ring)}
+.tot .res{display:flex;gap:16px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
+.tot .res div{font-size:13px;color:var(--muted)}.tot .res b{display:block;font-size:22px}
+.tot .res b{color:var(--text)}.tot .res i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.tot .res .ov i{background:var(--text)}.tot .res .un i{border:1.5px solid var(--muted)}.tot .res .eq i{border:1.5px dashed var(--muted)}
+.tot .dots{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.tot .dot{font-size:11px;padding:2px 6px;border-radius:6px;font-variant-numeric:tabular-nums}
+.tot .dot{border:1px solid transparent}.tot .dot.ov{background:var(--text);color:var(--card)}.tot .dot.un{border-color:var(--muted);color:var(--text)}
+.tot .dot.eq{border:1px dashed var(--muted);color:var(--muted)}
+
+.banner{position:relative;border-radius:12px;padding:28px 24px 24px;margin-top:4px;background:var(--card);border:1px solid var(--line)}
+.banner h1{font-size:34px;line-height:1.1;letter-spacing:-.03em;max-width:760px}
+.banner .lead{color:var(--muted);margin-top:8px;max-width:65ch}
+.banner .tourb{display:inline-block;margin-bottom:12px;padding:3px 10px;border-radius:6px;background:var(--bar);font-size:12.5px;font-weight:600}
+.bracket{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:22px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+@media (max-width:800px){.bracket{grid-template-columns:1fr}}
+.mcard{background:var(--card);padding:16px}
+.mcard .st{font-size:12.5px;font-weight:600;color:var(--muted)}
+.mcard .row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0 10px}
+.mcard .tm{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;text-align:center;font-weight:650;color:var(--text);text-decoration:none;transition:color .2s}
+.mcard .tm:hover{color:var(--muted)}.mcard .tm:active{transform:scale(.98)}
+.mcard .tm img{width:64px;height:64px;object-fit:contain}
+.mcard .tm img.dark{background:#111;border-radius:12px;padding:6px}
+.mcard .tm .q{width:64px;height:64px;border-radius:12px;border:1.5px dashed var(--v-axis);display:grid;place-items:center;font-size:24px;color:var(--muted)}
+.mcard .x{font-weight:600;color:var(--muted);font-size:14px}
+.mcard .nt{font-size:13px;color:var(--muted);text-align:center}
+.prob{display:flex;gap:2px;height:26px;font-size:12px;font-weight:600;margin-top:10px}
+.prob span{display:flex;align-items:center;padding:0 10px;color:#0b0b0b;white-space:nowrap;min-width:0}
+.prob span:first-child{border-radius:6px 0 0 6px}.prob span:last-child{justify-content:flex-end;border-radius:0 6px 6px 0}
+.scn{font-size:12px;color:var(--muted);margin-top:10px}
+.sec{margin-top:36px}.sec>h2{margin:0 0 4px;font-size:22px}.sec>.muted{margin-bottom:14px}
+.cmpbars{display:grid;gap:10px}
+.metric{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.metric .ml{font-size:12.5px;color:var(--muted);font-weight:600;margin-bottom:8px}
+.mrow{display:grid;grid-template-columns:120px 1fr 90px;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+.mrow .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow .tr{height:10px;border-radius:5px;background:var(--line);overflow:hidden;position:relative}
+.mrow .tr.div::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--v-axis)}
+.mrow .sw{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:0}
+.mrow .fl{height:100%;border-radius:0 4px 4px 0}
+.mrow .tr.div .fl[style*="right"]{border-radius:4px 0 0 4px}
+.mrow .vl{text-align:right;font-variant-numeric:tabular-nums;font-weight:650}
+.mrow.best .vl::after{content:" ★";color:#f59e0b}
+.tcards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.tcards{grid-template-columns:1fr}}
+.tcard{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--tc);border-radius:12px;padding:16px}
+.tcard .th{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.tcard .th img{width:48px;height:48px;object-fit:contain}.tcard .th img.dark{background:#111;border-radius:12px;padding:5px}
+.tcard .th a{font-size:18px;font-weight:750;color:inherit;text-decoration:none}
+.tcard .tg{font-size:13px;color:var(--muted);margin-bottom:10px}
+.tcard h4{margin:14px 0 6px;font-size:12.5px;letter-spacing:.06em}
+.tcard ul{list-style:none;margin:0;padding:0}.tcard li{position:relative;padding-left:22px;margin:6px 0}
+.tcard .pros li::before{content:"✓";position:absolute;left:0;color:var(--win);font-weight:900}
+.tcard .cons li::before{content:"✕";position:absolute;left:0;color:var(--loss);font-weight:900}
+.tcard h4.p{color:var(--win)}.tcard h4.c{color:var(--loss)}
+.preview{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.preview .ph{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.preview .ph img{width:40px;height:40px;object-fit:contain}.preview .ph img.dark{background:#000;border-radius:8px;padding:4px}
+.preview .ph b{font-size:18px}
+.keys{counter-reset:k;list-style:none;padding:0;margin:8px 0}
+.keys li{counter-increment:k;position:relative;padding-left:36px;margin:10px 0}
+.keys li::before{content:counter(k);position:absolute;left:0;top:-1px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:12px;font-weight:800;display:grid;place-items:center}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media (max-width:800px){.duo{grid-template-columns:1fr}}
+.verdict{margin-top:14px;padding:12px 14px;border-radius:10px;background:var(--bar);font-weight:500}
+.verdict b{color:var(--accent)}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.fact{border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:13px}
+.note{font-size:12px;color:var(--muted);margin-top:28px}
+.cta{position:relative;z-index:1;display:inline-block;margin-top:18px;padding:10px 20px;border-radius:10px;background:#fff;color:#0b0d14;font-weight:750;text-decoration:none}
+.cta:hover{background:#e9d5ff}
+.cmp{border-radius:14px}
+.cmp .in{display:flex;gap:24px;flex-wrap:wrap;padding:16px;border-bottom:1px solid var(--line)}
+.cmp label{display:block;font-size:12.5px;color:var(--muted);letter-spacing:.04em;font-weight:700;margin-bottom:4px}
+.cmp input{font:inherit;font-size:22px;font-weight:700;width:120px;padding:8px 12px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--text)}
+.cmp input:focus{outline:none;border-color:var(--accent)}
+.cmp td{padding:12px 16px}.cmp td b{font-size:16px;color:var(--text)}.cmp .ov,.cmp .un{color:var(--muted)}
+.cmp .tn{display:flex;align-items:center;gap:10px}.cmp .tn i{width:10px;height:10px;border-radius:50%;background:var(--tc);flex:none}
+.split{display:flex;gap:2px;height:8px;margin-top:6px;max-width:260px}
+.split .o{background:var(--text);border-radius:4px 0 0 4px}.split .u{border:1.5px solid var(--muted);border-radius:0 4px 4px 0}
+.split .q{border:1.5px dashed var(--muted)}
+
+.odds-m{margin-bottom:20px}
+.odds-m .oh{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.odds-m .oh b{font-size:16px}.odds-m .oh span{font-size:12.5px;color:var(--muted)}
+.odds-m td,.odds-m th{padding:9px 12px}
+.odds-m td.k{font-family:var(--mono);white-space:nowrap}
+.odds-m td.k i{font-style:normal;color:var(--muted);font-size:11.5px;margin-right:4px}
+.odds-m tr.noise td{color:var(--muted)}
+.odds-m tr.strong td.sig{font-weight:700}
+.odds-m td.d.pos{color:var(--win)}.odds-m td.d.neg{color:var(--loss)}
+.odds-note{font-size:12.5px;color:var(--muted);max-width:80ch;margin-top:8px}
+</style></head><body><main class=wrap><a class=back href='../../tournaments/19102.html'>← страница турнира</a><div class=banner><div class=tourb>BLAST SLAM VIII</div><h1>Плей-офф: кто заберёт BLAST Slam VIII</h1><div class=lead>PARIVISION, Team Spirit и Team Yandex — сильные и слабые стороны, очные встречи, драфт и тоталы</div><div class=bracket><div class=mcard><div class=st>Полуфинал</div><div class=row><a class=tm href='parivision.html'><img src='../../assets/teams/9824702.png' alt=''>PARIVISION</a><span class=x>VS</span><a class=tm href='team-spirit.html'><img class=dark src='../../assets/teams/7119388.png' alt=''>Team Spirit</a></div><div class=nt>Ранний темп PARIVISION против камбэков Spirit</div><div class=prob title='Оценка шансов по статистике турнира'><span style='width:60%;background:var(--s1)'>PARIVISION 60%</span><span style='width:40%;background:var(--s2)'>40%</span></div></div><div class=mcard><div class=st>Финал</div><div class=row><a class=tm href='team-yandex.html'><img src='../../assets/teams/9823272.png' alt=''>Team Yandex</a><span class=x>VS</span><div class=tm><div class=q>?</div>победитель полуфинала</div></div><div class=nt>Яндекс уже обыгрывал обоих полуфиналистов</div><div class=scn>если против PARIVISION:</div><div class=prob title='Оценка шансов по статистике турнира'><span style='width:55%;background:var(--s3)'>Team Yandex 55%</span><span style='width:45%;background:var(--s1)'>45%</span></div><div class=scn>если против Team Spirit:</div><div class=prob title='Оценка шансов по статистике турнира'><span style='width:65%;background:var(--s3)'>Team Yandex 65%</span><span style='width:35%;background:var(--s2)'>35%</span></div></div></div></div>
+
+<div class=sec>
+  <h2>Цифры рядом</h2>
+  <div class=muted>★ — лучший показатель среди трёх. Выборка 13-15 карт на команду: это тенденции, а не приговор.</div>
+  <div class=cmpbars><div class=metric><div class=ml>Винрейт по картам</div><div class='mrow'><div class=nm><i class=sw style='background:var(--s1)'></i>PARIVISION</div><div class=tr><div class=fl style='width:96%;background:var(--s1)'></div></div><div class=vl>70.6%</div></div><div class='mrow best'><div class=nm><i class=sw style='background:var(--s3)'></i>Team Yandex</div><div class=tr><div class=fl style='width:100%;background:var(--s3)'></div></div><div class=vl>73.7%</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s2)'></i>Team Spirit</div><div class=tr><div class=fl style='width:75%;background:var(--s2)'></div></div><div class=vl>55.0%</div></div></div><div class=metric><div class=ml>Свои фраги за карту</div><div class='mrow'><div class=nm><i class=sw style='background:var(--s1)'></i>PARIVISION</div><div class=tr><div class=fl style='width:96%;background:var(--s1)'></div></div><div class=vl>33.0</div></div><div class='mrow best'><div class=nm><i class=sw style='background:var(--s3)'></i>Team Yandex</div><div class=tr><div class=fl style='width:100%;background:var(--s3)'></div></div><div class=vl>34.4</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s2)'></i>Team Spirit</div><div class=tr><div class=fl style='width:96%;background:var(--s2)'></div></div><div class=vl>33.1</div></div></div><div class=metric><div class=ml>Пропущенные фраги за карту</div><div class='mrow best'><div class=nm><i class=sw style='background:var(--s1)'></i>PARIVISION</div><div class=tr><div class=fl style='width:77%;background:var(--s1)'></div></div><div class=vl>22.9</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s3)'></i>Team Yandex</div><div class=tr><div class=fl style='width:92%;background:var(--s3)'></div></div><div class=vl>27.4</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s2)'></i>Team Spirit</div><div class=tr><div class=fl style='width:100%;background:var(--s2)'></div></div><div class=vl>29.8</div></div></div><div class=metric><div class=ml>Убийств в минуту</div><div class='mrow'><div class=nm><i class=sw style='background:var(--s1)'></i>PARIVISION</div><div class=tr><div class=fl style='width:95%;background:var(--s1)'></div></div><div class=vl>0.74</div></div><div class='mrow best'><div class=nm><i class=sw style='background:var(--s3)'></i>Team Yandex</div><div class=tr><div class=fl style='width:100%;background:var(--s3)'></div></div><div class=vl>0.78</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s2)'></i>Team Spirit</div><div class=tr><div class=fl style='width:97%;background:var(--s2)'></div></div><div class=vl>0.76</div></div></div><div class=metric><div class=ml>Первая кровь</div><div class='mrow best'><div class=nm><i class=sw style='background:var(--s1)'></i>PARIVISION</div><div class=tr><div class=fl style='width:100%;background:var(--s1)'></div></div><div class=vl>53%</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s3)'></i>Team Yandex</div><div class=tr><div class=fl style='width:50%;background:var(--s3)'></div></div><div class=vl>26%</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s2)'></i>Team Spirit</div><div class=tr><div class=fl style='width:95%;background:var(--s2)'></div></div><div class=vl>50%</div></div></div><div class=metric><div class=ml>Золото на 10:00</div><div class='mrow best'><div class=nm><i class=sw style='background:var(--s1)'></i>PARIVISION</div><div class='tr div'><div class=fl style='position:absolute;top:0;bottom:0;left:50%;width:50.0%;background:var(--s1)'></div></div><div class=vl>+1111</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s3)'></i>Team Yandex</div><div class='tr div'><div class=fl style='position:absolute;top:0;bottom:0;left:50%;width:34.1%;background:var(--s3)'></div></div><div class=vl>+757</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s2)'></i>Team Spirit</div><div class='tr div'><div class=fl style='position:absolute;top:0;bottom:0;right:50%;width:40.7%;background:var(--s2)'></div></div><div class=vl>-905</div></div></div><div class=metric><div class=ml>Средняя длительность</div><div class='mrow'><div class=nm><i class=sw style='background:var(--s1)'></i>PARIVISION</div><div class=tr><div class=fl style='width:100%;background:var(--s1)'></div></div><div class=vl>44:44</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s3)'></i>Team Yandex</div><div class=tr><div class=fl style='width:99%;background:var(--s3)'></div></div><div class=vl>44:18</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s2)'></i>Team Spirit</div><div class=tr><div class=fl style='width:97%;background:var(--s2)'></div></div><div class=vl>43:29</div></div></div><div class=metric><div class=ml>Длительность поражений</div><div class='mrow'><div class=nm><i class=sw style='background:var(--s1)'></i>PARIVISION</div><div class=tr><div class=fl style='width:100%;background:var(--s1)'></div></div><div class=vl>48:37</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s3)'></i>Team Yandex</div><div class=tr><div class=fl style='width:91%;background:var(--s3)'></div></div><div class=vl>44:18</div></div><div class='mrow'><div class=nm><i class=sw style='background:var(--s2)'></i>Team Spirit</div><div class=tr><div class=fl style='width:94%;background:var(--s2)'></div></div><div class=vl>45:33</div></div></div></div>
+</div>
+
+<div class=sec>
+  <h2>Тоталы</h2>
+  <div class=muted>Введи линию — увидишь, сколько карт каждой команды на турнире ушло больше и меньше.</div>
+  <div class='card cmp' data-teams='[{&quot;n&quot;: &quot;PARIVISION&quot;, &quot;g&quot;: [{&quot;d&quot;: 2101, &quot;k&quot;: 50}, {&quot;d&quot;: 1237, &quot;k&quot;: 23}, {&quot;d&quot;: 2112, &quot;k&quot;: 44}, {&quot;d&quot;: 3089, &quot;k&quot;: 53}, {&quot;d&quot;: 1677, &quot;k&quot;: 36}, {&quot;d&quot;: 2637, &quot;k&quot;: 64}, {&quot;d&quot;: 3304, &quot;k&quot;: 58}, {&quot;d&quot;: 3113, &quot;k&quot;: 62}, {&quot;d&quot;: 3811, &quot;k&quot;: 80}, {&quot;d&quot;: 2682, &quot;k&quot;: 56}, {&quot;d&quot;: 2972, &quot;k&quot;: 60}, {&quot;d&quot;: 3103, &quot;k&quot;: 71}, {&quot;d&quot;: 3916, &quot;k&quot;: 84}, {&quot;d&quot;: 2604, &quot;k&quot;: 73}, {&quot;d&quot;: 2293, &quot;k&quot;: 50}, {&quot;d&quot;: 2401, &quot;k&quot;: 41}, {&quot;d&quot;: 2577, &quot;k&quot;: 45}]}, {&quot;n&quot;: &quot;Team Spirit&quot;, &quot;g&quot;: [{&quot;d&quot;: 2884, &quot;k&quot;: 73}, {&quot;d&quot;: 2785, &quot;k&quot;: 82}, {&quot;d&quot;: 2491, &quot;k&quot;: 70}, {&quot;d&quot;: 2557, &quot;k&quot;: 69}, {&quot;d&quot;: 1310, &quot;k&quot;: 45}, {&quot;d&quot;: 2195, &quot;k&quot;: 51}, {&quot;d&quot;: 1599, &quot;k&quot;: 49}, {&quot;d&quot;: 2765, &quot;k&quot;: 75}, {&quot;d&quot;: 3828, &quot;k&quot;: 86}, {&quot;d&quot;: 2705, &quot;k&quot;: 60}, {&quot;d&quot;: 2826, &quot;k&quot;: 57}, {&quot;d&quot;: 3011, &quot;k&quot;: 64}, {&quot;d&quot;: 2036, &quot;k&quot;: 65}, {&quot;d&quot;: 2293, &quot;k&quot;: 50}, {&quot;d&quot;: 2401, &quot;k&quot;: 41}, {&quot;d&quot;: 2577, &quot;k&quot;: 45}, {&quot;d&quot;: 2441, &quot;k&quot;: 67}, {&quot;d&quot;: 3169, &quot;k&quot;: 70}, {&quot;d&quot;: 2904, &quot;k&quot;: 50}, {&quot;d&quot;: 3400, &quot;k&quot;: 88}]}, {&quot;n&quot;: &quot;Team Yandex&quot;, &quot;g&quot;: [{&quot;d&quot;: 1905, &quot;k&quot;: 38}, {&quot;d&quot;: 2518, &quot;k&quot;: 68}, {&quot;d&quot;: 2236, &quot;k&quot;: 62}, {&quot;d&quot;: 2804, &quot;k&quot;: 59}, {&quot;d&quot;: 2195, &quot;k&quot;: 51}, {&quot;d&quot;: 1599, &quot;k&quot;: 49}, {&quot;d&quot;: 2765, &quot;k&quot;: 75}, {&quot;d&quot;: 2200, &quot;k&quot;: 60}, {&quot;d&quot;: 3179, &quot;k&quot;: 64}, {&quot;d&quot;: 1914, &quot;k&quot;: 43}, {&quot;d&quot;: 3304, &quot;k&quot;: 58}, {&quot;d&quot;: 3113, &quot;k&quot;: 62}, {&quot;d&quot;: 3811, &quot;k&quot;: 80}, {&quot;d&quot;: 3011, &quot;k&quot;: 64}, {&quot;d&quot;: 2036, &quot;k&quot;: 65}, {&quot;d&quot;: 2441, &quot;k&quot;: 67}, {&quot;d&quot;: 3169, &quot;k&quot;: 70}, {&quot;d&quot;: 2904, &quot;k&quot;: 50}, {&quot;d&quot;: 3400, &quot;k&quot;: 88}]}]'><div class=in><div><label>Тотал времени, мин</label><input type=number step=0.5 min=0 value=43></div><div><label>Тотал убийств</label><input type=number step=0.5 min=0 value=60></div></div><table><thead><tr><th>Команда</th><th>Время</th><th>Убийства</th></tr></thead><tbody><tr><td><div class=tn style='--tc:var(--s1)'><i></i><div><b>PARIVISION</b><div class=muted style='font-size:12px'>ср. 44:44 · 55.9 убийств</div></div></div></td><td></td><td></td></tr><tr><td><div class=tn style='--tc:var(--s2)'><i></i><div><b>Team Spirit</b><div class=muted style='font-size:12px'>ср. 43:29 · 62.9 убийств</div></div></div></td><td></td><td></td></tr><tr><td><div class=tn style='--tc:var(--s3)'><i></i><div><b>Team Yandex</b><div class=muted style='font-size:12px'>ср. 44:18 · 61.7 убийств</div></div></div></td><td></td><td></td></tr></tbody></table></div>
+</div>
+
+<div class=sec>
+  <h2>Линия PARI против статистики</h2>
+  <div class=muted>Коэффициенты букмекера рядом с тем, как часто это случалось в картах команд на турнире. Обновить: <code>python scripts/collect_odds.py --league 19102</code></div>
+  <div class=muted>На 2026-10-23 21:31 МСК в линии PARI нет матчей турнира.</div>
+</div>
+
+<div class=sec>
+  <h2>Команды</h2>
+  <div class=muted>Сильные и слабые стороны по статистике турнира</div>
+  <div class=tcards>
+    <div class=tcard style='--tc:var(--s1)'>
+      <div class=th><img src='../../assets/teams/9824702.png' alt=''><a href="parivision.html">PARIVISION</a></div>
+      <div class=tg>Лучшее начало игры турнира · 11-3 по картам</div>
+      <h4 class=p>Сильные стороны</h4>
+      <ul class=pros>
+        <li>Первая кровь в 57% карт, +1206 золота к 10-й минуте. В 11 победах почти не уходили в минус.</li>
+        <li>Самая большая разница во фрагах: в среднем на 13 убийств за карту больше соперника.</li>
+        <li>Satanic — 902 золота в минуту, KDA 7.4; No[o]ne- — KDA 8.6.</li>
+        <li>Rubick у 9Class 7 из 7, Brewmaster у Noticed 4 из 4, Techies у Dukalis 4 из 5.</li>
+      </ul>
+      <h4 class=c>Слабые стороны</h4>
+      <ul class=cons>
+        <li>Затяжные игры: поражения в среднем 53:22, обе проигранные карты Яндексу — дольше 50 минут.</li>
+        <li>Предсказуемый драфт: против них банят Bounty Hunter (11), Io (10), Lone Druid и Earth Spirit (по 8).</li>
+        <li>Terrorblade 1 из 3, Slardar 1 из 3.</li>
+        <li>Сетка была мягче: Level UP, LGD и дважды Aurora.</li>
+      </ul>
+    </div>
+    <div class=tcard style='--tc:var(--s3)'>
+      <div class=th><img src='../../assets/teams/9823272.png' alt=''><a href="team-yandex.html">Team Yandex</a></div>
+      <div class=tg>Побеждает тех, кто сильнее · 11-4 по картам</div>
+      <h4 class=p>Сильные стороны</h4>
+      <ul class=pros>
+        <li>2-1 против PARIVISION (их единственное поражение в серии) и 2-0 во второй встрече со Spirit.</li>
+        <li>Умеют отыгрываться: победы из −5 тысяч (BetBoom) и −6.4 тысячи (PARIVISION).</li>
+        <li>Techies у Maladych 5 из 5, Windranger у Saksa 5 из 6.</li>
+        <li>watson` — KDA 7.6, 838 золота в минуту. Вторым пиком 7 из 9.</li>
+      </ul>
+      <h4 class=c>Слабые стороны</h4>
+      <ul class=cons>
+        <li>Если проигрывают — с разгромом: в каждом поражении отставание 17-26 тысяч.</li>
+        <li>Первая кровь всего в 27% карт.</li>
+        <li>Против них банят Huskar (11) и Necrophos (10); Huskar всего 2 из 4.</li>
+        <li>12 карт из 15 за Dire — игра за Radiant почти не проверена.</li>
+      </ul>
+    </div>
+    <div class=tcard style='--tc:var(--s2)'>
+      <div class=th><img class=dark src='../../assets/teams/7119388.png' alt=''><a href="team-spirit.html">Team Spirit</a></div>
+      <div class=tg>Драки и камбэки, но нестабильно · 8-5 по картам</div>
+      <h4 class=p>Сильные стороны</h4>
+      <ul class=pros>
+        <li>Самая кровавая команда: 0.84 убийства в минуту, 65 фрагов на карту.</li>
+        <li>Камбэки: к 10-й минуте в среднем −1108, отстают в 9 картах из 13, но выигрывают 61%.</li>
+        <li>Batyuk — KDA 6.4, Lycan 3 из 3.</li>
+        <li>Slark у Yatoro и Sand King у Larl — по 3 из 3, Hoodwink 4 из 4.</li>
+      </ul>
+      <h4 class=c>Слабые стороны</h4>
+      <ul class=cons>
+        <li>Самое слабое начало игры из трёх.</li>
+        <li>Поражения — разгромы: −38 тысяч против Aurora, −48 и −34 тысячи против Яндекса.</li>
+        <li>not_me умирает 10 раз за карту; Outworld Devourer у Yatoro 0 из 2.</li>
+        <li>Пропускают больше всех из трёх — 29.7 за карту.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class=sec>
+  <h2>Полуфинал</h2>
+  <div class=preview>
+    <div class=ph><img src='../../assets/teams/9824702.png' alt=''><b>PARIVISION</b><span class=muted>vs</span><img class=dark src='../../assets/teams/7119388.png' alt=''><b>Team Spirit</b></div>
+    <p>На турнире не встречались. Это столкновение стилей: <b>лучшее начало игры турнира против команды, которая привыкла отставать</b>. Поражения Spirit — разгромы от соперников, которые рано забирали золото, а это как раз игра PARIVISION.</p>
+    <div class=facts>
+      <span class=fact>Aurora: PV 4-0 · Spirit 2-1</span>
+      <span class=fact>1win: PV 2-1 · Spirit 2-0</span>
+      <span class=fact>Яндекс: PV 1-2 · Spirit 2-3 по картам</span>
+    </div>
+    <h4>Ключи к драфту</h4>
+    <ol class=keys>
+      <li><b>Techies и Rubick.</b> Spirit ни разу не банили ни того, ни другого. А это лучшие герои PARIVISION (Rubick 7/7, Techies 4/5), и против Techies Spirit выиграли всего 1 карту из 3.</li>
+      <li><b>Brewmaster и Ember Spirit скорее всего уйдут в бан.</b> Spirit банят Brewmaster 6 раз, Ember Spirit 7 раз — это 4/4 Noticed и основной герой No[o]ne-.</li>
+      <li><b>Hoodwink.</b> У Spirit 4 из 4; PARIVISION уже банили его 5 раз — стоит продолжать.</li>
+      <li><b>Pangolier у Larl</b> — самый частый пик Spirit (5 карт), PARIVISION почти его не банят (2 раза).</li>
+    </ol>
+    <div class=verdict><b>Оценка:</b> PARIVISION — фаворит. Им нужно быстро закрывать игры. Если карта уходит за 50 минут и превращается в хаос с драками — шансы Spirit сильно растут.</div>
+  </div>
+</div>
+
+<div class=sec>
+  <h2>Финал</h2>
+  <div class=muted>Team Yandex ждёт победителя полуфинала — оба сценария</div>
+  <div class=duo>
+    <div class=preview>
+      <div class=ph><img src='../../assets/teams/9823272.png' alt=''><b>Team Yandex</b><span class=muted>vs</span><img src='../../assets/teams/9824702.png' alt=''><b>PARIVISION</b></div>
+      <div class=facts><span class=fact>Очная серия: 2-1 Яндекс</span></div>
+      <ol class=keys>
+        <li>Первую карту PARIVISION выиграли из −1.6 тысячи к 10-й минуте, но две следующие (51:53 и 63:31) взял Яндекс.</li>
+        <li><b>Длина игры решает</b>: до 45 минут — PARIVISION, за 50 — Яндекс.</li>
+        <li>Windranger Яндекса (5/6) — PARIVISION против него 3 из 3 и банят его 3 раза.</li>
+        <li>Techies у Maladych 5/5 — PARIVISION против Techies 3 из 4.</li>
+        <li>Яндекс ни разу не банил Rubick — 9Class почти гарантированно его получит.</li>
+      </ol>
+      <div class=verdict><b>Оценка:</b> равная пара, лёгкий перевес у Яндекса за счёт очной серии и игры в затяжных картах.</div>
+    </div>
+    <div class=preview>
+      <div class=ph><img src='../../assets/teams/9823272.png' alt=''><b>Team Yandex</b><span class=muted>vs</span><img class=dark src='../../assets/teams/7119388.png' alt=''><b>Team Spirit</b></div>
+      <div class=facts><span class=fact>По картам: 3-2 Яндекс</span><span class=fact>Серии: 1-2 и 2-0</span></div>
+      <ol class=keys>
+        <li>Вторая серия — 2-0 разгромом: +6250 и +3920 к 10-й минуте, отрыв до 48 тысяч.</li>
+        <li>Яндекс уже нашёл, как ломать Spirit: выиграть линии и не дать дожить до драк.</li>
+        <li>Яндекс банит Lycan (5 раз) — 3/3 у Batyuk — и Hoodwink (8 раз) — 4/4 у Spirit.</li>
+        <li>Шанс Spirit — как в первой серии: вытащить игру в хаос и выиграть драки.</li>
+      </ol>
+      <div class=verdict><b>Оценка:</b> фаворит — Яндекс, особенно после свежих 2-0.</div>
+    </div>
+  </div>
+</div>
+
+<div class=note>Оценки шансов — разбор статистики турнира, а не ставочный прогноз. Детали по каждой карте — на страницах команд.</div>
+</main><script>
+document.querySelectorAll('.cmp').forEach(root=>{
+const teams=JSON.parse(root.dataset.teams),ins=root.querySelectorAll('input'),rows=root.querySelectorAll('tbody tr');
+const cell=(games,val,x)=>{if(isNaN(x))return '—';let o=0,u=0;games.forEach(g=>{const v=val(g);v>x?o++:v<x?u++:0});const n=games.length,q=n-o-u,po=n?Math.round(100*o/n):0,pu=n?Math.round(100*u/n):0;
+ return `<span class=ov><b>${o}</b> больше</span> · <span class=un><b>${u}</b> меньше</span>`+(q?` · <b>${q}</b> ровно`:'')+` <span class=muted>из ${n}</span>`+
+ `<div class=split><div class=o style="width:${po}%"></div>`+(q?`<div class=q style="width:${100-po-pu}%"></div>`:'')+`<div class=u style="width:${pu}%"></div></div><div class=muted style="font-size:12px;margin-top:2px">${po}% / ${pu}%</div>`};
+const upd=()=>{const d=parseFloat(String(ins[0].value).replace(',','.')),k=parseFloat(String(ins[1].value).replace(',','.'));
+ teams.forEach((t,i)=>{rows[i].cells[1].innerHTML=cell(t.g,g=>g.d/60,d);rows[i].cells[2].innerHTML=cell(t.g,g=>g.k,k)})};
+ins.forEach(i=>i.addEventListener('input',upd));upd();});
+</script></body></html>

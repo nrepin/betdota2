@@ -1,0 +1,7 @@
+raw/
+__pycache__/
+*.pyc
+odds/*/20*.json
+logs/
+.auto.lock
+auto_state.json
