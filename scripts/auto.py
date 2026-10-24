@@ -1,5 +1,6 @@
-"""Автопилот: сам собирает линию и расписание, фиксирует прогнозы до старта, ведёт лайв (с лайв-ставками на время
-карты по оценке драфтов), дожидается результатов, закрывает прогнозы и пересобирает страницы.
+"""Автопилот: сам собирает линию и расписание, ведёт лайв, в начале каждой карты (когда выбраны герои обеих команд)
+даёт один прогноз — победа, время или убийства, с учётом героев, — дожидается результатов, закрывает прогнозы и
+пересобирает страницы. Доматчевых прогнозов нет.
 
 Каждый запуск — один «тик»: смотрит, что пора сделать (по времени последних действий в auto_state.json), и делает.
 Ничего не требует от Claude: только Python и интернет.
@@ -12,9 +13,10 @@
 
 Расписание работ:
   линия PARI + расписание  — раз в 3 мин, когда есть матч в окне «старт − 10 мин … + 5 ч»; раз в 5 мин, если до старта < 3 ч; иначе раз в 20 мин;
-  прогноз                  — один раз, за 45 мин до старта (ранее — линии по картам обычно нет);
+  коэффициенты до матча    — при каждом скачивании линии: odds/<лига>/prematch/<event_id>.json (открытие и закрытие);
   лайв                     — раз в минуту в окне матча: герои, оценка драфтов, страницы;
-  лайв-ставка              — на карту одна: когда выбраны все герои и идёт ≥ 3 мин, по оценке драфтов против линии «Время карты больше N»;
+  прогноз                  — на карту один, как только выбраны все 10 героев: из победы, времени и убийств берётся рынок
+                             с наибольшим расхождением «оценка по драфтам против линии» (forecast.from_draft);
   закрытие                 — через 40 мин после старта, пока есть незакрытые прогнозы, раз в 10 мин: обновить матчи, посчитать результат.
 """
 import argparse
@@ -32,6 +34,7 @@ import collect_odds
 import forecast
 import heroes_stats
 import live as livemod
+import prematch
 import render_index
 import render_schedule
 from render_html import ROOT
@@ -39,13 +42,11 @@ from render_html import ROOT
 LOCK = ROOT / ".auto.lock"
 STATE = ROOT / "auto_state.json"
 LOCK_TTL = 15 * 60
-PRE_WINDOW = 45 * 60        # прогноз за столько до старта
 LIVE_BEFORE, LIVE_AFTER = 10 * 60, 5 * 3600
 SETTLE_AFTER = 25 * 60      # когда начинать искать результат (от старта матча в линии)
 SETTLE_EVERY = 10 * 60
-LIVE_EDGE_MIN, LIVE_EDGE_STRONG = 3.0, 6.0   # минут расхождения оценки драфта с линией
-LIVE_MIN_TIME = 180         # секунд игры, когда герои уже выбраны
-LIVE_SAFE_LEFT = 300        # до линии должно оставаться не меньше 5 мин игры
+SERIES_EVERY = 4 * 60       # пока идёт серия: как часто подтягивать результаты сыгранных карт
+LATE_AFTER = 7 * 60         # позже этого времени игры прогноз уже не даём (только начало карты)
 STAKES = forecast.STAKES
 
 log = logging.getLogger("auto")
@@ -114,60 +115,38 @@ def refresh_odds(lid, st, now, dry):
     return snap
 
 
-def live_bet(lid, ev, g, snap, teams, ser, st, now, dry):
-    """Лайв-ставка на время карты по оценке драфтов. Одна на идущую карту."""
+def draft_forecast(lid, ev, g, snap, teams, ser, st, now, dry):
+    """Прогноз на идущую карту, когда выбраны все герои. Один на карту: решение (прогноз или отказ) запоминается."""
     key = str(g["match_id"])
     if key in st.setdefault("live_bets", {}):
         return False
-    main = forecast.load(lid, str(ev["event_id"]))
-    names = json.loads((ROOT / "raw" / "heroes.json").read_text(encoding="utf-8"))
     hs = heroes_stats.stats()
+    names = json.loads((ROOT / "raw" / "heroes.json").read_text(encoding="utf-8"))
     sides = [[p["hero_id"] for p in g["players"] if p["team"] == t and p["hero_id"]] for t in (0, 1)]
-    if min(len(sides[0]), len(sides[1])) < 5 or g["game_time"] < LIVE_MIN_TIME:
+    if min(len(sides[0]), len(sides[1])) < 5:
+        return False  # драфт ещё идёт
+    if g["game_time"] > LATE_AFTER:
+        st["live_bets"][key] = "пропуск: карта уже идёт"
+        log.info("[%s] прогноз %s: карта идёт %d мин — прогноз даём только в начале", lid, key, g["game_time"] // 60)
         return False
-    known = sum(1 for h in sides[0] + sides[1] if hs["heroes"].get(h, {}).get("label") not in (None, "мало данных"))
-    evd = heroes_stats.draft_eval(sides[0], sides[1], hs)
     sr = render_schedule.find_series(ser, ev["a"], ev["b"], ev["start"])
     map_no = (len(sr["maps"]) if sr else 0) + 1
-    if main and main["map_no"] == map_no and main["picks"]:  # одна ставка на матч: прогноз на эту карту уже есть
-        st["live_bets"][key] = "пропуск: уже есть ставка"
-        log.info("[%s] лайв %s: ставка на карту уже есть", lid, key)
-        return False
     m = next((x for x in snap["matches"] if str(x.get("event_id")) == str(ev["event_id"])), None) if snap else None
-    rows = [r for r in (m["rows"] if m else []) if r["market"].startswith("Время карты больше")]
-    best = None
-    if known >= 6 and evd and rows:
-        for r in rows:
-            N = forecast.line_of(r["market"])
-            if N * 60 - g["game_time"] < LIVE_SAFE_LEFT:
-                continue
-            for side, odds, edge in (("Да", r["k1"], evd["exp"] - N), ("нет", r["k2"], N - evd["exp"])):
-                if edge >= LIVE_EDGE_MIN and (best is None or odds > best[2]):
-                    best = (r, side, odds, edge, N)
-    if not best:
-        st["live_bets"][key] = "пропуск"
-        log.info("[%s] лайв %s: ставки нет (оценка %s мин, известных героев %d)", lid, key, evd and evd["exp"], known)
+    if m and forecast.map_no(m.get("map")) != map_no:
+        m = None  # в линии рынки другой карты
+    fc, why = forecast.from_draft(lid, ev, g, m, hs, names)
+    if not fc:
+        if why == "в линии нет рынков по этой карте" and g["game_time"] < 600:
+            log.info("[%s] прогноз %s: %s, ещё раз на следующем тике", lid, key, why)
+            return False
+        st["live_bets"][key] = "нет прогноза: " + why
+        log.info("[%s] прогноз %s: нет (%s)", lid, key, why)
         return False
-    r, side, odds, edge, N = best
-    signal = "явный" if edge >= LIVE_EDGE_STRONG else "небольшой"
-    more = side == "Да"
-    a, b = teams[ev["a"]]["name"], teams[ev["b"]]["name"]
-    text = f"Время карты {'больше' if more else 'меньше'} {N:g} мин"
-    fc = {"event_id": f"{ev['event_id']}L{map_no}", "match_event_id": str(ev["event_id"]), "league": lid, "live_bet": True,
-          "created": datetime.datetime.now(render_schedule.MSK).strftime("%Y-%m-%d %H:%M"), "after_start": True,
-          "t1": a, "t2": b, "t1_id": ev["a"], "t2_id": ev["b"], "start": ev["start"], "map_no": map_no,
-          "series_win": [], "url": ev.get("url"),
-          "picks": [{"cat": "time", "label": "Время карты (лайв)", "text": text, "market": r["market"], "side": side,
-                     "line": N, "odds": odds, "est": None, "implied": round(1 / odds, 3), "n": 0,
-                     "basis": f"драфты: ожидание {evd['exp']:g} мин, линия {N:g}", "signal": signal, "ev": None,
-                     "stake": STAKES[signal], "hit": None}],
-          "note": (f"Лайв на {g['game_time'] // 60}-й минуте: оценка драфтов даёт ≈ {evd['exp']:g} мин "
-                   f"(темп {evd['mean']:+g}), линия {N:g} мин — расхождение {edge:.1f} мин."),
-          "rows": rows, "result": None}
     if not dry:
         forecast.save(lid, fc)
-    st["live_bets"][key] = text
-    notify(f"Лайв-ставка {STAKES[signal]} $: {a} – {b}, карта {map_no}: {text}, коэф {odds} (перевес: {signal})")
+    p = fc["picks"][0]
+    st["live_bets"][key] = p["text"]
+    notify(f"Прогноз на карту {fc['map_no']}: {fc['t1']} – {fc['t2']}: {p['text']}, коэф {p['odds']} (перевес: {p['signal']})")
     return True
 
 
@@ -189,10 +168,21 @@ def do_live(lid, st, now, events, snap, teams, dry):
         log.info("[%s] лайв: %s – %s, %d:%02d, убийства %d:%d", lid, teams[ev["a"]]["name"], teams[ev["b"]]["name"],
                  g["game_time"] // 60, g["game_time"] % 60, g["radiant_score"], g["dire_score"])
         try:
-            live_bet(lid, ev, g, snap, teams, ser, st, now, dry)
+            draft_forecast(lid, ev, g, snap, teams, ser, st, now, dry)
         except Exception as ex:
-            log.exception("лайв-ставка: %s", ex)
+            log.exception("прогноз по драфту: %s", ex)
     return found
+
+
+def live_event_ids(lid, events):
+    """События, у которых карта идёт прямо сейчас (None — лайв недоступен)."""
+    try:
+        games = livemod.fetch_live()
+    except Exception:
+        return None
+    return {str(ev["event_id"]) for ev in events for x in games
+            if str(x.get("league_id")) == lid and not x.get("deactivate_time")
+            and {x.get("team_id_radiant"), x.get("team_id_dire")} == {ev["a"], ev["b"]}}
 
 
 def pending(lid, now):
@@ -200,16 +190,18 @@ def pending(lid, now):
     out = []
     for f in sorted(d.glob("*.json")) if d.exists() else []:
         fc = json.loads(f.read_text(encoding="utf-8"))
-        if fc["result"] is None and fc["start"] + SETTLE_AFTER < now:
+        if fc.get("live_bet") and fc["result"] is None and fc["start"] + SETTLE_AFTER < now:
             out.append(fc)
     return out
 
 
-def do_settle(lid, st, now, dry):
+def do_settle(lid, st, now, dry, running=()):
+    """Обновить матчи лиги: когда ждут результата прогнозы или идёт серия (страница матча показывает результаты карт)."""
     pend = pending(lid, now)
-    if not pend or not due(st, "settle_ts", SETTLE_EVERY, now):
+    run = [m for m in running if m["start"] + SETTLE_AFTER < now]
+    if not (pend or run) or not due(st, "settle_ts", SETTLE_EVERY if pend else SERIES_EVERY, now):
         return False
-    log.info("[%s] закрытие: ждут результата %d прогнозов, обновляю матчи", lid, len(pend))
+    log.info("[%s] закрытие: ждут результата %d прогнозов, идущих серий %d, обновляю матчи", lid, len(pend), len(run))
     if dry:
         return False
     st["settle_ts"] = now
@@ -252,18 +244,20 @@ def tick(lid, st, dry):
             changed = True
         except Exception as ex:
             log.exception("[%s] линия: %s", lid, ex)
+    fresh = snap is not None
     if snap is None:
         f = ROOT / "odds" / lid / "latest.json"
         snap = json.loads(f.read_text(encoding="utf-8")) if f.exists() else None
-    if snap and not dry:
-        n = forecast.make(lid, snap, window=PRE_WINDOW)
-        if n:
-            changed = True
-            notify(f"Новых прогнозов: {n} ({lid})")
     if active and due(s, "live_ts", 55, now):
         s["live_ts"] = now
         changed |= do_live(lid, s, now, active, snap, teams, dry)
-    changed |= do_settle(lid, s, now, dry)
+    if fresh and snap and not dry:   # коэффициенты до матча/карты: открытие и закрытие линии
+        try:
+            if prematch.save(lid, snap, now, live_event_ids(lid, events)):
+                log.info("[%s] сохранены коэффициенты до матча", lid)
+        except Exception as ex:
+            log.warning("[%s] коэффициенты до матча: %s", lid, ex)
+    changed |= do_settle(lid, s, now, dry, active)
     return changed
 
 

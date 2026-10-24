@@ -164,10 +164,41 @@ def hit_mark(h):
                                                            else "<span class=mark>ждём</span>")
 
 
+def prematch_html(lid, eid, a, b):
+    """Блок «Коэффициенты до матча»: открытие и закрытие линии на серию и на каждую карту (из odds/<лига>/prematch)."""
+    import prematch
+    d = prematch.load(lid, eid)
+    if not d:
+        return ("<h2>Коэффициенты до матча</h2><div class=fc>Пока не сохранены: они пишутся автопилотом при каждом "
+                "скачивании линии до старта матча.</div>")
+    n1, n2 = e(d["t1"]), e(d["t2"])
+    H = ["<h2>Коэффициенты до матча</h2><div class=mt><table><thead><tr><th>Рынок</th><th>Открытие</th><th>Закрытие</th></tr></thead><tbody>"]
+    s = d.get("series") or {}
+    if s.get("close"):
+        o, c = s["open"], s["close"]
+        H.append(f"<tr><td>Победа в серии</td><td>{n1} {o['odds'][0]} · {n2} {o['odds'][1]}<div class=muted>{e(o['ts'])} МСК</div></td>"
+                 f"<td>{n1} {c['odds'][0]} · {n2} {c['odds'][1]}<div class=muted>{e(c['ts'])} МСК</div></td></tr>")
+
+    def fmt(rows):
+        out = []
+        for r in rows:
+            if r["market"].startswith(("Победа на карте", "Тотал убийств", "Время карты")):
+                out.append(f"{e(r['market'])}: {r['k1']} / {r['k2']}")
+        return "<br>".join(out)
+    for n in sorted(d.get("maps") or {}):
+        mp = d["maps"][n]
+        H.append(f"<tr><td>Карта {n}</td><td>{fmt(mp['open']['rows'])}<div class=muted>{e(mp['open']['ts'])} МСК</div></td>"
+                 f"<td>{fmt(mp['close']['rows'])}<div class=muted>{e(mp['close']['ts'])} МСК</div></td></tr>")
+    H.append("</tbody></table></div><div class=sch-note>Открытие — первый снимок линии, закрытие — последний до старта матча (карты). "
+             "Сохраняется навсегда, после старта линия в PARI меняется на лайвовую.</div>")
+    return "".join(H)
+
+
 def render(lid, ev, teams, ser, snap_rows, stems):
     out = page_path(lid, ev["event_id"])
     eid = str(ev["event_id"])
-    fc = forecast.load(lid, eid)
+    fcs = [json.loads(f.read_text(encoding="utf-8")) for f in sorted((ROOT / "forecasts" / lid).glob(f"{eid}L*.json"))]
+    fc = fcs[-1] if fcs else None
     a, b = teams.get(ev["a"], {}), teams.get(ev["b"], {})
     now = datetime.datetime.now(MSK).timestamp()
     s = find_series(ser, ev["a"], ev["b"], ev["start"])
@@ -200,37 +231,31 @@ def render(lid, ev, teams, ser, snap_rows, stems):
          f"<div class=mlinks>" + (f"<a href='{e(ev['url'])}'>Матч на PARI</a>" if ev.get("url") else "")
          + f"<a href='https://www.dotabuff.com/esports/leagues/{lid}'>Турнир на Dotabuff</a></div>"]
 
-    # прогноз
+    # прогноз: один на карту, даётся в начале карты, когда выбраны герои обеих команд
     H.append("<h2>Прогноз ИИ</h2>")
-    if fc:
-        hits = [p["hit"] for p in fc["picks"] if p["hit"] is not None]
+    for f in fcs:
+        hits = [p["hit"] for p in f["picks"] if p["hit"] is not None]
         tot = f" · зашло {sum(hits)} из {len(hits)}" if hits else ""
-        H.append(f"<div class=fc><div class=meta>карта {fc['map_no']} · сохранён {e(fc['created'])} МСК"
-                 f"{' (после старта матча)' if fc.get('after_start') else ''}{tot}"
-                 + (f" · <a href='https://www.dotabuff.com/matches/{fc['result']['match_id']}'>карта {fc['map_no']} на Dotabuff</a>"
-                    if fc.get("result") else "") + "</div>")
-        if fc["picks"]:
-            for p in fc["picks"]:
-                H.append(f"<div class=pk><span class=c>{e(p['label'])}</span><span class=tx>{e(p['text'])}</span>"
-                         f"<span class=n><i>коэф</i>{p['odds']}</span>"
-                         f"<span class=n><i>стат / линия</i>{p['est']:.0%} / {p['implied']:.0%}</span>{hit_mark(p['hit'])}</div>")
-        else:
-            H.append("<div class=pk style='display:block'>Подсказок нет: статистика не расходится с линией.</div>")
-        H.append(f"<p class=note>{e(fc['note'])}</p></div>")
-    else:
-        H.append("<div class=fc>Прогноза пока нет: линии по картам ещё не открыты. "
-                 f"Запуск: <code>python scripts/collect_odds.py --league {e(lid)} &amp;&amp; python scripts/forecast.py --league {e(lid)}</code></div>")
-
-    # лайв-ставки автопилота по картам этого матча
-    for lf in sorted((ROOT / "forecasts" / lid).glob(f"{eid}L*.json")):
-        lv = json.loads(lf.read_text(encoding="utf-8"))
-        H.append(f"<div class=fc><div class=meta>лайв-ставка · карта {lv['map_no']} · {e(lv['created'])} МСК"
-                 + (f" · <a href='https://www.dotabuff.com/matches/{lv['result']['match_id']}'>карта {lv['map_no']} на Dotabuff</a>"
-                    if lv.get("result") else "") + "</div>")
-        for p in lv["picks"]:
+        H.append(f"<div class=fc><div class=meta>карта {f['map_no']} · в начале карты, {e(f['created'])} МСК{tot}"
+                 + (f" · <a href='https://www.dotabuff.com/matches/{f['result']['match_id']}'>карта {f['map_no']} на Dotabuff</a>"
+                    if f.get("result") else "") + "</div>")
+        for p in f["picks"]:
+            est = f"<span class=n><i>оценка / линия</i>{p['est']:.0%} / {p['implied']:.0%}</span>" if p.get("est") is not None else ""
             H.append(f"<div class=pk><span class=c>{e(p['label'])}</span><span class=tx>{e(p['text'])}</span>"
-                     f"<span class=n><i>коэф</i>{p['odds']}</span><span class=n><i>ставка</i>{p['stake']} $</span>{hit_mark(p['hit'])}</div>")
-        H.append(f"<p class=note>{e(lv['note'])}</p></div>")
+                     f"<span class=n><i>коэф</i>{p['odds']}</span>{est}"
+                     f"<span class=n><i>ставка</i>{p['stake']} $</span>{hit_mark(p['hit'])}</div>")
+        H.append(f"<p class=note>{e(f['note'])}</p></div>")
+    if not fcs:
+        H.append("<div class=fc>Прогноз будет дан в начале карты, когда обе команды выберут героев: "
+                 "один прогноз — победа, время или убийства (если оценка драфтов заметно расходится с линией).</div>")
+
+    # коэффициенты до матча и форма команд
+    H.append(prematch_html(lid, eid, a, b))
+    import form
+    H.append("<h2>Форма команд</h2>")
+    for tid, tm in ((ev["a"], a), (ev["b"], b)):
+        H.append(form.html(form.form(tid, ev["start"]), tm.get("name") or str(tid)).replace("<div class=card>", "<div class=card style='margin-bottom:10px'>", 1))
+    H.append(f"<div class=sch-note>{form.NOTE}</div>")
 
     # результат
     r = fc["result"] if fc else None
@@ -290,7 +315,7 @@ def render(lid, ev, teams, ser, snap_rows, stems):
     rows = snap_rows if snap_rows is not None else (fc["rows"] if fc else [])
     H.append("<h2>Коэффициенты</h2>")
     if rows:
-        picks = {p["market"] for p in (fc["picks"] if fc else [])}
+        picks = {p["market"] for f in fcs for p in f["picks"]}
         H.append("<div class=mt><table><thead><tr><th>Рынок</th><th>Коэффициенты</th><th class=num>Линия</th>"
                  "<th class=num>Статистика</th><th class=num>Разница</th><th>Основание</th><th>Перевес</th></tr></thead><tbody>")
         for x in rows:
@@ -300,7 +325,7 @@ def render(lid, ev, teams, ser, snap_rows, stems):
                      f"<td class=num>{x['line'] * 100:.0f}%</td><td class=num>{x['est'] * 100:.0f}%</td>"
                      f"<td class='num d {'pos' if d > 0 else 'neg'}'>{d:+.0f} п.п.</td><td>{e(x['basis'])}</td><td>{x['signal']}</td></tr>")
         H.append("</tbody></table></div><div class=sch-note>«Линия» — вероятность первого исхода без маржи букмекера; "
-                 "«Статистика» — частота по картам обеих команд. Выделены строки прогноза. "
+                 "«Статистика» — частота по картам обеих команд. Выделена строка прогноза. "
                  "Это разбор статистики, не гарантия исхода.</div>")
     else:
         H.append("<div class=fc>Линия по картам для этого матча не открыта или уже снята.</div>")

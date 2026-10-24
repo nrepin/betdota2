@@ -694,32 +694,205 @@
       ],
       "patch": 60,
       "dotabuff": "https://www.dotabuff.com/matches/9057681759"
+    },
+    {
+      "match_id": 9059185615,
+      "series_id": 1158638,
+      "start_time": 1792829128,
+      "opponent_id": 9964962,
+      "opponent": "GamerLegion",
+      "side": "Dire",
+      "win": false,
+      "duration_sec": 2207,
+      "duration": "36:47",
+      "kills_for": 10,
+      "kills_against": 29,
+      "total_kills": 39,
+      "first_pick": false,
+      "first_blood": false,
+      "first_blood_time": 190,
+      "gold_adv_10min": null,
+      "max_gold_lead": null,
+      "max_gold_deficit": null,
+      "roshans": 0,
+      "towers": null,
+      "picks": [
+        "Puck",
+        "Nyx Assassin",
+        "Death Prophet",
+        "Dazzle",
+        "Terrorblade"
+      ],
+      "bans": [
+        "Bounty Hunter",
+        "Dragon Knight",
+        "Enigma",
+        "Brewmaster",
+        "Night Stalker",
+        "Windranger",
+        "Lone Druid"
+      ],
+      "opp_picks": [
+        "Invoker",
+        "Techies",
+        "Mirana",
+        "Axe",
+        "Sven"
+      ],
+      "opp_bans": [
+        "Largo",
+        "Nature's Prophet",
+        "Ember Spirit",
+        "Kez",
+        "Hoodwink",
+        "Lifestealer",
+        "Tiny"
+      ],
+      "players": [
+        {
+          "account_id": 86698277,
+          "name": "33",
+          "hero": "Death Prophet",
+          "position": null,
+          "kills": 5,
+          "deaths": 6,
+          "assists": 3,
+          "last_hits": 241,
+          "denies": 3,
+          "gpm": 456,
+          "xpm": 529,
+          "net_worth": 16344,
+          "hero_damage": 16124,
+          "tower_damage": 1378,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 346412363,
+          "name": "Ari",
+          "hero": "Nyx Assassin",
+          "position": null,
+          "kills": 1,
+          "deaths": 8,
+          "assists": 7,
+          "last_hits": 17,
+          "denies": 0,
+          "gpm": 225,
+          "xpm": 282,
+          "net_worth": 6680,
+          "hero_damage": 11969,
+          "tower_damage": 197,
+          "hero_healing": 125,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 136829091,
+          "name": "Whitemon",
+          "hero": "Dazzle",
+          "position": null,
+          "kills": 1,
+          "deaths": 5,
+          "assists": 6,
+          "last_hits": 52,
+          "denies": 5,
+          "gpm": 276,
+          "xpm": 398,
+          "net_worth": 6650,
+          "hero_damage": 6571,
+          "tower_damage": 321,
+          "hero_healing": 12995,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 93618577,
+          "name": "bzm",
+          "hero": "Puck",
+          "position": null,
+          "kills": 3,
+          "deaths": 6,
+          "assists": 4,
+          "last_hits": 325,
+          "denies": 5,
+          "gpm": 499,
+          "xpm": 625,
+          "net_worth": 16364,
+          "hero_damage": 16636,
+          "tower_damage": 343,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 331855530,
+          "name": "Pure",
+          "hero": "Terrorblade",
+          "position": null,
+          "kills": 0,
+          "deaths": 4,
+          "assists": 4,
+          "last_hits": 522,
+          "denies": 20,
+          "gpm": 678,
+          "xpm": 555,
+          "net_worth": 22595,
+          "hero_damage": 13232,
+          "tower_damage": 3304,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9059185615"
     }
   ],
   "summary": {
-    "games": 4,
+    "games": 5,
     "wins": 0,
-    "losses": 4,
+    "losses": 5,
     "winrate": 0.0,
-    "avg_duration": "47:34",
+    "avg_duration": "45:24",
     "avg_duration_win": "0:00",
-    "avg_duration_loss": "47:34",
+    "avg_duration_loss": "45:24",
     "shortest": "26:35",
     "longest": "76:59",
-    "avg_kills_for": 23.0,
-    "avg_kills_against": 37.2,
-    "avg_total_kills": 60.2,
-    "kills_per_min": 0.48,
-    "first_blood_rate": 75.0,
+    "avg_kills_for": 20.4,
+    "avg_kills_against": 35.6,
+    "avg_total_kills": 56.0,
+    "kills_per_min": 0.45,
+    "first_blood_rate": 60.0,
     "avg_gold_adv_10min": -1478,
-    "avg_roshans": 0.75,
+    "avg_roshans": 0.6,
     "radiant": {
       "games": 0,
       "wins": 0,
       "winrate": 0
     },
     "dire": {
-      "games": 4,
+      "games": 5,
       "wins": 0,
       "winrate": 0.0
     },
@@ -729,7 +902,7 @@
       "winrate": 0.0
     },
     "second_pick": {
-      "games": 2,
+      "games": 3,
       "wins": 0,
       "winrate": 0.0
     },
@@ -745,10 +918,28 @@
         "opponent": "OG",
         "score": "0-2",
         "won": false
+      },
+      {
+        "series_id": 1158638,
+        "opponent": "GamerLegion",
+        "score": "0-1",
+        "won": false
       }
     ],
-    "series_record": "0-2",
+    "series_record": "0-3",
     "hero_picks": [
+      {
+        "hero": "Dazzle",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Nyx Assassin",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
       {
         "hero": "Earth Spirit",
         "games": 2,
@@ -763,18 +954,6 @@
       },
       {
         "hero": "Slark",
-        "games": 1,
-        "wins": 0,
-        "winrate": 0.0
-      },
-      {
-        "hero": "Dazzle",
-        "games": 1,
-        "wins": 0,
-        "winrate": 0.0
-      },
-      {
-        "hero": "Nyx Assassin",
         "games": 1,
         "wins": 0,
         "winrate": 0.0
@@ -856,15 +1035,37 @@
         "games": 1,
         "wins": 0,
         "winrate": 0.0
+      },
+      {
+        "hero": "Puck",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Death Prophet",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Terrorblade",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
       }
     ],
     "bans_by_team": [
       [
         "Bounty Hunter",
-        4
+        5
       ],
       [
         "Enigma",
+        4
+      ],
+      [
+        "Brewmaster",
         3
       ],
       [
@@ -872,7 +1073,7 @@
         2
       ],
       [
-        "Brewmaster",
+        "Windranger",
         2
       ],
       [
@@ -893,10 +1094,6 @@
       ],
       [
         "Nature's Prophet",
-        1
-      ],
-      [
-        "Windranger",
         1
       ],
       [
@@ -942,12 +1139,28 @@
       [
         "Bristleback",
         1
+      ],
+      [
+        "Dragon Knight",
+        1
+      ],
+      [
+        "Night Stalker",
+        1
+      ],
+      [
+        "Lone Druid",
+        1
       ]
     ],
     "bans_against_team": [
       [
         "Largo",
-        4
+        5
+      ],
+      [
+        "Nature's Prophet",
+        3
       ],
       [
         "Slark",
@@ -955,6 +1168,10 @@
       ],
       [
         "Dark Seer",
+        3
+      ],
+      [
+        "Hoodwink",
         3
       ],
       [
@@ -966,7 +1183,7 @@
         2
       ],
       [
-        "Nature's Prophet",
+        "Lifestealer",
         2
       ],
       [
@@ -974,15 +1191,7 @@
         2
       ],
       [
-        "Hoodwink",
-        2
-      ],
-      [
         "Timbersaw",
-        1
-      ],
-      [
-        "Lifestealer",
         1
       ],
       [
@@ -1008,6 +1217,18 @@
       [
         "Templar Assassin",
         1
+      ],
+      [
+        "Ember Spirit",
+        1
+      ],
+      [
+        "Kez",
+        1
+      ],
+      [
+        "Tiny",
+        1
       ]
     ],
     "vs_heroes": [
@@ -1018,14 +1239,14 @@
         "our_winrate": 0.0
       },
       {
-        "hero": "Earthshaker",
+        "hero": "Techies",
         "games": 2,
         "our_wins": 0,
         "our_winrate": 0.0
       },
       {
-        "hero": "Techies",
-        "games": 1,
+        "hero": "Earthshaker",
+        "games": 2,
         "our_wins": 0,
         "our_winrate": 0.0
       },
@@ -1112,6 +1333,30 @@
         "games": 1,
         "our_wins": 0,
         "our_winrate": 0.0
+      },
+      {
+        "hero": "Invoker",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Mirana",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Axe",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Sven",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
       }
     ],
     "players": [
@@ -1119,16 +1364,16 @@
         "account_id": 331855530,
         "name": "Pure",
         "position": 1,
-        "games": 4,
-        "avg_kills": 5.8,
-        "avg_deaths": 6.2,
-        "avg_assists": 8.8,
-        "kda": 2.32,
+        "games": 5,
+        "avg_kills": 4.6,
+        "avg_deaths": 5.8,
+        "avg_assists": 7.8,
+        "kda": 2.14,
         "avg_gpm": 679,
-        "avg_xpm": 772,
-        "avg_last_hits": 585,
-        "avg_hero_damage": 35169,
-        "avg_wards": 1.5,
+        "avg_xpm": 729,
+        "avg_last_hits": 572,
+        "avg_hero_damage": 30782,
+        "avg_wards": 1.2,
         "heroes": [
           {
             "hero": "Slark",
@@ -1149,6 +1394,11 @@
             "hero": "Luna",
             "games": 1,
             "wins": 0
+          },
+          {
+            "hero": "Terrorblade",
+            "games": 1,
+            "wins": 0
           }
         ]
       },
@@ -1156,20 +1406,25 @@
         "account_id": 93618577,
         "name": "bzm",
         "position": 2,
-        "games": 2,
-        "avg_kills": 7.5,
-        "avg_deaths": 6.5,
-        "avg_assists": 11.0,
-        "kda": 2.85,
-        "avg_gpm": 625,
-        "avg_xpm": 791,
-        "avg_last_hits": 600,
-        "avg_hero_damage": 56496,
-        "avg_wards": 1.5,
+        "games": 3,
+        "avg_kills": 6.0,
+        "avg_deaths": 6.3,
+        "avg_assists": 8.7,
+        "kda": 2.32,
+        "avg_gpm": 583,
+        "avg_xpm": 736,
+        "avg_last_hits": 509,
+        "avg_hero_damage": 43209,
+        "avg_wards": 1.0,
         "heroes": [
           {
             "hero": "Earth Spirit",
             "games": 2,
+            "wins": 0
+          },
+          {
+            "hero": "Puck",
+            "games": 1,
             "wins": 0
           }
         ]
@@ -1205,15 +1460,15 @@
         "account_id": 86698277,
         "name": "33",
         "position": 3,
-        "games": 4,
+        "games": 5,
         "avg_kills": 5.0,
-        "avg_deaths": 7.2,
-        "avg_assists": 8.8,
-        "kda": 1.9,
-        "avg_gpm": 563,
-        "avg_xpm": 646,
-        "avg_last_hits": 448,
-        "avg_hero_damage": 30400,
+        "avg_deaths": 7.0,
+        "avg_assists": 7.6,
+        "kda": 1.8,
+        "avg_gpm": 541,
+        "avg_xpm": 623,
+        "avg_last_hits": 407,
+        "avg_hero_damage": 27545,
         "avg_wards": 0.2,
         "heroes": [
           {
@@ -1235,6 +1490,11 @@
             "hero": "Doom",
             "games": 1,
             "wins": 0
+          },
+          {
+            "hero": "Death Prophet",
+            "games": 1,
+            "wins": 0
           }
         ]
       },
@@ -1242,20 +1502,20 @@
         "account_id": 346412363,
         "name": "Ari",
         "position": 4,
-        "games": 4,
-        "avg_kills": 3.8,
+        "games": 5,
+        "avg_kills": 3.2,
         "avg_deaths": 8.0,
-        "avg_assists": 13.2,
-        "kda": 2.12,
-        "avg_gpm": 269,
-        "avg_xpm": 429,
-        "avg_last_hits": 58,
-        "avg_hero_damage": 25736,
-        "avg_wards": 15.8,
+        "avg_assists": 12.0,
+        "kda": 1.9,
+        "avg_gpm": 260,
+        "avg_xpm": 400,
+        "avg_last_hits": 50,
+        "avg_hero_damage": 22982,
+        "avg_wards": 12.6,
         "heroes": [
           {
             "hero": "Nyx Assassin",
-            "games": 1,
+            "games": 2,
             "wins": 0
           },
           {
@@ -1279,20 +1539,20 @@
         "account_id": 136829091,
         "name": "Whitemon",
         "position": 5,
-        "games": 4,
-        "avg_kills": 2.8,
-        "avg_deaths": 10.2,
-        "avg_assists": 13.0,
-        "kda": 1.54,
-        "avg_gpm": 285,
-        "avg_xpm": 420,
-        "avg_last_hits": 44,
-        "avg_hero_damage": 17009,
-        "avg_wards": 39.5,
+        "games": 5,
+        "avg_kills": 2.4,
+        "avg_deaths": 9.2,
+        "avg_assists": 11.6,
+        "kda": 1.52,
+        "avg_gpm": 283,
+        "avg_xpm": 415,
+        "avg_last_hits": 45,
+        "avg_hero_damage": 14922,
+        "avg_wards": 31.6,
         "heroes": [
           {
             "hero": "Dazzle",
-            "games": 1,
+            "games": 2,
             "wins": 0
           },
           {

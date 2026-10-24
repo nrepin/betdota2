@@ -1,8 +1,7 @@
 """Страница «Прогнозы ИИ» (forecasts.html): условный учёт ставок по сохранённым прогнозам.
 
 Ставка по прогнозу: перевес «явный» — 200 $, «небольшой» — 100 $ (STAKES). Это бухгалтерия прогнозов,
-реальные ставки не делаются. Выигрыш = ставка × (коэффициент − 1), проигрыш = −ставка. Лайв-ставки (прогноз
-сохранён после старта матча) идут в зачёт так же и помечены «лайв».
+реальные ставки не делаются. Выигрыш = ставка × (коэффициент − 1), проигрыш = −ставка. Прогноз — один на карту, в её начале (герои обеих команд выбраны).
 
     python scripts/render_forecasts.py
 """
@@ -14,7 +13,7 @@ from html import escape as e
 from render_html import ROOT, SORT_JS, rel
 
 OUT = ROOT / "forecasts.html"
-STAKES = {"явный": 200, "небольшой": 100}
+STAKES = {"явный": 200, "небольшой": 100, "слабый": 50}
 MSK = datetime.timezone(datetime.timedelta(hours=3))
 CATS = {"win": "Победа на карте", "time": "Время карты", "kills": "Убийства"}
 
@@ -48,12 +47,14 @@ def collect():
     rows = []
     for f in sorted((ROOT / "forecasts").glob("*/*.json")):
         fc = json.loads(f.read_text(encoding="utf-8"))
+        if not fc.get("live_bet"):
+            continue  # доматчевых прогнозов больше нет: старые файлы в учёт не идут
         lname = json.loads((ROOT / "raw" / f"league_{fc['league']}.json").read_text(encoding="utf-8"))["name"]
         for p in fc["picks"]:
             stake = p.get("stake") or STAKES.get(p["signal"], 100)
             profit = None if p["hit"] is None else (stake * (p["odds"] - 1) if p["hit"] else -stake)
             rows.append({"fc": fc, "league": lname, "p": p, "stake": stake, "profit": profit,
-                         "counted": True, "live": bool(fc.get("after_start"))})
+                         "counted": True, "live": True})
     rows.sort(key=lambda r: r["fc"]["start"], reverse=True)
     return rows
 
@@ -72,9 +73,9 @@ def render_page():
     t = agg(rows)
     pending = [r for r in rows if r["counted"] and r["profit"] is None]
     out_of = [r for r in rows if not r["counted"]]
-    body = [f"<div class=page-h><h2>Прогнозы ИИ</h2><div class=sub>Условный учёт: перевес «явный» — 200 $, «небольшой» — 100 $ "
-            f"на каждую подсказку. Реальные ставки не делаются. Выигрыш = ставка × (коэффициент − 1), проигрыш = −ставка. "
-            f"Лайв-ставки (прогноз сохранён уже после старта матча) принимаются так же и помечены «лайв».</div></div>"]
+    body = [f"<div class=page-h><h2>Прогнозы ИИ</h2><div class=sub>Условный учёт: перевес «явный» — 200 $, «небольшой» — 100 $, «слабый» — 50 $ "
+            f"на прогноз. Реальные ставки не делаются. Выигрыш = ставка × (коэффициент − 1), проигрыш = −ставка. "
+            f"Один прогноз на каждую карту, в её начале, когда выбраны герои обеих команд: победа, время или убийства.</div></div>"]
     hr = f"{t['hit'] / t['n']:.0%}" if t["n"] else "—"
     body.append(
         "<div class=fk>"
@@ -110,7 +111,7 @@ def render_page():
         href = rel(ROOT / "matches" / fc["league"] / f"{fc.get('match_event_id', fc['event_id'])}.html", OUT)
         d = datetime.datetime.fromtimestamp(fc["start"], MSK).strftime("%d.%m")
         res = "ждём" if p["hit"] is None else "✓ зашло" if p["hit"] else "✗ не зашло"
-        live = " · лайв" if r["live"] else ""
+        live = ""
         if fc.get("result"):
             mid = fc["result"]["match_id"]
             res += (f"<div style='font-size:12px'><a href='https://www.dotabuff.com/matches/{mid}'>Dotabuff</a> · "

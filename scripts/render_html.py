@@ -136,7 +136,7 @@ border:1px solid var(--line);background:var(--bg);color:var(--text);transition:b
 
 TOTALS_JS = """
 document.querySelectorAll('.tot[data-games]').forEach(root=>{
-const games=JSON.parse(root.dataset.games);
+const all=JSON.parse(root.dataset.games);let games=all;
 root.querySelectorAll('.box').forEach(box=>{
  const key=box.dataset.k,inp=box.querySelector('input'),res=box.querySelector('.res'),dots=box.querySelector('.dots');
  const val=g=>key==='d'?g.d/60:g.k, fmt=g=>key==='d'?`${Math.floor(g.d/60)}:${String(g.d%60).padStart(2,'0')}`:g.k;
@@ -146,7 +146,8 @@ root.querySelectorAll('.box').forEach(box=>{
    const s=document.createElement('span');s.className='dot '+c;s.title=g.o;s.textContent=fmt(g);dots.appendChild(s)});
   const n=games.length,p=v=>n?Math.round(100*v/n):0;
   res.innerHTML=`<div class=ov><b>${o} из ${n}</b><i></i>больше · ${p(o)}%</div><div class=un><b>${u} из ${n}</b><i></i>меньше · ${p(u)}%</div>`+(q?`<div class=eq><b>${q}</b><i></i>ровно</div>`:'');};
- inp.addEventListener('input',upd);upd();});});
+ inp.addEventListener('input',upd);upd();
+ document.addEventListener('wlfilter',e=>{const m=e.detail;games=m==='all'?all:all.filter(g=>m==='w'?g.w:!g.w);upd()});});});
 """
 
 
@@ -176,28 +177,28 @@ def nice_ticks(vmax, steps=(5, 10, 20, 25, 50)):
     return top, list(range(0, int(top) + 1, st))
 
 
-def column_chart(cols, top, ticks, tick_fmt, legend, avg=None, avg_label="", label=""):
+def column_chart(cols, top, ticks, tick_fmt, legend, avg=None, avg_label="", label="", avg_kind="", avg_tpl=""):
     """Столбчатый график: cols = [{segs:[(value, cls)], total, x, tip, cap}] (сегменты сверху вниз)."""
     H = [f"<figure class='card viz' aria-label='{escape(label)}' style='margin:0'><div class=lg>"]
     H += [f"<span><i style='background:{col}'></i>{escape(txt)}</span>" for col, txt in legend]
-    H.append(f"</div><div class=sc><div class=in style='--n:{len(cols)}'><div class=plot>")
+    H.append(f"</div><div class=sc><div class=in style='--n:{len(cols)}'><div class=plot data-top='{top}'>")
     H += [f"<div class=gl style='bottom:{100 * t / top:.2f}%'><span>{tick_fmt(t)}</span></div>" for t in ticks]
     if avg is not None:
-        H.append(f"<div class=avg style='bottom:{100 * avg / top:.2f}%'><span>{escape(avg_label)}</span></div>")
+        H.append(f"<div class=avg data-kind='{avg_kind}' data-tpl='{escape(avg_tpl)}' style='bottom:{100 * avg / top:.2f}%'><span>{escape(avg_label)}</span></div>")
     H.append("<div class=cols>")
     for c in cols:
         segs = "".join(f"<div class='sg {cls}' style='height:{190 * v / top:.1f}px'></div>" for v, cls in c["segs"] if v > 0)
         cap = (f"<div class=cap style='bottom:{100 * c['total'] / top:.2f}%'>{escape(c['cap'])}</div>" if c.get("cap") else "")
-        H.append(f"<div class=c tabindex=0 data-tip='{escape(json.dumps(c['tip'], ensure_ascii=False))}'>{cap}<div class=stk>{segs}</div></div>")
+        H.append(f"<div class=c tabindex=0 data-picks='{escape(json.dumps(c.get('picks', []), ensure_ascii=False))}' data-win={1 if c.get('win') else 0} data-val='{c['total']}' data-tip='{escape(json.dumps(c['tip'], ensure_ascii=False))}'>{cap}<div class=stk>{segs}</div></div>")
     H.append("</div></div><div class=xa>")
-    H += [f"<div>{c['x']}</div>" for c in cols]
+    H += [f"<div data-win={1 if c.get('win') else 0}>{c['x']}</div>" for c in cols]
     H.append("</div></div></div><div class=tip role=status></div></figure>")
     return "".join(H)
 
 
 def totals_widget(t, title=None):
     """Калькулятор тоталов: ввёл число — видно, сколько карт команды больше/меньше по времени и убийствам."""
-    games = [{"d": g["duration_sec"], "k": g["total_kills"], "o": g["opponent"]} for g in t["games"]]
+    games = [{"d": g["duration_sec"], "k": g["total_kills"], "o": g["opponent"], "w": 1 if g["win"] else 0} for g in t["games"]]
     s = t["summary"]
     avg_min = round(sum(g["d"] for g in games) / len(games) / 60) if games else 45
     avg_k = round(s["avg_total_kills"]) if games else 60
@@ -217,6 +218,49 @@ const tb=th.closest('table').tBodies[0],rows=[...tb.rows],asc=th.dataset.asc!=='
 th.closest('tr').querySelectorAll('th').forEach(x=>delete x.dataset.asc);th.dataset.asc=asc?'1':'0';
 const key=r=>{const c=r.cells[i],v=c.dataset.v??c.textContent.trim();const n=parseFloat(v);return isNaN(n)?v.toLowerCase():n};
 rows.sort((a,b)=>{const x=key(a),y=key(b);return (x>y?1:x<y?-1:0)*(asc?1:-1)});rows.forEach(r=>tb.appendChild(r))}));
+"""
+
+
+PICK_CSS = """
+tr.pk{cursor:pointer}tr.pk.sel td{background:var(--win-bg)}
+.pksel tr[data-picks]:not(.hit){opacity:.35}.pksel tr.hit td{background:var(--win-bg)}
+.pksel .c:not(.hit){opacity:.25}
+"""
+
+PICK_JS = """
+(()=>{const bar=document.getElementById('pkbar');let cur=null;
+const sel=h=>{cur=cur===h?null:h;document.body.classList.toggle('pksel',!!cur);let n=0;
+ document.querySelectorAll('[data-picks]').forEach(el=>{const hit=!!cur&&JSON.parse(el.dataset.picks).includes(cur);el.classList.toggle('hit',hit);
+  if(hit&&el.tagName==='TR')n++});
+ document.querySelectorAll('tr.pk').forEach(r=>r.classList.toggle('sel',r.dataset.hero===cur));
+ if(bar){bar.innerHTML='';if(cur){bar.append(`Выбран герой: ${cur} · карт: ${n} · `);const a=document.createElement('a');a.href='#';a.textContent='сбросить';
+  a.onclick=e=>{e.preventDefault();sel(cur)};bar.appendChild(a);document.getElementById('maps').scrollIntoView({behavior:'smooth'})}}};
+document.querySelectorAll('tr.pk').forEach(r=>{r.addEventListener('click',()=>sel(r.dataset.hero));
+ r.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();sel(r.dataset.hero)}})});})();
+"""
+
+FILTER_JS = """
+(()=>{const bar=document.getElementById('wlf');if(!bar)return;const sum=document.getElementById('wlsum');
+const fm=sec=>`${Math.floor(sec/60)}:${String(Math.round(sec%60)).padStart(2,'0')}`;
+const ok=(m,w)=>m==='all'||(m==='w')===(w==='1');
+function apply(m){
+ bar.querySelectorAll('a').forEach(a=>a.toggleAttribute('aria-current',a.dataset.m===m)||0);
+ bar.querySelectorAll('a').forEach(a=>{if(a.dataset.m===m)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+ document.querySelectorAll('tr[data-win]').forEach(r=>r.style.display=ok(m,String(r.dataset.win))?'':'none');
+ document.querySelectorAll('.viz').forEach(v=>{
+  const cols=[...v.querySelectorAll('.c')],xa=[...v.querySelectorAll('.xa > div')];
+  cols.forEach((c,i)=>{const k=ok(m,c.dataset.win);c.style.display=k?'':'none';if(xa[i])xa[i].style.display=k?'':'none'});
+  const vis=cols.filter(c=>c.style.display!=='none'),inn=v.querySelector('.in');if(inn)inn.style.setProperty('--n',vis.length);
+  const avg=v.querySelector('.avg');
+  if(avg&&vis.length){const a=vis.reduce((x,c)=>x+parseFloat(c.dataset.val),0)/vis.length,top=parseFloat(v.querySelector('.plot').dataset.top);
+   avg.style.bottom=(100*a/top)+'%';avg.firstChild.textContent=avg.dataset.tpl.replace('{}',avg.dataset.kind==='d'?fm(a*60):a.toFixed(1))}});
+ document.dispatchEvent(new CustomEvent('wlfilter',{detail:m}));
+ const tot=document.querySelector('.tot[data-games]');
+ if(tot&&sum){const g=JSON.parse(tot.dataset.games).filter(x=>m==='all'||(m==='w')===!!x.w);
+  if(!g.length)sum.textContent='Нет карт';else{const d=g.map(x=>x.d),k=g.map(x=>x.k),av=a=>a.reduce((x,y)=>x+y,0)/a.length;
+   sum.textContent=`${g.length} карт · среднее время ${fm(av(d))} (${fm(Math.min(...d))} – ${fm(Math.max(...d))}) · фраги в среднем ${av(k).toFixed(1)}`}}}
+bar.addEventListener('click',e=>{const a=e.target.closest('a[data-m]');if(!a)return;e.preventDefault();apply(a.dataset.m)});
+apply('all');})();
 """
 
 
@@ -330,7 +374,7 @@ def render(t, league_name, imgs, logo=None, back=None, tags=None, switch="", mat
         return f"{w}/{n} ({round(100 * w / n) if n else 0}%)"
 
     H = [head(f"{t['team']}, {league_name}", f"Статистика {t['team']} на {league_name}: карты, фраги, пики, игроки, тоталы")
-         + f"<style>{CSS}{TOTALS_CSS}{SWITCH_CSS}{HEROTAG_CSS}</style></head><body><main class=wrap>",
+         + f"<style>{CSS}{TOTALS_CSS}{SWITCH_CSS}{HEROTAG_CSS}{PICK_CSS}</style></head><body><main class=wrap>",
          (f"<a class=back href='{e(back)}'>← {'все команды' if t['league_id'] == 'all' else 'страница турнира'}</a>" if back else ""),
          switch or f"<div class=tour>{'Все турниры' if t['league_id'] == 'all' else 'Турнир'}: {e(league_name)}</div>",
          f"<div class=head>{logo_html}<h1>{e(t['team'])}</h1></div>",
@@ -352,7 +396,18 @@ def render(t, league_name, imgs, logo=None, back=None, tags=None, switch="", mat
              f"{s['first_pick']['wins']}/{s['first_pick']['games']} · {s['second_pick']['wins']}/{s['second_pick']['games']}"),
          "</div>"]
 
+    if games:
+        H.append("<div class=scope><span class=lbl>Карты</span><nav class=seg id=wlf aria-label='Фильтр по итогу'>"
+                 "<a href='#' data-m=all aria-current=page>Все</a><a href='#' data-m=w>Только победы</a>"
+                 "<a href='#' data-m=l>Только поражения</a></nav></div>"
+                 "<div class=muted id=wlsum style='font-size:13px;margin-top:6px'></div>"
+                 "<div class=muted style='font-size:12px;margin-top:2px'>Фильтр действует на тоталы, графики и таблицу карт.</div>")
     H.append("<h2>Тоталы</h2>" + totals_widget(t))
+
+    # форма: результаты против ожиданий
+    import form
+    H.append("<h2>Форма</h2>" + form.html(form.form(t["team_id"]), t["team"])
+             + f"<div class=muted style='font-size:12px;margin-top:6px'>{form.NOTE}</div>")
 
     # серии
     H.append("<h2>Серии</h2><div class=series>")
@@ -377,20 +432,21 @@ def render(t, league_name, imgs, logo=None, back=None, tags=None, switch="", mat
     if games:
         top, ticks = nice_ticks(max(durs), (10, 15, 20, 30))
         i_max, i_min = durs.index(max(durs)), durs.index(min(durs))
-        cols = [{"segs": [(d, "w" if g["win"] else "lo")], "total": d, "x": xlab(g),
+        cols = [{"segs": [(d, "w" if g["win"] else "lo")], "total": d, "x": xlab(g), "win": g["win"], "picks": g["picks"],
                  "cap": g["duration"] if i in (i_max, i_min) else "",
                  "tip": {"h": head_tip(g), "r": [[g["duration"], "длительность", res_col(g)],
                                                  [f"{g['kills_for']}:{g['kills_against']} ({g['total_kills']})", "фраги", ""]]}}
                 for i, (g, d) in enumerate(zip(games, durs))]
         H.append("<h2>Длительность карт</h2>" + column_chart(
             cols, top, ticks, lambda t: f"{t} мин", legend_wl,
-            avg=sum(durs) / len(durs), avg_label=f"среднее {s['avg_duration']}", label="Длительность карт"))
+            avg=sum(durs) / len(durs), avg_label=f"среднее {s['avg_duration']}", label="Длительность карт",
+            avg_kind="d", avg_tpl="среднее {}"))
 
         kills = [g["total_kills"] for g in games]
         top, ticks = nice_ticks(max(kills), (10, 20, 25, 50))
         i_max, i_min = kills.index(max(kills)), kills.index(min(kills))
         cols = [{"segs": [(g["kills_against"], "opp"), (g["kills_for"], "w" if g["win"] else "lo")], "total": g["total_kills"],
-                 "x": xlab(g), "cap": f"{g['kills_for']}:{g['kills_against']} ({g['total_kills']})" if i in (i_max, i_min) else "",
+                 "x": xlab(g), "win": g["win"], "picks": g["picks"], "cap": f"{g['kills_for']}:{g['kills_against']} ({g['total_kills']})" if i in (i_max, i_min) else "",
                  "tip": {"h": head_tip(g), "r": [[str(g["kills_for"]), "фраги команды", res_col(g)],
                                                  [str(g["kills_against"]), "фраги соперника", "var(--v-opp)"],
                                                  [str(g["total_kills"]), "всего на карте", ""]]}}
@@ -398,17 +454,18 @@ def render(t, league_name, imgs, logo=None, back=None, tags=None, switch="", mat
         H.append("<h2>Фраги по картам</h2>" + column_chart(
             cols, top, ticks, str,
             legend_wl[:1] + [("var(--v-loss)", "Поражение"), ("var(--v-opp)", "Фраги соперника")],
-            avg=s["avg_total_kills"], avg_label=f"в среднем {s['avg_total_kills']} за карту", label="Фраги по картам"))
+            avg=s["avg_total_kills"], avg_label=f"в среднем {s['avg_total_kills']} за карту", label="Фраги по картам",
+            avg_kind="k", avg_tpl="в среднем {} за карту"))
         H.append("<div class=muted style='font-size:12px;margin-top:6px'>Нижняя часть столбика: фраги команды "
                  "(цвет показывает итог карты), серая часть: фраги соперника. Точные значения видны при наведении и в таблице «Карты».</div>")
 
     # карты
-    H.append("<h2>Карты</h2><div class=card><table class=sortable><thead><tr>"
+    H.append("<h2 id=maps>Карты</h2><div id=pkbar class=muted style='font-size:13px;margin:-6px 0 8px'></div><div class=card><table class=sortable><thead><tr>"
              "<th>Дата</th><th>Соперник</th><th>Сторона</th><th>Итог</th><th class=num>Время</th>"
              "<th class=num>Фраги</th><th>FB</th><th>Пики команды</th><th>Пики соперника</th><th>Ссылки</th></tr></thead><tbody>")
     for g in reversed(games):  # свежие карты сверху
         cls, res = ("w", "W") if g["win"] else ("lo", "L")
-        H.append(f"<tr><td data-v={g['start_time']}>{date_link(g, match_links)}</td><td>{e(g['opponent'])}</td>"
+        H.append(f"<tr data-win={1 if g['win'] else 0} data-picks='{e(json.dumps(g['picks'], ensure_ascii=False))}'><td data-v={g['start_time']}>{date_link(g, match_links)}</td><td>{e(g['opponent'])}</td>"
                  f"<td>{g['side']}{' · FP' if g['first_pick'] else ''}</td><td><span class='pill {cls}'>{res}</span></td>"
                  f"<td class=num data-v={g['duration_sec']}>{g['duration']}</td>"
                  f"<td class=num data-v={g['total_kills']}>{g['kills_for']}:{g['kills_against']} ({g['total_kills']})</td>"
@@ -438,7 +495,7 @@ def render(t, league_name, imgs, logo=None, back=None, tags=None, switch="", mat
     H.append("<h2>Пики команды</h2><div class=card><table class=sortable><thead><tr>"
              "<th>Герой</th><th class=num>Карты</th><th class=num>Победы</th><th class=num>Винрейт</th><th></th></tr></thead><tbody>")
     for h in s["hero_picks"]:
-        H.append(f"<tr><td><div class=hcell>{himg(h['hero'])}{e(h['hero'])}</div></td><td class=num>{h['games']}</td>"
+        H.append(f"<tr class=pk data-hero='{e(h['hero'])}' tabindex=0 title='Подсветить карты с этим героем'><td><div class=hcell>{himg(h['hero'])}{e(h['hero'])}</div></td><td class=num>{h['games']}</td>"
                  f"<td class=num>{h['wins']}</td><td class=num>{h['winrate']:.0f}%</td>"
                  f"<td><div class=bar><span style='width:{h['winrate']}%'></span></div></td></tr>")
     H.append("</tbody></table></div>")
@@ -458,7 +515,7 @@ def render(t, league_name, imgs, logo=None, back=None, tags=None, switch="", mat
     for h in s["vs_heroes"]:
         H.append(f"<tr><td><div class=hcell>{himg(h['hero'])}{e(h['hero'])}</div></td><td class=num>{h['games']}</td>"
                  f"<td class=num>{h['our_wins']}</td><td class=num>{h['our_winrate']:.0f}%</td></tr>")
-    H.append(f"</tbody></table></div></main><script>{SORT_JS}{TOTALS_JS}{VIZ_JS}</script></body></html>")
+    H.append(f"</tbody></table></div></main><script>{SORT_JS}{TOTALS_JS}{VIZ_JS}{FILTER_JS}{PICK_JS}</script></body></html>")
     return "\n".join(H)
 
 

@@ -155,15 +155,14 @@ def schedule_html(lid, out):
     snap_f = ROOT / "odds" / lid / "schedule.json"
     snap = json.loads(snap_f.read_text(encoding="utf-8")) if snap_f.exists() else {"matches": [], "fetched": "—"}
     now = datetime.datetime.now(MSK).timestamp()
-    from forecast import load as load_fc
     sch, fin, day = [], [], None
     for m in snap["matches"]:
         sr = find_series(ser, m["a"], m["b"], m["start"])
         href = rel(ROOT / "matches" / lid / f"{m['event_id']}.html", out) if m.get("event_id") else ""
         tag, close = (f"a class='sch-m{{c}}' href='{e(href)}'", "a") if href else ("div class='sch-m{c}'", "div")
         if sr and sr["done"]:
-            fc = load_fc(lid, str(m.get("event_id")))
-            hits = [p["hit"] for p in fc["picks"] if p["hit"] is not None] if fc else []
+            hits = [p["hit"] for f in sorted((ROOT / "forecasts" / lid).glob(f"{m.get('event_id')}L*.json"))
+                    for p in json.loads(f.read_text(encoding="utf-8"))["picks"] if p["hit"] is not None]
             mk = f"<span class=live-b>прогноз {sum(hits)}/{len(hits)}</span>" if hits else ""
             dt = datetime.datetime.fromtimestamp(m["start"], MSK)
             fin.append(f"<{tag.format(c='')}><time>{dt:%d.%m}</time><div class=vs>{_team(m['a'], teams, out, '')}"
