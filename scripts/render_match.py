@@ -71,7 +71,7 @@ return '<span class="hc '+h.l+'" title="'+h.n+': ср. '+h.a+' мин, темп 
 const mm=t=>Math.floor(t/60)+':'+String(Math.abs(t)%60).padStart(2,'0');
 async function tick(){try{const r=await fetch('https://api.opendota.com/api/live');const L=await r.json();
 const g=L.find(x=>T.includes(x.team_id_radiant)&&T.includes(x.team_id_dire)&&x.league_id==__LG__&&!x.deactivate_time);
-if(!g){box.innerHTML='<div class=meta>сейчас карта не идёт · обновлено '+new Date().toLocaleTimeString('ru-RU')+'</div>';return}
+if(!g){if(!box.dataset.snap)box.innerHTML='<div class=meta>сейчас карта не идёт · обновлено '+new Date().toLocaleTimeString('ru-RU')+'</div>';return}
 const side=t=>g.players.filter(p=>p.team===t);const nm=t=>t==0?g.team_name_radiant:g.team_name_dire;
 box.innerHTML='<div class=meta>карта идёт: '+mm(g.game_time)+' · убийства '+g.radiant_score+':'+g.dire_score+' · золото '+nm(g.radiant_lead>0?0:1)+' +'+Math.abs(g.radiant_lead)+' · обновлено '+new Date().toLocaleTimeString('ru-RU')+'</div>'+
 [0,1].map(t=>'<div class=dr><span class=c>'+(t==0?'Radiant':'Dire')+'</span><div class=side><b>'+nm(t)+'</b>'+side(t).map(p=>chip(p.hero_id,t==0?g.team_id_radiant:g.team_id_dire)).join('')+'</div></div>').join('')+verdict(g.players)+winrow(g)}catch(e){}}
@@ -83,9 +83,9 @@ const fm=(fr[0]!==null&&fd[0]!==null)?W.fw*(fr[0]-fd[0]):0;const p=Math.min(.95,
 const win=p>=.5?g.team_name_radiant:g.team_name_dire,pc=Math.round(100*Math.max(p,1-p));const sp=v=>(v>=0?'+':'')+Math.round(v*100);
 const part=Math.min(ra.length,di.length)<5?' <i class=muted>(пики не завершены: выбрано '+ra.length+' + '+di.length+' героев из 5 + 5)</i>':'';
 return '<div class=dr><span class=c></span><div class=side><span class=verdict>Прогноз по драфту: победит <b>'+win+'</b>, '+pc+'%. Команды '+Math.round(100*base)+'% ('+g.team_name_radiant+'), герои '+sp(hero)+' п.п., форма '+sp(fm)+' п.п. (форма: '+g.team_name_radiant+' — '+fr[1]+', '+g.team_name_dire+' — '+fd[1]+').'+part+'</span></div></div>'}
-function verdict(ps){const t=ps.map(p=>H[p.hero_id]).filter(Boolean).map(h=>h.t);if(t.length<6)return '';
+function verdict(ps){const t=ps.map(p=>H[p.hero_id]).filter(h=>h&&!h.x).map(h=>h.t);if(t.length<6)return '';
 const m=Math.round(t.reduce((a,b)=>a+b,0)/t.length*10)/10,w=m>=1?'затяжная':m<=-1?'быстрая':'средняя';
-const q=ps.map(p=>H[p.hero_id]).filter(Boolean),f=q.filter(h=>h.w=='f').length,s=q.filter(h=>h.w=='s').length;
+const q=ps.map(p=>H[p.hero_id]).filter(h=>h&&!h.x),f=q.filter(h=>h.w=='f').length,s=q.filter(h=>h.w=='s').length;
 return '<div class=dr><span class=c></span><div class=side><span class=verdict>Оценка драфтов: карта <b>'+w+'</b> (темп '+sg(m)+'), ожидаемая длительность ≈ '+(OV+m).toFixed(1)+' мин. Вышки: быстро ломают '+f+', медленно '+s+' героев; '+TW+'.</span></div></div>'}
 tick();setInterval(tick,30000);
 """
@@ -106,6 +106,10 @@ def hero_table(imgs, st, names, out):
         r[hid] = {"n": nm, "i": rel(imgs[nm], out) if nm in imgs else "", "a": h["avg"], "t": h["tilt"],
                   "w": "f" if h["tlabel"] == "быстро ломает" else "s" if h["tlabel"] == "медленно ломает" else "", "td": h["td"],
                   "l": "long" if h["label"] == "затяжной" else "fast" if h["label"] == "быстрый" else ""}
+    for hid, h in names.items():   # герои без сыгранных карт в базе: иконка есть, темп нейтральный
+        if int(hid) not in r and str(hid) not in r and h["localized_name"] in imgs:
+            r[int(hid)] = {"n": h["localized_name"], "i": rel(imgs[h["localized_name"]], out), "a": 0, "t": 0,
+                           "w": "", "td": 0, "l": "", "x": 1}
     return r
 
 
@@ -240,17 +244,12 @@ def draft_row(m, teams, ht, st, label, out):
 
 
 def live_snapshot(lid, ev):
-    """Текущая карта серии из OpenDota /live (None, если не идёт или нет связи)."""
+    """Текущая карта серии: hawk.live, запасной вариант — OpenDota /live (None, если не идёт или нет связи)."""
+    import live as livemod
     try:
-        req = urllib.request.Request("https://api.opendota.com/api/live", headers={"User-Agent": "dota-stats/1.0"})
-        live = json.loads(netutil.urlopen(req, timeout=30).read())
+        return livemod.current_game(lid, ev, teams_of(lid))
     except Exception:
         return None
-    for g in live:
-        if (g.get("league_id") == int(lid) and {g.get("team_id_radiant"), g.get("team_id_dire")} == {ev["a"], ev["b"]}
-                and not g.get("deactivate_time")):
-            return g
-    return None
 
 
 def hit_mark(h):
@@ -346,7 +345,7 @@ def render(lid, ev, teams, ser, snap_rows, stems):
         H.append(f"<p class=note>{e(f['note'])}</p></div>")
     if not fcs and not hide_fc:
         H.append("<div class=fc>Прогноз будет дан в начале карты, когда обе команды выберут героев: "
-                 "три прогноза (победитель, тотал убийств, время) и ставка 100 $ на один из них: победа — от коэффициента 1.4, тоталы — от 1.7.</div>")
+                 "три прогноза (победитель, тотал убийств, время) и ставка на один из них (слабый перевес 50 $, небольшой 75 $, явный 100 $): победа — от коэффициента 1.4, тоталы — от 1.7.</div>")
 
     # результат
     r = fc["result"] if fc else None
@@ -389,7 +388,7 @@ def render(lid, ev, teams, ser, snap_rows, stems):
                                 win_html(forecast.draft_win(g["team_id_radiant"], g["team_id_dire"],
                                                             *[[p["hero_id"] for p in g["players"] if p["team"] == t] for t in (0, 1)], st),
                                          g["team_name_radiant"], g["team_name_dire"])))
-        H.append(f"<h3 style='margin:0 0 6px;font-size:15px'>Лайв</h3><div id=live class=livebox>{init}</div>")
+        H.append(f"<h3 style='margin:0 0 6px;font-size:15px'>Лайв</h3><div id=live class=livebox{' data-snap=1' if g else ''}>{init}</div>")
     if s:
         for i, m in enumerate(s["maps"], 1):
             f = ROOT / "raw" / "matches" / f"{m['match_id']}.json"

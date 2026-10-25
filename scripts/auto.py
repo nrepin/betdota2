@@ -235,7 +235,7 @@ def do_settle(lid, st, now, dry, running=()):
         try:
             if fc and fc["result"]:
                 hits = [p for p in fc["picks"] if p["hit"] is not None]
-                stake = lambda p: p.get("stake") or STAKES.get(p["signal"], 100)
+                stake = lambda p: STAKES.get(p["signal"], 50)
                 pl = sum(stake(p) * (p["odds"] - 1) if p["hit"] else -stake(p) for p in hits)
                 notify(f"Карта закрыта: {fc['t1']} – {fc['t2']}, карта {fc['map_no']}: зашло {sum(p['hit'] for p in hits)} из "
                        f"{len(hits)}, {pl:+.0f} $")

@@ -18,8 +18,7 @@ from render_html import ROOT
 from render_schedule import MSK, find_series, series_results, teams_of
 
 DIR = ROOT / "forecasts"
-STAKE = 100       # условная ставка на каждый прогноз, $
-STAKES = {"явный": STAKE, "небольшой": STAKE, "слабый": STAKE}
+STAKES = {"явный": 100, "небольшой": 75, "слабый": 50}   # условная ставка по перевесу, $
 MIN_ODDS = {"win": 1.4, "time": 1.7, "kills": 1.7}   # ставка ставится, только если коэффициент не ниже порога
 
 
@@ -43,7 +42,7 @@ def line_of(market):
     return float(m.group(1)) if m else None
 
 
-# пороги расхождения «оценка − линия»: (небольшой — ставка 100, явный — 200); ниже малого порога — «слабый», ставка 50
+# пороги расхождения «оценка − линия»: (небольшой — ставка 75, явный — 100); ниже малого порога — «слабый», ставка 50
 EDGE = {"time": (3.0, 6.0), "kills": (6.0, 10.0), "win": (0.08, 0.15)}   # минуты, убийства, вероятность
 LIVE_SAFE_LEFT = 300   # до линии времени должно оставаться не меньше 5 мин игры
 HERO_K = 8             # сглаживание винрейта героя (как n/(n+K))
@@ -229,7 +228,7 @@ def from_draft(lid, ev, g, m, st, hero_names):
         pick = {"cat": cat, "label": {"kills": "Убийства", "time": "Время карты", "win": "Победа на карте"}[cat], "text": c["text"],
                 "market": c["market"], "side": c["side"], "line": c["line"], "odds": c["odds"], "est": c.get("est"),
                 "implied": round(1 / c["odds"], 3), "n": c.get("n", 0), "basis": c["basis"], "signal": signal, "ev": None,
-                "stake": STAKE, "hit": None}
+                "stake": STAKES[signal], "hit": None}
         picks = [pick]
     elif not (win or any(ev3[c]["odds"] for c in ("kills", "time"))):
         return None, "в линии нет подходящих рынков"

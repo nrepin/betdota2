@@ -1,6 +1,6 @@
 """Страница «Прогнозы ИИ» (forecasts.html): условный учёт ставок по сохранённым прогнозам.
 
-Ставка на каждый прогноз — 100 $ (STAKE). Это бухгалтерия прогнозов,
+Ставка зависит от перевеса: слабый — 50 $, небольшой — 75 $, явный — 100 $ (STAKES). Это бухгалтерия прогнозов,
 реальные ставки не делаются. Выигрыш = ставка × (коэффициент − 1), проигрыш = −ставка. Прогноз — один на карту, в её начале (герои обеих команд выбраны).
 
     python scripts/render_forecasts.py
@@ -13,8 +13,7 @@ from html import escape as e
 from render_html import ROOT, SORT_JS, rel
 
 OUT = ROOT / "forecasts.html"
-STAKE = 100
-STAKES = {"явный": STAKE, "небольшой": STAKE, "слабый": STAKE}
+STAKES = {"явный": 100, "небольшой": 75, "слабый": 50}
 MSK = datetime.timezone(datetime.timedelta(hours=3))
 CATS = {"win": "Победа на карте", "time": "Время карты", "kills": "Убийства"}
 
@@ -29,10 +28,23 @@ CSS = """
 .fbox td{padding:9px 12px;border-bottom:1px solid var(--line)}.fbox tr:last-child td{border-bottom:0}
 .fbox td.n,.fbox th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
 .fbox a{color:inherit}.fbox tr.out td{color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.chip{font:600 12.5px var(--mono);padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:inherit;cursor:pointer}
+.chip.on{background:var(--win-bg);border-color:var(--win);color:var(--win)}
+#fsum{font-size:12.5px;margin-left:6px}
 .fgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
 .fgrid .fbox{margin-top:0;overflow-x:auto}
 .fgrid .fbox th,.fgrid .fbox td{padding:9px 6px;font-size:13px}.fgrid .fbox td:first-child,.fgrid .fbox th:first-child{padding-left:12px;white-space:normal}.fgrid .fbox th{letter-spacing:.02em}
 
+"""
+
+FILTER_JS = """
+(()=>{const chips=[...document.querySelectorAll('.chip')],rows=[...document.querySelectorAll('table.sortable tbody tr[data-sig]')],sum=document.getElementById('fsum');
+const apply=sig=>{let n=0,st=0,pr=0;rows.forEach(r=>{const ok=!sig||r.dataset.sig===sig;r.style.display=ok?'':'none';
+if(ok&&r.dataset.done==='1'){n++;st+=+r.dataset.stake;pr+=+r.cells[5].dataset.v}});
+chips.forEach(c=>c.classList.toggle('on',c.dataset.sig===sig));
+sum.textContent=n?n+' рассчитано · '+st+' $ поставлено · прибыль '+(pr>0?'+':'')+Math.round(pr)+' $':''};
+chips.forEach(c=>c.addEventListener('click',()=>apply(c.dataset.sig)));apply('')})();
 """
 
 
@@ -60,7 +72,7 @@ def collect():
             continue  # доматчевых прогнозов больше нет: старые файлы в учёт не идут
         lname = json.loads((ROOT / "raw" / f"league_{fc['league']}.json").read_text(encoding="utf-8"))["name"]
         for p in fc["picks"]:
-            stake = STAKE   # на все прогнозы — одинаковая условная ставка
+            stake = STAKES.get(p["signal"], 50)   # условная ставка зависит от перевеса
             profit = None if p["hit"] is None else (stake * (p["odds"] - 1) if p["hit"] else -stake)
             rows.append({"fc": fc, "league": lname, "p": p, "stake": stake, "profit": profit,
                          "counted": True, "live": True})
@@ -82,8 +94,8 @@ def render_page():
     t = agg(rows)
     pending = [r for r in rows if r["counted"] and r["profit"] is None]
     out_of = [r for r in rows if not r["counted"]]
-    body = [f"<div class=page-h><h2>Прогнозы ИИ</h2><div class=sub>Условный учёт: 100 $ "
-            f"на каждый прогноз. Реальные ставки не делаются. Выигрыш = ставка × (коэффициент − 1), проигрыш = −ставка. "
+    body = [f"<div class=page-h><h2>Прогнозы ИИ</h2><div class=sub>Условный учёт: слабый перевес — 50 $, небольшой — 75 $, явный — 100 $. "
+            f" Реальные ставки не делаются. Выигрыш = ставка × (коэффициент − 1), проигрыш = −ставка. "
             f"На каждой карте, когда выбраны герои обеих команд, ИИ даёт три прогноза (победитель, тотал убийств, время) и ставит на один из них — с наибольшим перевесом над линией. Ставка на победу — от коэффициента 1.4, на тоталы — от 1.7.</div></div>"]
     hr = f"{t['hit'] / t['n']:.0%}" if t["n"] else "—"
     body.append(
@@ -113,7 +125,9 @@ def render_page():
     body.append("<h3 class=grp-h>Разрезы</h3><div class=fgrid>" + table("Рынок", by_cat) + table("Перевес", by_sig)
                 + table("Турнир", sorted(by_lg.items())) + "</div>")
 
-    body.append("<h3 class=grp-h>Все ставки</h3><div class=fbox><table class=sortable><thead><tr><th>Матч</th><th>Прогноз</th>"
+    chips = "".join(f"<button type=button class=chip data-sig='{e(s)}'>{e(s)} · {v} $</button>" for s, v in STAKES.items())
+    body.append("<h3 class=grp-h>Все ставки</h3><div class=chips><button type=button class='chip on' data-sig=''>Все</button>" + chips
+                + "<span id=fsum class=muted></span></div><div class=fbox><table class=sortable><thead><tr><th>Матч</th><th>Прогноз</th>"
                 "<th class=n>Коэф</th><th class=n>Ставка</th><th>Результат</th><th class=n>Прибыль</th></tr></thead><tbody>")
     for r in rows:
         fc, p = r["fc"], r["p"]
@@ -128,7 +142,7 @@ def render_page():
         if fc.get("url"):
             res += f"<div style='font-size:12px'><a href='{e(fc['url'])}'>PARI</a></div>"
         pr = "—" if r["profit"] is None else money(r["profit"])
-        body.append(f"<tr class='{'' if r['counted'] else 'out'}'><td><a href='{e(href)}'>{d} {e(fc['t1'])} – {e(fc['t2'])}</a>"
+        body.append(f"<tr data-sig='{e(p['signal'])}' data-stake='{r['stake']}' data-done='{int(r['profit'] is not None)}' class='{'' if r['counted'] else 'out'}'><td><a href='{e(href)}'>{d} {e(fc['t1'])} – {e(fc['t2'])}</a>"
                     f"<div class=muted style='font-size:12px'>{e(r['league'])}, карта {fc['map_no']}{live}</div></td>"
                     f"<td>{e(p['text'])}<div class=muted style='font-size:12px'>перевес: {e(p['signal'])}</div></td>"
                     f"<td class=n>{p['odds']}</td><td class=n>{r['stake']}</td><td>{res}</td>"
@@ -137,7 +151,7 @@ def render_page():
         body.append("<tr><td colspan=6>Прогнозов пока нет.</td></tr>")
     body.append("</tbody></table></div>")
     render_index.page(OUT, "Прогнозы ИИ: учёт ставок", "Условный учёт ставок по прогнозам ИИ: прибыль, ROI, попадания",
-                      "forecasts", "".join(body), SORT_JS, extra_css=CSS)
+                      "forecasts", "".join(body), SORT_JS + FILTER_JS, extra_css=CSS)
 
 
 if __name__ == "__main__":

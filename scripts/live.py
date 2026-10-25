@@ -23,6 +23,20 @@ def fetch_live():
     return json.loads(netutil.urlopen(req, timeout=30).read())
 
 
+def current_game(lid, ev, teams):
+    """Идущая карта события: сначала hawk.live, запасной вариант — OpenDota /live (None, если карты нет)."""
+    import hawk
+    g = (hawk.extra_games([], str(lid), [ev], teams) or [None])[0]
+    if g:
+        return g
+    try:
+        live = fetch_live()
+    except Exception:
+        return None
+    return next((x for x in live if str(x.get("league_id")) == str(lid) and not x.get("deactivate_time")
+                 and {x.get("team_id_radiant"), x.get("team_id_dire")} == {ev["a"], ev["b"]}), None)
+
+
 def mmss(t):
     return f"{t // 60}:{abs(t) % 60:02d}"
 
