@@ -8,6 +8,8 @@ import json
 import os
 import sys
 import urllib.request
+
+import netutil
 from html import escape
 from pathlib import Path
 
@@ -213,11 +215,11 @@ def totals_widget(t, title=None):
 
 
 SORT_JS = """
-document.querySelectorAll('table.sortable th').forEach((th,i)=>th.addEventListener('click',()=>{
-const tb=th.closest('table').tBodies[0],rows=[...tb.rows],asc=th.dataset.asc!=='1';
+document.querySelectorAll('table.sortable').forEach(tbl=>tbl.querySelectorAll('thead th').forEach((th,i)=>th.addEventListener('click',()=>{
+const tb=tbl.tBodies[0],rows=[...tb.rows],asc=th.dataset.asc!=='1';
 th.closest('tr').querySelectorAll('th').forEach(x=>delete x.dataset.asc);th.dataset.asc=asc?'1':'0';
 const key=r=>{const c=r.cells[i],v=c.dataset.v??c.textContent.trim();const n=parseFloat(v);return isNaN(n)?v.toLowerCase():n};
-rows.sort((a,b)=>{const x=key(a),y=key(b);return (x>y?1:x<y?-1:0)*(asc?1:-1)});rows.forEach(r=>tb.appendChild(r))}));
+rows.sort((a,b)=>{const x=key(a),y=key(b);return (x>y?1:x<y?-1:0)*(asc?1:-1)});rows.forEach(r=>tb.appendChild(r))})));
 """
 
 
@@ -278,7 +280,7 @@ def load_heroes():
         if not path.exists():
             try:
                 req = urllib.request.Request(url, headers={"User-Agent": "dota-stats/1.0"})
-                with urllib.request.urlopen(req, timeout=30) as r:
+                with netutil.urlopen(req, timeout=30) as r:
                     path.write_bytes(r.read())
             except Exception as ex:
                 print(f"  нет картинки {h['localized_name']}: {ex}", file=sys.stderr)
@@ -341,7 +343,7 @@ def team_heroes_html(t, himg):
         tag = {"затяжной": "long", "быстрый": "fast"}.get(r["label"], "")
         H.append(f"<tr><td><div class=hcell>{himg(nm)}{e(nm)}</div></td>"
                  f"<td data-v={order[r['label']]}><span class='tag {tag}'>{e(r['label'])}</span> <span class=muted>{r['tilt']:+g}</span></td>"
-                 f"<td><span class='tag {ttag.get(r['tlabel'], '')}'>{e(r['tlabel'])}</span></td>"
+                 f"<td data-v={ {'быстро ломает': 0, 'медленно ломает': 2}.get(r['tlabel'], 1) }><span class='tag {ttag.get(r['tlabel'], '')}'>{e(r['tlabel'])}</span></td>"
                  + ("" if is_all else cell(r["scope"])) + cell(r["all"]) + "</tr>")
     H.append("</tbody></table></div><div class=muted style='font-size:12.5px;margin-top:6px'>Темп героя — по всем сыгранным картам базы "
              "(страница «Герои»); «Мин» — средняя длительность карт команды с этим героем. Сортировка: быстрые, затяжные, "
@@ -544,7 +546,7 @@ def team_logo(team_id):
             if t["team_id"] == team_id and t.get("logo_url"):
                 try:
                     req = urllib.request.Request(t["logo_url"], headers={"User-Agent": "dota-stats/1.0"})
-                    with urllib.request.urlopen(req, timeout=30) as r:
+                    with netutil.urlopen(req, timeout=30) as r:
                         TEAM_DIR.mkdir(parents=True, exist_ok=True)
                         path.write_bytes(r.read())
                     return path

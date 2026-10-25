@@ -12,13 +12,15 @@ import json
 import time
 import urllib.request
 
+import netutil
+
 import heroes_stats
 from render_html import ROOT
 
 
 def fetch_live():
     req = urllib.request.Request("https://api.opendota.com/api/live", headers={"User-Agent": "dota-stats/1.0"})
-    return json.loads(urllib.request.urlopen(req, timeout=30).read())
+    return json.loads(netutil.urlopen(req, timeout=30).read())
 
 
 def mmss(t):
@@ -58,6 +60,14 @@ def show(g, st, names, lid):
         print(f"  {g['team_name_radiant'] if team == 0 else g['team_name_dire']}: " + "; ".join(cells)
               + f"\n    темп драфта: {heroes_stats.tempo_word(t)}" + ("" if t is None else f" ({t:+g})"))
     ev = heroes_stats.draft_eval(ids[0], ids[1], st) if min(len(ids[0]), len(ids[1])) == 5 else None
+    import forecast
+    wn = forecast.draft_win(g["team_id_radiant"], g["team_id_dire"], ids[0], ids[1], st)
+    if wn:
+        pa = wn["p"]
+        part = "" if min(wn["na"], wn["nb"]) == 5 else f" [пики не завершены: {wn['na']}+{wn['nb']}]"
+        print(f"  Прогноз по драфту: победит {g['team_name_radiant'] if pa >= 0.5 else g['team_name_dire']} "
+              f"{max(pa, 1 - pa):.0%} (команды {wn['base']:.0%}, герои {wn['hero'] * 100:+.0f} п.п., форма {wn['form'] * 100:+.0f} п.п.; "
+              f"форма: {wn['form_a']} / {wn['form_b']}){part}")
     if ev:
         w = {"затяжной": "затяжная", "быстрый": "быстрая", "средний": "средняя"}[ev["word"]]
         print(f"  Оценка драфтов: карта {w} (темп {ev['mean']:+g}), ожидаемая длительность ≈ {ev['exp']:g} мин "

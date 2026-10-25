@@ -348,44 +348,390 @@
       ],
       "patch": 60,
       "dotabuff": "https://www.dotabuff.com/matches/9056429802"
+    },
+    {
+      "match_id": 9059726836,
+      "series_id": 1158959,
+      "start_time": 1792852704,
+      "opponent_id": 8255888,
+      "opponent": "BETBOOM TEAM",
+      "side": "Radiant",
+      "win": true,
+      "duration_sec": 2752,
+      "duration": "45:52",
+      "kills_for": 39,
+      "kills_against": 24,
+      "total_kills": 63,
+      "first_pick": true,
+      "first_blood": false,
+      "first_blood_time": 14,
+      "gold_adv_10min": null,
+      "max_gold_lead": null,
+      "max_gold_deficit": null,
+      "roshans": 0,
+      "towers": null,
+      "picks": [
+        "Witch Doctor",
+        "Pangolier",
+        "Dark Willow",
+        "Weaver",
+        "Mars"
+      ],
+      "bans": [
+        "Enigma",
+        "Lone Druid",
+        "Beastmaster",
+        "Undying",
+        "Doom",
+        "Lifestealer",
+        "Faceless Void"
+      ],
+      "opp_picks": [
+        "Keeper of the Light",
+        "Hoodwink",
+        "Brewmaster",
+        "Windranger",
+        "Sven"
+      ],
+      "opp_bans": [
+        "Bounty Hunter",
+        "Techies",
+        "Slark",
+        "Earth Spirit",
+        "Anti-Mage",
+        "Tidehunter",
+        "Largo"
+      ],
+      "players": [
+        {
+          "account_id": 847565596,
+          "name": "rue",
+          "hero": "Witch Doctor",
+          "position": null,
+          "kills": 0,
+          "deaths": 10,
+          "assists": 26,
+          "last_hits": 24,
+          "denies": 6,
+          "gpm": 364,
+          "xpm": 634,
+          "net_worth": 15467,
+          "hero_damage": 18378,
+          "tower_damage": 578,
+          "hero_healing": 14915,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 321580662,
+          "name": "Yatoro",
+          "hero": "Weaver",
+          "position": null,
+          "kills": 10,
+          "deaths": 3,
+          "assists": 10,
+          "last_hits": 612,
+          "denies": 9,
+          "gpm": 847,
+          "xpm": 1111,
+          "net_worth": 36547,
+          "hero_damage": 26872,
+          "tower_damage": 13112,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 106305042,
+          "name": "Larl",
+          "hero": "Pangolier",
+          "position": null,
+          "kills": 13,
+          "deaths": 2,
+          "assists": 17,
+          "last_hits": 448,
+          "denies": 11,
+          "gpm": 702,
+          "xpm": 1005,
+          "net_worth": 30127,
+          "hero_damage": 30491,
+          "tower_damage": 2277,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 218231587,
+          "name": "not_me",
+          "hero": "Dark Willow",
+          "position": null,
+          "kills": 7,
+          "deaths": 6,
+          "assists": 23,
+          "last_hits": 80,
+          "denies": 0,
+          "gpm": 400,
+          "xpm": 627,
+          "net_worth": 15388,
+          "hero_damage": 22292,
+          "tower_damage": 301,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 140835095,
+          "name": "Batyuk",
+          "hero": "Mars",
+          "position": null,
+          "kills": 9,
+          "deaths": 3,
+          "assists": 22,
+          "last_hits": 316,
+          "denies": 6,
+          "gpm": 572,
+          "xpm": 911,
+          "net_worth": 24857,
+          "hero_damage": 21242,
+          "tower_damage": 560,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9059726836"
+    },
+    {
+      "match_id": 9059855376,
+      "series_id": 1158959,
+      "start_time": 1792857192,
+      "opponent_id": 8255888,
+      "opponent": "BETBOOM TEAM",
+      "side": "Dire",
+      "win": true,
+      "duration_sec": 1935,
+      "duration": "32:15",
+      "kills_for": 49,
+      "kills_against": 13,
+      "total_kills": 62,
+      "first_pick": false,
+      "first_blood": false,
+      "first_blood_time": 0,
+      "gold_adv_10min": null,
+      "max_gold_lead": null,
+      "max_gold_deficit": null,
+      "roshans": 0,
+      "towers": null,
+      "picks": [
+        "Witch Doctor",
+        "Hoodwink",
+        "Sand King",
+        "Largo",
+        "Phantom Lancer"
+      ],
+      "bans": [
+        "Lone Druid",
+        "Earth Spirit",
+        "Bounty Hunter",
+        "Techies",
+        "Anti-Mage",
+        "Brewmaster",
+        "Enigma"
+      ],
+      "opp_picks": [
+        "Keeper of the Light",
+        "Bane",
+        "Windranger",
+        "Lifestealer",
+        "Doom"
+      ],
+      "opp_bans": [
+        "Slark",
+        "Nature's Prophet",
+        "Pangolier",
+        "Dark Willow",
+        "Nyx Assassin",
+        "Morphling",
+        "Faceless Void"
+      ],
+      "players": [
+        {
+          "account_id": 847565596,
+          "name": "rue",
+          "hero": "Witch Doctor",
+          "position": null,
+          "kills": 11,
+          "deaths": 4,
+          "assists": 26,
+          "last_hits": 20,
+          "denies": 1,
+          "gpm": 410,
+          "xpm": 609,
+          "net_worth": 11513,
+          "hero_damage": 20148,
+          "tower_damage": 293,
+          "hero_healing": 16301,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 321580662,
+          "name": "Yatoro",
+          "hero": "Phantom Lancer",
+          "position": null,
+          "kills": 11,
+          "deaths": 0,
+          "assists": 10,
+          "last_hits": 405,
+          "denies": 7,
+          "gpm": 835,
+          "xpm": 943,
+          "net_worth": 26902,
+          "hero_damage": 29188,
+          "tower_damage": 18586,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 106305042,
+          "name": "Larl",
+          "hero": "Sand King",
+          "position": null,
+          "kills": 9,
+          "deaths": 3,
+          "assists": 24,
+          "last_hits": 268,
+          "denies": 1,
+          "gpm": 642,
+          "xpm": 726,
+          "net_worth": 19901,
+          "hero_damage": 29074,
+          "tower_damage": 1790,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 218231587,
+          "name": "not_me",
+          "hero": "Hoodwink",
+          "position": null,
+          "kills": 13,
+          "deaths": 3,
+          "assists": 19,
+          "last_hits": 73,
+          "denies": 2,
+          "gpm": 461,
+          "xpm": 752,
+          "net_worth": 12755,
+          "hero_damage": 21756,
+          "tower_damage": 190,
+          "hero_healing": 24,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 140835095,
+          "name": "Batyuk",
+          "hero": "Largo",
+          "position": null,
+          "kills": 5,
+          "deaths": 3,
+          "assists": 26,
+          "last_hits": 217,
+          "denies": 10,
+          "gpm": 589,
+          "xpm": 831,
+          "net_worth": 18310,
+          "hero_damage": 12772,
+          "tower_damage": 1687,
+          "hero_healing": 16482,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9059855376"
     }
   ],
   "summary": {
-    "games": 2,
-    "wins": 2,
+    "games": 4,
+    "wins": 4,
     "losses": 0,
     "winrate": 100.0,
-    "avg_duration": "37:26",
-    "avg_duration_win": "37:26",
+    "avg_duration": "38:15",
+    "avg_duration_win": "38:15",
     "avg_duration_loss": "0:00",
-    "shortest": "33:17",
-    "longest": "41:36",
-    "avg_kills_for": 48.5,
-    "avg_kills_against": 21.0,
-    "avg_total_kills": 69.5,
-    "kills_per_min": 1.3,
-    "first_blood_rate": 100.0,
+    "shortest": "32:15",
+    "longest": "45:52",
+    "avg_kills_for": 46.2,
+    "avg_kills_against": 19.8,
+    "avg_total_kills": 66.0,
+    "kills_per_min": 1.21,
+    "first_blood_rate": 50.0,
     "avg_gold_adv_10min": 2425,
-    "avg_roshans": 0.5,
+    "avg_roshans": 0.25,
     "radiant": {
-      "games": 1,
-      "wins": 1,
-      "winrate": 100.0
-    },
-    "dire": {
-      "games": 1,
-      "wins": 1,
-      "winrate": 100.0
-    },
-    "first_pick": {
       "games": 2,
       "wins": 2,
       "winrate": 100.0
     },
+    "dire": {
+      "games": 2,
+      "wins": 2,
+      "winrate": 100.0
+    },
+    "first_pick": {
+      "games": 3,
+      "wins": 3,
+      "winrate": 100.0
+    },
     "second_pick": {
-      "games": 0,
-      "wins": 0,
-      "winrate": 0
+      "games": 1,
+      "wins": 1,
+      "winrate": 100.0
     },
     "series": [
       {
@@ -393,10 +739,22 @@
         "opponent": "LEGION",
         "score": "2-0",
         "won": true
+      },
+      {
+        "series_id": 1158959,
+        "opponent": "BETBOOM TEAM",
+        "score": "2-0",
+        "won": true
       }
     ],
-    "series_record": "1-0",
+    "series_record": "2-0",
     "hero_picks": [
+      {
+        "hero": "Witch Doctor",
+        "games": 3,
+        "wins": 3,
+        "winrate": 100.0
+      },
       {
         "hero": "Slark",
         "games": 2,
@@ -404,13 +762,13 @@
         "winrate": 100.0
       },
       {
-        "hero": "Earth Spirit",
-        "games": 1,
-        "wins": 1,
+        "hero": "Hoodwink",
+        "games": 2,
+        "wins": 2,
         "winrate": 100.0
       },
       {
-        "hero": "Witch Doctor",
+        "hero": "Earth Spirit",
         "games": 1,
         "wins": 1,
         "winrate": 100.0
@@ -434,12 +792,6 @@
         "winrate": 100.0
       },
       {
-        "hero": "Hoodwink",
-        "games": 1,
-        "wins": 1,
-        "winrate": 100.0
-      },
-      {
         "hero": "Earthshaker",
         "games": 1,
         "wins": 1,
@@ -450,16 +802,58 @@
         "games": 1,
         "wins": 1,
         "winrate": 100.0
+      },
+      {
+        "hero": "Pangolier",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Dark Willow",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Weaver",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Mars",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Sand King",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Largo",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Phantom Lancer",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
       }
     ],
     "bans_by_team": [
       [
         "Enigma",
-        2
+        4
       ],
       [
         "Lone Druid",
-        2
+        4
       ],
       [
         "Largo",
@@ -470,12 +864,16 @@
         2
       ],
       [
+        "Doom",
+        2
+      ],
+      [
         "Tiny",
         2
       ],
       [
-        "Doom",
-        1
+        "Faceless Void",
+        2
       ],
       [
         "Naga Siren",
@@ -486,29 +884,65 @@
         1
       ],
       [
-        "Faceless Void",
+        "Beastmaster",
+        1
+      ],
+      [
+        "Undying",
+        1
+      ],
+      [
+        "Lifestealer",
+        1
+      ],
+      [
+        "Earth Spirit",
+        1
+      ],
+      [
+        "Bounty Hunter",
+        1
+      ],
+      [
+        "Techies",
+        1
+      ],
+      [
+        "Anti-Mage",
+        1
+      ],
+      [
+        "Brewmaster",
         1
       ]
     ],
     "bans_against_team": [
       [
         "Bounty Hunter",
-        2
+        3
       ],
       [
         "Techies",
-        2
+        3
       ],
       [
         "Anti-Mage",
-        2
+        3
       ],
       [
         "Pangolier",
-        2
+        3
       ],
       [
         "Brewmaster",
+        2
+      ],
+      [
+        "Earth Spirit",
+        2
+      ],
+      [
+        "Slark",
         2
       ],
       [
@@ -520,17 +954,59 @@
         1
       ],
       [
-        "Earth Spirit",
+        "Dawnbreaker",
         1
       ],
       [
-        "Dawnbreaker",
+        "Tidehunter",
+        1
+      ],
+      [
+        "Largo",
+        1
+      ],
+      [
+        "Nature's Prophet",
+        1
+      ],
+      [
+        "Dark Willow",
+        1
+      ],
+      [
+        "Nyx Assassin",
+        1
+      ],
+      [
+        "Morphling",
+        1
+      ],
+      [
+        "Faceless Void",
         1
       ]
     ],
     "vs_heroes": [
       {
         "hero": "Invoker",
+        "games": 2,
+        "our_wins": 2,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Sven",
+        "games": 2,
+        "our_wins": 2,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Keeper of the Light",
+        "games": 2,
+        "our_wins": 2,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Windranger",
         "games": 2,
         "our_wins": 2,
         "our_winrate": 100.0
@@ -578,7 +1054,31 @@
         "our_winrate": 100.0
       },
       {
-        "hero": "Sven",
+        "hero": "Hoodwink",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Brewmaster",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Bane",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Lifestealer",
+        "games": 1,
+        "our_wins": 1,
+        "our_winrate": 100.0
+      },
+      {
+        "hero": "Doom",
         "games": 1,
         "our_wins": 1,
         "our_winrate": 100.0
@@ -589,21 +1089,31 @@
         "account_id": 321580662,
         "name": "Yatoro",
         "position": 1,
-        "games": 2,
-        "avg_kills": 12.0,
-        "avg_deaths": 2.5,
-        "avg_assists": 14.0,
-        "kda": 10.4,
-        "avg_gpm": 704,
-        "avg_xpm": 958,
-        "avg_last_hits": 332,
-        "avg_hero_damage": 20296,
-        "avg_wards": 4.0,
+        "games": 4,
+        "avg_kills": 11.2,
+        "avg_deaths": 2.0,
+        "avg_assists": 12.0,
+        "kda": 11.62,
+        "avg_gpm": 773,
+        "avg_xpm": 992,
+        "avg_last_hits": 420,
+        "avg_hero_damage": 24163,
+        "avg_wards": 2.0,
         "heroes": [
           {
             "hero": "Slark",
             "games": 2,
             "wins": 2
+          },
+          {
+            "hero": "Weaver",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Phantom Lancer",
+            "games": 1,
+            "wins": 1
           }
         ]
       },
@@ -611,16 +1121,16 @@
         "account_id": 106305042,
         "name": "Larl",
         "position": 2,
-        "games": 2,
-        "avg_kills": 13.5,
-        "avg_deaths": 3.0,
-        "avg_assists": 16.0,
-        "kda": 9.83,
-        "avg_gpm": 669,
+        "games": 4,
+        "avg_kills": 12.2,
+        "avg_deaths": 2.8,
+        "avg_assists": 18.2,
+        "kda": 11.09,
+        "avg_gpm": 670,
         "avg_xpm": 866,
-        "avg_last_hits": 311,
-        "avg_hero_damage": 33382,
-        "avg_wards": 1.5,
+        "avg_last_hits": 334,
+        "avg_hero_damage": 31582,
+        "avg_wards": 0.8,
         "heroes": [
           {
             "hero": "Earth Spirit",
@@ -631,6 +1141,16 @@
             "hero": "Earthshaker",
             "games": 1,
             "wins": 1
+          },
+          {
+            "hero": "Pangolier",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Sand King",
+            "games": 1,
+            "wins": 1
           }
         ]
       },
@@ -638,15 +1158,15 @@
         "account_id": 140835095,
         "name": "Batyuk",
         "position": 3,
-        "games": 2,
-        "avg_kills": 10.0,
-        "avg_deaths": 2.0,
-        "avg_assists": 21.5,
-        "kda": 15.75,
-        "avg_gpm": 757,
-        "avg_xpm": 994,
-        "avg_last_hits": 368,
-        "avg_hero_damage": 30360,
+        "games": 4,
+        "avg_kills": 8.5,
+        "avg_deaths": 2.5,
+        "avg_assists": 22.8,
+        "kda": 12.5,
+        "avg_gpm": 669,
+        "avg_xpm": 933,
+        "avg_last_hits": 317,
+        "avg_hero_damage": 23683,
         "avg_wards": 0.0,
         "heroes": [
           {
@@ -658,6 +1178,16 @@
             "hero": "Doom",
             "games": 1,
             "wins": 1
+          },
+          {
+            "hero": "Mars",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Largo",
+            "games": 1,
+            "wins": 1
           }
         ]
       },
@@ -665,24 +1195,29 @@
         "account_id": 218231587,
         "name": "not_me",
         "position": 4,
-        "games": 2,
-        "avg_kills": 7.5,
-        "avg_deaths": 8.5,
-        "avg_assists": 20.5,
-        "kda": 3.29,
-        "avg_gpm": 370,
-        "avg_xpm": 533,
-        "avg_last_hits": 56,
-        "avg_hero_damage": 15714,
-        "avg_wards": 24.5,
+        "games": 4,
+        "avg_kills": 8.8,
+        "avg_deaths": 6.5,
+        "avg_assists": 20.8,
+        "kda": 4.54,
+        "avg_gpm": 400,
+        "avg_xpm": 611,
+        "avg_last_hits": 66,
+        "avg_hero_damage": 18869,
+        "avg_wards": 12.2,
         "heroes": [
+          {
+            "hero": "Hoodwink",
+            "games": 2,
+            "wins": 2
+          },
           {
             "hero": "Shadow Demon",
             "games": 1,
             "wins": 1
           },
           {
-            "hero": "Hoodwink",
+            "hero": "Dark Willow",
             "games": 1,
             "wins": 1
           }
@@ -692,21 +1227,21 @@
         "account_id": 847565596,
         "name": "rue",
         "position": 5,
-        "games": 2,
-        "avg_kills": 5.0,
-        "avg_deaths": 5.0,
-        "avg_assists": 21.0,
-        "kda": 5.2,
-        "avg_gpm": 356,
-        "avg_xpm": 596,
-        "avg_last_hits": 36,
-        "avg_hero_damage": 14298,
-        "avg_wards": 18.0,
+        "games": 4,
+        "avg_kills": 5.2,
+        "avg_deaths": 6.0,
+        "avg_assists": 23.5,
+        "kda": 4.79,
+        "avg_gpm": 372,
+        "avg_xpm": 609,
+        "avg_last_hits": 29,
+        "avg_hero_damage": 16780,
+        "avg_wards": 9.0,
         "heroes": [
           {
             "hero": "Witch Doctor",
-            "games": 1,
-            "wins": 1
+            "games": 3,
+            "wins": 3
           },
           {
             "hero": "Dazzle",

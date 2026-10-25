@@ -348,29 +348,375 @@
       ],
       "patch": 60,
       "dotabuff": "https://www.dotabuff.com/matches/9057681759"
+    },
+    {
+      "match_id": 9059391986,
+      "series_id": 1158753,
+      "start_time": 1792840107,
+      "opponent_id": 9823272,
+      "opponent": "Team Yandex",
+      "side": "Radiant",
+      "win": false,
+      "duration_sec": 3660,
+      "duration": "61:00",
+      "kills_for": 27,
+      "kills_against": 51,
+      "total_kills": 78,
+      "first_pick": false,
+      "first_blood": false,
+      "first_blood_time": 96,
+      "gold_adv_10min": null,
+      "max_gold_lead": null,
+      "max_gold_deficit": null,
+      "roshans": 0,
+      "towers": null,
+      "picks": [
+        "Techies",
+        "Timbersaw",
+        "Invoker",
+        "Largo",
+        "Clinkz"
+      ],
+      "bans": [
+        "Bounty Hunter",
+        "Slark",
+        "Witch Doctor",
+        "Necrophos",
+        "Ursa",
+        "Bane",
+        "Dazzle"
+      ],
+      "opp_picks": [
+        "Earth Spirit",
+        "Lone Druid",
+        "Rubick",
+        "Doom",
+        "Death Prophet"
+      ],
+      "opp_bans": [
+        "Dragon Knight",
+        "Windranger",
+        "Brewmaster",
+        "Enigma",
+        "Monkey King",
+        "Nature's Prophet",
+        "Anti-Mage"
+      ],
+      "players": [
+        {
+          "account_id": 100594231,
+          "name": "skem",
+          "hero": "Techies",
+          "position": null,
+          "kills": 1,
+          "deaths": 14,
+          "assists": 12,
+          "last_hits": 181,
+          "denies": 2,
+          "gpm": 369,
+          "xpm": 426,
+          "net_worth": 14841,
+          "hero_damage": 46693,
+          "tower_damage": 0,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 402583877,
+          "name": "SSS",
+          "hero": "Timbersaw",
+          "position": null,
+          "kills": 6,
+          "deaths": 8,
+          "assists": 12,
+          "last_hits": 562,
+          "denies": 5,
+          "gpm": 638,
+          "xpm": 849,
+          "net_worth": 28249,
+          "hero_damage": 53524,
+          "tower_damage": 220,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 181267255,
+          "name": "OneJey ",
+          "hero": "Largo",
+          "position": null,
+          "kills": 3,
+          "deaths": 13,
+          "assists": 14,
+          "last_hits": 60,
+          "denies": 1,
+          "gpm": 277,
+          "xpm": 450,
+          "net_worth": 10478,
+          "hero_damage": 11097,
+          "tower_damage": 0,
+          "hero_healing": 10872,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 94054712,
+          "name": "Topson",
+          "hero": "Invoker",
+          "position": null,
+          "kills": 5,
+          "deaths": 9,
+          "assists": 13,
+          "last_hits": 444,
+          "denies": 10,
+          "gpm": 565,
+          "xpm": 563,
+          "net_worth": 27229,
+          "hero_damage": 61940,
+          "tower_damage": 3990,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 355168766,
+          "name": "Natsumi",
+          "hero": "Clinkz",
+          "position": null,
+          "kills": 11,
+          "deaths": 7,
+          "assists": 13,
+          "last_hits": 638,
+          "denies": 14,
+          "gpm": 732,
+          "xpm": 871,
+          "net_worth": 30124,
+          "hero_damage": 112430,
+          "tower_damage": 8776,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9059391986"
+    },
+    {
+      "match_id": 9059530192,
+      "series_id": 1158753,
+      "start_time": 1792845745,
+      "opponent_id": 9823272,
+      "opponent": "Team Yandex",
+      "side": "Radiant",
+      "win": false,
+      "duration_sec": 4261,
+      "duration": "71:01",
+      "kills_for": 34,
+      "kills_against": 71,
+      "total_kills": 105,
+      "first_pick": true,
+      "first_blood": false,
+      "first_blood_time": 5,
+      "gold_adv_10min": null,
+      "max_gold_lead": null,
+      "max_gold_deficit": null,
+      "roshans": 0,
+      "towers": null,
+      "picks": [
+        "Timbersaw",
+        "Invoker",
+        "Bane",
+        "Terrorblade",
+        "Shadow Demon"
+      ],
+      "bans": [
+        "Slark",
+        "Lone Druid",
+        "Necrophos",
+        "Techies",
+        "Doom",
+        "Viper",
+        "Legion Commander"
+      ],
+      "opp_picks": [
+        "Ursa",
+        "Windranger",
+        "Pangolier",
+        "Death Prophet",
+        "Magnus"
+      ],
+      "opp_bans": [
+        "Bounty Hunter",
+        "Brewmaster",
+        "Earth Spirit",
+        "Enigma",
+        "Dragon Knight",
+        "Gyrocopter",
+        "Keeper of the Light"
+      ],
+      "players": [
+        {
+          "account_id": 100594231,
+          "name": "skem",
+          "hero": "Bane",
+          "position": null,
+          "kills": 2,
+          "deaths": 22,
+          "assists": 14,
+          "last_hits": 26,
+          "denies": 1,
+          "gpm": 321,
+          "xpm": 422,
+          "net_worth": 12240,
+          "hero_damage": 11101,
+          "tower_damage": 0,
+          "hero_healing": 125,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 402583877,
+          "name": "SSS",
+          "hero": "Timbersaw",
+          "position": null,
+          "kills": 7,
+          "deaths": 7,
+          "assists": 18,
+          "last_hits": 701,
+          "denies": 2,
+          "gpm": 723,
+          "xpm": 1014,
+          "net_worth": 39167,
+          "hero_damage": 76819,
+          "tower_damage": 2127,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 181267255,
+          "name": "OneJey ",
+          "hero": "Shadow Demon",
+          "position": null,
+          "kills": 4,
+          "deaths": 22,
+          "assists": 19,
+          "last_hits": 213,
+          "denies": 3,
+          "gpm": 427,
+          "xpm": 474,
+          "net_worth": 20551,
+          "hero_damage": 41518,
+          "tower_damage": 3237,
+          "hero_healing": 3168,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 94054712,
+          "name": "Topson",
+          "hero": "Invoker",
+          "position": null,
+          "kills": 11,
+          "deaths": 11,
+          "assists": 18,
+          "last_hits": 462,
+          "denies": 2,
+          "gpm": 600,
+          "xpm": 717,
+          "net_worth": 32814,
+          "hero_damage": 47541,
+          "tower_damage": 4423,
+          "hero_healing": 9,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 355168766,
+          "name": "Natsumi",
+          "hero": "Terrorblade",
+          "position": null,
+          "kills": 9,
+          "deaths": 10,
+          "assists": 12,
+          "last_hits": 896,
+          "denies": 9,
+          "gpm": 846,
+          "xpm": 943,
+          "net_worth": 47059,
+          "hero_damage": 63527,
+          "tower_damage": 16667,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9059530192"
     }
   ],
   "summary": {
-    "games": 2,
+    "games": 4,
     "wins": 2,
-    "losses": 0,
-    "winrate": 100.0,
-    "avg_duration": "43:20",
+    "losses": 2,
+    "winrate": 50.0,
+    "avg_duration": "54:40",
     "avg_duration_win": "43:20",
-    "avg_duration_loss": "0:00",
+    "avg_duration_loss": "66:00",
     "shortest": "37:39",
-    "longest": "49:01",
-    "avg_kills_for": 33.0,
-    "avg_kills_against": 22.0,
-    "avg_total_kills": 55.0,
-    "kills_per_min": 0.76,
+    "longest": "71:01",
+    "avg_kills_for": 31.8,
+    "avg_kills_against": 41.5,
+    "avg_total_kills": 73.2,
+    "kills_per_min": 0.58,
     "first_blood_rate": 0.0,
     "avg_gold_adv_10min": 1423,
-    "avg_roshans": 2.0,
+    "avg_roshans": 1.0,
     "radiant": {
-      "games": 2,
+      "games": 4,
       "wins": 2,
-      "winrate": 100.0
+      "winrate": 50.0
     },
     "dire": {
       "games": 0,
@@ -378,14 +724,14 @@
       "winrate": 0
     },
     "first_pick": {
-      "games": 2,
+      "games": 3,
       "wins": 2,
-      "winrate": 100.0
+      "winrate": 66.7
     },
     "second_pick": {
-      "games": 0,
+      "games": 1,
       "wins": 0,
-      "winrate": 0
+      "winrate": 0.0
     },
     "series": [
       {
@@ -393,10 +739,34 @@
         "opponent": "1win",
         "score": "2-0",
         "won": true
+      },
+      {
+        "series_id": 1158753,
+        "opponent": "Team Yandex",
+        "score": "0-2",
+        "won": false
       }
     ],
-    "series_record": "1-0",
+    "series_record": "1-1",
     "hero_picks": [
+      {
+        "hero": "Terrorblade",
+        "games": 2,
+        "wins": 1,
+        "winrate": 50.0
+      },
+      {
+        "hero": "Timbersaw",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Invoker",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
       {
         "hero": "Dazzle",
         "games": 1,
@@ -411,12 +781,6 @@
       },
       {
         "hero": "Bristleback",
-        "games": 1,
-        "wins": 1,
-        "winrate": 100.0
-      },
-      {
-        "hero": "Terrorblade",
         "games": 1,
         "wins": 1,
         "winrate": 100.0
@@ -456,12 +820,42 @@
         "games": 1,
         "wins": 1,
         "winrate": 100.0
+      },
+      {
+        "hero": "Techies",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Largo",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Clinkz",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Bane",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Shadow Demon",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
       }
     ],
     "bans_by_team": [
       [
         "Slark",
-        2
+        4
       ],
       [
         "Largo",
@@ -476,11 +870,15 @@
         2
       ],
       [
-        "Anti-Mage",
-        1
+        "Doom",
+        2
       ],
       [
-        "Doom",
+        "Necrophos",
+        2
+      ],
+      [
+        "Anti-Mage",
         1
       ],
       [
@@ -498,31 +896,75 @@
       [
         "Templar Assassin",
         1
+      ],
+      [
+        "Bounty Hunter",
+        1
+      ],
+      [
+        "Witch Doctor",
+        1
+      ],
+      [
+        "Ursa",
+        1
+      ],
+      [
+        "Bane",
+        1
+      ],
+      [
+        "Dazzle",
+        1
+      ],
+      [
+        "Lone Druid",
+        1
+      ],
+      [
+        "Techies",
+        1
+      ],
+      [
+        "Viper",
+        1
+      ],
+      [
+        "Legion Commander",
+        1
       ]
     ],
     "bans_against_team": [
       [
-        "Bounty Hunter",
-        2
-      ],
-      [
         "Brewmaster",
-        2
+        4
       ],
       [
-        "Earth Spirit",
-        1
+        "Bounty Hunter",
+        3
       ],
       [
         "Enigma",
-        1
+        3
       ],
       [
-        "Timbersaw",
-        1
+        "Earth Spirit",
+        2
       ],
       [
         "Monkey King",
+        2
+      ],
+      [
+        "Gyrocopter",
+        2
+      ],
+      [
+        "Dragon Knight",
+        2
+      ],
+      [
+        "Timbersaw",
         1
       ],
       [
@@ -531,10 +973,6 @@
       ],
       [
         "Dazzle",
-        1
-      ],
-      [
-        "Gyrocopter",
         1
       ],
       [
@@ -548,9 +986,79 @@
       [
         "Bristleback",
         1
+      ],
+      [
+        "Windranger",
+        1
+      ],
+      [
+        "Nature's Prophet",
+        1
+      ],
+      [
+        "Anti-Mage",
+        1
+      ],
+      [
+        "Keeper of the Light",
+        1
       ]
     ],
     "vs_heroes": [
+      {
+        "hero": "Death Prophet",
+        "games": 2,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Windranger",
+        "games": 2,
+        "our_wins": 1,
+        "our_winrate": 50.0
+      },
+      {
+        "hero": "Doom",
+        "games": 2,
+        "our_wins": 1,
+        "our_winrate": 50.0
+      },
+      {
+        "hero": "Earth Spirit",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Lone Druid",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Rubick",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Ursa",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Pangolier",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Magnus",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
       {
         "hero": "Dragon Knight",
         "games": 1,
@@ -559,12 +1067,6 @@
       },
       {
         "hero": "Nature's Prophet",
-        "games": 1,
-        "our_wins": 1,
-        "our_winrate": 100.0
-      },
-      {
-        "hero": "Windranger",
         "games": 1,
         "our_wins": 1,
         "our_winrate": 100.0
@@ -594,12 +1096,6 @@
         "our_winrate": 100.0
       },
       {
-        "hero": "Doom",
-        "games": 1,
-        "our_wins": 1,
-        "our_winrate": 100.0
-      },
-      {
         "hero": "Weaver",
         "games": 1,
         "our_wins": 1,
@@ -617,26 +1113,31 @@
         "account_id": 355168766,
         "name": "Natsumi",
         "position": 1,
-        "games": 2,
-        "avg_kills": 8.5,
-        "avg_deaths": 1.0,
-        "avg_assists": 7.5,
-        "kda": 16.0,
-        "avg_gpm": 902,
-        "avg_xpm": 844,
-        "avg_last_hits": 640,
-        "avg_hero_damage": 28549,
-        "avg_wards": 0.5,
+        "games": 4,
+        "avg_kills": 9.2,
+        "avg_deaths": 4.8,
+        "avg_assists": 10.0,
+        "kda": 4.05,
+        "avg_gpm": 846,
+        "avg_xpm": 876,
+        "avg_last_hits": 704,
+        "avg_hero_damage": 58264,
+        "avg_wards": 0.2,
         "heroes": [
           {
             "hero": "Terrorblade",
-            "games": 1,
+            "games": 2,
             "wins": 1
           },
           {
             "hero": "Lone Druid",
             "games": 1,
             "wins": 1
+          },
+          {
+            "hero": "Clinkz",
+            "games": 1,
+            "wins": 0
           }
         ]
       },
@@ -644,17 +1145,22 @@
         "account_id": 94054712,
         "name": "Topson",
         "position": 2,
-        "games": 2,
-        "avg_kills": 9.0,
-        "avg_deaths": 2.0,
-        "avg_assists": 18.0,
-        "kda": 13.5,
-        "avg_gpm": 598,
-        "avg_xpm": 830,
-        "avg_last_hits": 368,
-        "avg_hero_damage": 35864,
-        "avg_wards": 1.5,
+        "games": 4,
+        "avg_kills": 8.5,
+        "avg_deaths": 6.0,
+        "avg_assists": 16.8,
+        "kda": 4.21,
+        "avg_gpm": 590,
+        "avg_xpm": 735,
+        "avg_last_hits": 410,
+        "avg_hero_damage": 45302,
+        "avg_wards": 0.8,
         "heroes": [
+          {
+            "hero": "Invoker",
+            "games": 2,
+            "wins": 0
+          },
           {
             "hero": "Magnus",
             "games": 1,
@@ -671,17 +1177,22 @@
         "account_id": 402583877,
         "name": "SSS",
         "position": 3,
-        "games": 2,
+        "games": 4,
         "avg_kills": 6.5,
-        "avg_deaths": 2.5,
-        "avg_assists": 15.5,
-        "kda": 8.8,
-        "avg_gpm": 584,
-        "avg_xpm": 810,
-        "avg_last_hits": 342,
-        "avg_hero_damage": 21853,
-        "avg_wards": 0.5,
+        "avg_deaths": 5.0,
+        "avg_assists": 15.2,
+        "kda": 4.35,
+        "avg_gpm": 632,
+        "avg_xpm": 871,
+        "avg_last_hits": 487,
+        "avg_hero_damage": 43512,
+        "avg_wards": 0.2,
         "heroes": [
+          {
+            "hero": "Timbersaw",
+            "games": 2,
+            "wins": 0
+          },
           {
             "hero": "Bristleback",
             "games": 1,
@@ -698,16 +1209,16 @@
         "account_id": 181267255,
         "name": "OneJey ",
         "position": 4,
-        "games": 2,
-        "avg_kills": 5.0,
-        "avg_deaths": 7.5,
-        "avg_assists": 16.0,
-        "kda": 2.8,
-        "avg_gpm": 396,
-        "avg_xpm": 558,
-        "avg_last_hits": 138,
-        "avg_hero_damage": 17390,
-        "avg_wards": 15.5,
+        "games": 4,
+        "avg_kills": 4.2,
+        "avg_deaths": 12.5,
+        "avg_assists": 16.2,
+        "kda": 1.64,
+        "avg_gpm": 374,
+        "avg_xpm": 510,
+        "avg_last_hits": 137,
+        "avg_hero_damage": 21849,
+        "avg_wards": 7.8,
         "heroes": [
           {
             "hero": "Gyrocopter",
@@ -718,6 +1229,16 @@
             "hero": "Keeper of the Light",
             "games": 1,
             "wins": 1
+          },
+          {
+            "hero": "Largo",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Shadow Demon",
+            "games": 1,
+            "wins": 0
           }
         ]
       },
@@ -725,16 +1246,16 @@
         "account_id": 100594231,
         "name": "skem",
         "position": 5,
-        "games": 2,
-        "avg_kills": 4.0,
-        "avg_deaths": 9.0,
-        "avg_assists": 14.0,
-        "kda": 2.0,
-        "avg_gpm": 338,
-        "avg_xpm": 518,
-        "avg_last_hits": 24,
-        "avg_hero_damage": 7274,
-        "avg_wards": 41.0,
+        "games": 4,
+        "avg_kills": 2.8,
+        "avg_deaths": 13.5,
+        "avg_assists": 13.5,
+        "kda": 1.2,
+        "avg_gpm": 342,
+        "avg_xpm": 471,
+        "avg_last_hits": 64,
+        "avg_hero_damage": 18085,
+        "avg_wards": 20.5,
         "heroes": [
           {
             "hero": "Dazzle",
@@ -745,6 +1266,16 @@
             "hero": "Witch Doctor",
             "games": 1,
             "wins": 1
+          },
+          {
+            "hero": "Techies",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Bane",
+            "games": 1,
+            "wins": 0
           }
         ]
       }

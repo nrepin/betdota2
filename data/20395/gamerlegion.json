@@ -709,13 +709,13 @@
       "kills_against": 10,
       "total_kills": 39,
       "first_pick": true,
-      "first_blood": false,
+      "first_blood": true,
       "first_blood_time": 190,
-      "gold_adv_10min": null,
-      "max_gold_lead": null,
-      "max_gold_deficit": null,
-      "roshans": 0,
-      "towers": null,
+      "gold_adv_10min": 1891,
+      "max_gold_lead": 21678,
+      "max_gold_deficit": -84,
+      "roshans": 2,
+      "towers": 0,
       "picks": [
         "Invoker",
         "Techies",
@@ -753,7 +753,7 @@
           "account_id": 177203952,
           "name": "Yuma",
           "hero": "Sven",
-          "position": null,
+          "position": 1,
           "kills": 12,
           "deaths": 1,
           "assists": 8,
@@ -765,18 +765,18 @@
           "hero_damage": 25287,
           "tower_damage": 12003,
           "hero_healing": 0,
-          "obs_placed": null,
-          "sen_placed": null,
-          "stuns": null,
-          "roshans_killed": null,
-          "teamfight_participation": null,
-          "firstblood_claimed": null
+          "obs_placed": 0,
+          "sen_placed": 0,
+          "stuns": 28.53418,
+          "roshans_killed": 2,
+          "teamfight_participation": 0.6896552,
+          "firstblood_claimed": 0
         },
         {
           "account_id": 154974246,
           "name": "RCY",
           "hero": "Invoker",
-          "position": null,
+          "position": 2,
           "kills": 5,
           "deaths": 2,
           "assists": 18,
@@ -788,64 +788,18 @@
           "hero_damage": 15472,
           "tower_damage": 10791,
           "hero_healing": 0,
-          "obs_placed": null,
-          "sen_placed": null,
-          "stuns": null,
-          "roshans_killed": null,
-          "teamfight_participation": null,
-          "firstblood_claimed": null
-        },
-        {
-          "account_id": 90423751,
-          "name": "Bignum",
-          "hero": "Techies",
-          "position": null,
-          "kills": 1,
-          "deaths": 5,
-          "assists": 21,
-          "last_hits": 88,
-          "denies": 0,
-          "gpm": 389,
-          "xpm": 600,
-          "net_worth": 11813,
-          "hero_damage": 15580,
-          "tower_damage": 599,
-          "hero_healing": 0,
-          "obs_placed": null,
-          "sen_placed": null,
-          "stuns": null,
-          "roshans_killed": null,
-          "teamfight_participation": null,
-          "firstblood_claimed": null
-        },
-        {
-          "account_id": 191362875,
-          "name": "Speeed",
-          "hero": "Mirana",
-          "position": null,
-          "kills": 1,
-          "deaths": 2,
-          "assists": 20,
-          "last_hits": 103,
-          "denies": 5,
-          "gpm": 333,
-          "xpm": 579,
-          "net_worth": 12493,
-          "hero_damage": 12436,
-          "tower_damage": 794,
-          "hero_healing": 0,
-          "obs_placed": null,
-          "sen_placed": null,
-          "stuns": null,
-          "roshans_killed": null,
-          "teamfight_participation": null,
-          "firstblood_claimed": null
+          "obs_placed": 2,
+          "sen_placed": 1,
+          "stuns": 37.168022,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.79310346,
+          "firstblood_claimed": 1
         },
         {
           "account_id": 160119017,
           "name": "Fayde",
           "hero": "Axe",
-          "position": null,
+          "position": 3,
           "kills": 10,
           "deaths": 0,
           "assists": 11,
@@ -857,6 +811,225 @@
           "hero_damage": 16963,
           "tower_damage": 2113,
           "hero_healing": 0,
+          "obs_placed": 0,
+          "sen_placed": 1,
+          "stuns": 51.43335,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.7241379,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 90423751,
+          "name": "Bignum",
+          "hero": "Techies",
+          "position": 4,
+          "kills": 1,
+          "deaths": 5,
+          "assists": 21,
+          "last_hits": 88,
+          "denies": 0,
+          "gpm": 389,
+          "xpm": 600,
+          "net_worth": 11813,
+          "hero_damage": 15580,
+          "tower_damage": 599,
+          "hero_healing": 0,
+          "obs_placed": 8,
+          "sen_placed": 18,
+          "stuns": 11.833984,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.7586207,
+          "firstblood_claimed": 0
+        },
+        {
+          "account_id": 191362875,
+          "name": "Speeed",
+          "hero": "Mirana",
+          "position": 5,
+          "kills": 1,
+          "deaths": 2,
+          "assists": 20,
+          "last_hits": 103,
+          "denies": 5,
+          "gpm": 333,
+          "xpm": 579,
+          "net_worth": 12493,
+          "hero_damage": 12436,
+          "tower_damage": 794,
+          "hero_healing": 0,
+          "obs_placed": 6,
+          "sen_placed": 9,
+          "stuns": 24.867037,
+          "roshans_killed": 0,
+          "teamfight_participation": 0.7241379,
+          "firstblood_claimed": 0
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9059185615"
+    },
+    {
+      "match_id": 9059262765,
+      "series_id": 1158638,
+      "start_time": 1792833372,
+      "opponent_id": 10182357,
+      "opponent": "1win",
+      "side": "Radiant",
+      "win": true,
+      "duration_sec": 2898,
+      "duration": "48:18",
+      "kills_for": 32,
+      "kills_against": 22,
+      "total_kills": 54,
+      "first_pick": false,
+      "first_blood": false,
+      "first_blood_time": 0,
+      "gold_adv_10min": null,
+      "max_gold_lead": null,
+      "max_gold_deficit": null,
+      "roshans": 0,
+      "towers": null,
+      "picks": [
+        "Sven",
+        "Dark Willow",
+        "Silencer",
+        "Pangolier",
+        "Timbersaw"
+      ],
+      "bans": [
+        "Largo",
+        "Earth Spirit",
+        "Invoker",
+        "Dragon Knight",
+        "Dazzle",
+        "Kez",
+        "Lone Druid"
+      ],
+      "opp_picks": [
+        "Brewmaster",
+        "Hoodwink",
+        "Winter Wyvern",
+        "Earthshaker",
+        "Terrorblade"
+      ],
+      "opp_bans": [
+        "Bounty Hunter",
+        "Slark",
+        "Enigma",
+        "Mirana",
+        "Techies",
+        "Outworld Devourer",
+        "Dark Seer"
+      ],
+      "players": [
+        {
+          "account_id": 177203952,
+          "name": "Yuma",
+          "hero": "Sven",
+          "position": null,
+          "kills": 11,
+          "deaths": 3,
+          "assists": 7,
+          "last_hits": 690,
+          "denies": 5,
+          "gpm": 827,
+          "xpm": 1045,
+          "net_worth": 37806,
+          "hero_damage": 20387,
+          "tower_damage": 21879,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 154974246,
+          "name": "RCY",
+          "hero": "Pangolier",
+          "position": null,
+          "kills": 8,
+          "deaths": 2,
+          "assists": 15,
+          "last_hits": 547,
+          "denies": 10,
+          "gpm": 763,
+          "xpm": 1060,
+          "net_worth": 34333,
+          "hero_damage": 35336,
+          "tower_damage": 1515,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 90423751,
+          "name": "Bignum",
+          "hero": "Dark Willow",
+          "position": null,
+          "kills": 4,
+          "deaths": 6,
+          "assists": 16,
+          "last_hits": 28,
+          "denies": 2,
+          "gpm": 326,
+          "xpm": 501,
+          "net_worth": 12942,
+          "hero_damage": 13345,
+          "tower_damage": 178,
+          "hero_healing": 316,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 191362875,
+          "name": "Speeed",
+          "hero": "Silencer",
+          "position": null,
+          "kills": 2,
+          "deaths": 6,
+          "assists": 19,
+          "last_hits": 46,
+          "denies": 4,
+          "gpm": 329,
+          "xpm": 461,
+          "net_worth": 14125,
+          "hero_damage": 9877,
+          "tower_damage": 368,
+          "hero_healing": 1425,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 160119017,
+          "name": "Fayde",
+          "hero": "Timbersaw",
+          "position": null,
+          "kills": 7,
+          "deaths": 5,
+          "assists": 11,
+          "last_hits": 493,
+          "denies": 10,
+          "gpm": 729,
+          "xpm": 970,
+          "net_worth": 32358,
+          "hero_damage": 28386,
+          "tower_damage": 4354,
+          "hero_healing": 0,
           "obs_placed": null,
           "sen_placed": null,
           "stuns": null,
@@ -866,30 +1039,30 @@
         }
       ],
       "patch": 60,
-      "dotabuff": "https://www.dotabuff.com/matches/9059185615"
+      "dotabuff": "https://www.dotabuff.com/matches/9059262765"
     }
   ],
   "summary": {
-    "games": 5,
-    "wins": 3,
+    "games": 6,
+    "wins": 4,
     "losses": 2,
-    "winrate": 60.0,
-    "avg_duration": "46:01",
-    "avg_duration_win": "53:18",
+    "winrate": 66.7,
+    "avg_duration": "46:24",
+    "avg_duration_win": "52:03",
     "avg_duration_loss": "35:06",
     "shortest": "33:08",
     "longest": "70:41",
-    "avg_kills_for": 31.2,
-    "avg_kills_against": 27.6,
-    "avg_total_kills": 58.8,
+    "avg_kills_for": 31.3,
+    "avg_kills_against": 26.7,
+    "avg_total_kills": 58.0,
     "kills_per_min": 0.68,
-    "first_blood_rate": 0.0,
-    "avg_gold_adv_10min": 2139,
-    "avg_roshans": 1.2,
+    "first_blood_rate": 16.7,
+    "avg_gold_adv_10min": 2089,
+    "avg_roshans": 1.33,
     "radiant": {
-      "games": 4,
-      "wins": 2,
-      "winrate": 50.0
+      "games": 5,
+      "wins": 3,
+      "winrate": 60.0
     },
     "dire": {
       "games": 1,
@@ -902,9 +1075,9 @@
       "winrate": 66.7
     },
     "second_pick": {
-      "games": 2,
-      "wins": 1,
-      "winrate": 50.0
+      "games": 3,
+      "wins": 2,
+      "winrate": 66.7
     },
     "series": [
       {
@@ -922,7 +1095,7 @@
       {
         "series_id": 1158638,
         "opponent": "1win",
-        "score": "1-0",
+        "score": "2-0",
         "won": true
       }
     ],
@@ -930,15 +1103,21 @@
     "hero_picks": [
       {
         "hero": "Dark Willow",
-        "games": 3,
-        "wins": 2,
-        "winrate": 66.7
+        "games": 4,
+        "wins": 3,
+        "winrate": 75.0
       },
       {
         "hero": "Dragon Knight",
         "games": 3,
         "wins": 1,
         "winrate": 33.3
+      },
+      {
+        "hero": "Timbersaw",
+        "games": 2,
+        "wins": 2,
+        "winrate": 100.0
       },
       {
         "hero": "Mirana",
@@ -953,6 +1132,12 @@
         "winrate": 100.0
       },
       {
+        "hero": "Sven",
+        "games": 2,
+        "wins": 2,
+        "winrate": 100.0
+      },
+      {
         "hero": "Windranger",
         "games": 2,
         "wins": 1,
@@ -960,12 +1145,6 @@
       },
       {
         "hero": "Earth Spirit",
-        "games": 1,
-        "wins": 1,
-        "winrate": 100.0
-      },
-      {
-        "hero": "Timbersaw",
         "games": 1,
         "wins": 1,
         "winrate": 100.0
@@ -995,7 +1174,13 @@
         "winrate": 100.0
       },
       {
-        "hero": "Sven",
+        "hero": "Silencer",
+        "games": 1,
+        "wins": 1,
+        "winrate": 100.0
+      },
+      {
+        "hero": "Pangolier",
         "games": 1,
         "wins": 1,
         "winrate": 100.0
@@ -1043,16 +1228,16 @@
         4
       ],
       [
-        "Lifestealer",
-        3
-      ],
-      [
         "Kez",
-        3
+        4
       ],
       [
         "Lone Druid",
-        2
+        3
+      ],
+      [
+        "Lifestealer",
+        3
       ],
       [
         "Techies",
@@ -1068,6 +1253,18 @@
       ],
       [
         "Huskar",
+        2
+      ],
+      [
+        "Dazzle",
+        2
+      ],
+      [
+        "Earth Spirit",
+        2
+      ],
+      [
+        "Largo",
         2
       ],
       [
@@ -1099,23 +1296,11 @@
         1
       ],
       [
-        "Dazzle",
-        1
-      ],
-      [
         "Snapfire",
         1
       ],
       [
-        "Earth Spirit",
-        1
-      ],
-      [
         "Anti-Mage",
-        1
-      ],
-      [
-        "Largo",
         1
       ],
       [
@@ -1129,31 +1314,39 @@
       [
         "Tiny",
         1
+      ],
+      [
+        "Invoker",
+        1
+      ],
+      [
+        "Dragon Knight",
+        1
       ]
     ],
     "bans_against_team": [
+      [
+        "Bounty Hunter",
+        4
+      ],
+      [
+        "Enigma",
+        4
+      ],
+      [
+        "Mirana",
+        4
+      ],
       [
         "Brewmaster",
         4
       ],
       [
-        "Bounty Hunter",
-        3
-      ],
-      [
-        "Enigma",
-        3
+        "Slark",
+        4
       ],
       [
         "Largo",
-        3
-      ],
-      [
-        "Mirana",
-        3
-      ],
-      [
-        "Slark",
         3
       ],
       [
@@ -1203,14 +1396,44 @@
       [
         "Windranger",
         1
+      ],
+      [
+        "Techies",
+        1
+      ],
+      [
+        "Outworld Devourer",
+        1
+      ],
+      [
+        "Dark Seer",
+        1
       ]
     ],
     "vs_heroes": [
+      {
+        "hero": "Hoodwink",
+        "games": 3,
+        "our_wins": 3,
+        "our_winrate": 100.0
+      },
       {
         "hero": "Earth Spirit",
         "games": 2,
         "our_wins": 0,
         "our_winrate": 0.0
+      },
+      {
+        "hero": "Winter Wyvern",
+        "games": 2,
+        "our_wins": 1,
+        "our_winrate": 50.0
+      },
+      {
+        "hero": "Brewmaster",
+        "games": 2,
+        "our_wins": 1,
+        "our_winrate": 50.0
       },
       {
         "hero": "Windranger",
@@ -1219,28 +1442,22 @@
         "our_winrate": 50.0
       },
       {
-        "hero": "Hoodwink",
-        "games": 2,
-        "our_wins": 2,
-        "our_winrate": 100.0
-      },
-      {
         "hero": "Nyx Assassin",
         "games": 2,
         "our_wins": 2,
         "our_winrate": 100.0
       },
       {
-        "hero": "Winter Wyvern",
-        "games": 1,
-        "our_wins": 0,
-        "our_winrate": 0.0
+        "hero": "Earthshaker",
+        "games": 2,
+        "our_wins": 2,
+        "our_winrate": 100.0
       },
       {
-        "hero": "Brewmaster",
-        "games": 1,
-        "our_wins": 0,
-        "our_winrate": 0.0
+        "hero": "Terrorblade",
+        "games": 2,
+        "our_wins": 2,
+        "our_winrate": 100.0
       },
       {
         "hero": "Rubick",
@@ -1291,12 +1508,6 @@
         "our_winrate": 100.0
       },
       {
-        "hero": "Earthshaker",
-        "games": 1,
-        "our_wins": 1,
-        "our_winrate": 100.0
-      },
-      {
         "hero": "Timbersaw",
         "games": 1,
         "our_wins": 1,
@@ -1325,12 +1536,6 @@
         "games": 1,
         "our_wins": 1,
         "our_winrate": 100.0
-      },
-      {
-        "hero": "Terrorblade",
-        "games": 1,
-        "our_wins": 1,
-        "our_winrate": 100.0
       }
     ],
     "players": [
@@ -1338,17 +1543,22 @@
         "account_id": 177203952,
         "name": "Yuma",
         "position": 1,
-        "games": 5,
-        "avg_kills": 9.0,
-        "avg_deaths": 4.2,
-        "avg_assists": 9.4,
-        "kda": 4.38,
-        "avg_gpm": 661,
-        "avg_xpm": 835,
-        "avg_last_hits": 449,
-        "avg_hero_damage": 28235,
-        "avg_wards": 0.4,
+        "games": 6,
+        "avg_kills": 9.3,
+        "avg_deaths": 4.0,
+        "avg_assists": 9.0,
+        "kda": 4.58,
+        "avg_gpm": 688,
+        "avg_xpm": 870,
+        "avg_last_hits": 490,
+        "avg_hero_damage": 26927,
+        "avg_wards": 0.3,
         "heroes": [
+          {
+            "hero": "Sven",
+            "games": 2,
+            "wins": 2
+          },
           {
             "hero": "Lifestealer",
             "games": 1,
@@ -1368,11 +1578,6 @@
             "hero": "Viper",
             "games": 1,
             "wins": 1
-          },
-          {
-            "hero": "Sven",
-            "games": 1,
-            "wins": 1
           }
         ]
       },
@@ -1380,16 +1585,16 @@
         "account_id": 154974246,
         "name": "RCY",
         "position": 2,
-        "games": 5,
-        "avg_kills": 7.0,
-        "avg_deaths": 4.2,
+        "games": 6,
+        "avg_kills": 7.2,
+        "avg_deaths": 3.8,
         "avg_assists": 15.0,
-        "kda": 5.24,
-        "avg_gpm": 649,
-        "avg_xpm": 778,
-        "avg_last_hits": 433,
-        "avg_hero_damage": 28503,
-        "avg_wards": 2.6,
+        "kda": 5.78,
+        "avg_gpm": 668,
+        "avg_xpm": 825,
+        "avg_last_hits": 452,
+        "avg_hero_damage": 29642,
+        "avg_wards": 2.7,
         "heroes": [
           {
             "hero": "Dragon Knight",
@@ -1405,6 +1610,11 @@
             "hero": "Earth Spirit",
             "games": 1,
             "wins": 1
+          },
+          {
+            "hero": "Pangolier",
+            "games": 1,
+            "wins": 1
           }
         ]
       },
@@ -1412,17 +1622,22 @@
         "account_id": 160119017,
         "name": "Fayde",
         "position": 3,
-        "games": 5,
-        "avg_kills": 7.6,
-        "avg_deaths": 5.8,
-        "avg_assists": 10.6,
-        "kda": 3.14,
-        "avg_gpm": 616,
-        "avg_xpm": 824,
-        "avg_last_hits": 459,
-        "avg_hero_damage": 25506,
+        "games": 6,
+        "avg_kills": 7.5,
+        "avg_deaths": 5.7,
+        "avg_assists": 10.7,
+        "kda": 3.21,
+        "avg_gpm": 635,
+        "avg_xpm": 848,
+        "avg_last_hits": 465,
+        "avg_hero_damage": 25986,
         "avg_wards": 1.0,
         "heroes": [
+          {
+            "hero": "Timbersaw",
+            "games": 2,
+            "wins": 2
+          },
           {
             "hero": "Necrophos",
             "games": 1,
@@ -1432,11 +1647,6 @@
             "hero": "Pudge",
             "games": 1,
             "wins": 0
-          },
-          {
-            "hero": "Timbersaw",
-            "games": 1,
-            "wins": 1
           },
           {
             "hero": "Dragon Knight",
@@ -1454,21 +1664,21 @@
         "account_id": 90423751,
         "name": "Bignum",
         "position": 4,
-        "games": 5,
-        "avg_kills": 5.2,
-        "avg_deaths": 7.4,
-        "avg_assists": 19.8,
-        "kda": 3.38,
-        "avg_gpm": 335,
-        "avg_xpm": 519,
-        "avg_last_hits": 57,
-        "avg_hero_damage": 15992,
-        "avg_wards": 18.0,
+        "games": 6,
+        "avg_kills": 5.0,
+        "avg_deaths": 7.2,
+        "avg_assists": 19.2,
+        "kda": 3.37,
+        "avg_gpm": 333,
+        "avg_xpm": 516,
+        "avg_last_hits": 52,
+        "avg_hero_damage": 15550,
+        "avg_wards": 19.3,
         "heroes": [
           {
             "hero": "Dark Willow",
-            "games": 3,
-            "wins": 2
+            "games": 4,
+            "wins": 3
           },
           {
             "hero": "Windranger",
@@ -1486,16 +1696,16 @@
         "account_id": 191362875,
         "name": "Speeed",
         "position": 5,
-        "games": 5,
+        "games": 6,
         "avg_kills": 2.0,
         "avg_deaths": 6.0,
-        "avg_assists": 19.6,
-        "kda": 3.6,
-        "avg_gpm": 348,
-        "avg_xpm": 514,
-        "avg_last_hits": 126,
-        "avg_hero_damage": 17447,
-        "avg_wards": 25.6,
+        "avg_assists": 19.5,
+        "kda": 3.58,
+        "avg_gpm": 345,
+        "avg_xpm": 505,
+        "avg_last_hits": 113,
+        "avg_hero_damage": 16186,
+        "avg_wards": 23.8,
         "heroes": [
           {
             "hero": "Mirana",
@@ -1514,6 +1724,11 @@
           },
           {
             "hero": "Venomancer",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Silencer",
             "games": 1,
             "wins": 1
           }

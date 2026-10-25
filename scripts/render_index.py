@@ -73,12 +73,14 @@ def league_info(lid):
 
 def nav(active, out):
     """Вкладки-ссылки: Все турниры + каждый турнир (отдельные адреса)."""
+    import render_live
+    lv = render_live.live_matches()
     items = [("all", "Все турниры", INDEX)] + [(lid, name, league_page(lid)) for lid, name in leagues()
-                                                 if league_info(lid)["current"] or lid == active] + [("forecasts", "Прогнозы ИИ", ROOT / "forecasts.html"), ("heroes", "Герои", ROOT / "heroes.html")]
+                                                 if league_info(lid)["current"] or lid == active] + [("played", "Сыгранные матчи", ROOT / "played.html")] + [("live", f"● Лайв {len(lv)}" if lv else "Лайв", ROOT / "live.html")] + [("forecasts", "Прогнозы ИИ", ROOT / "forecasts.html"), ("heroes", "Герои", ROOT / "heroes.html")]
     def a(key, name, path):
-        arch = key not in ("all", "heroes", "forecasts") and not league_info(key)["current"]
+        arch = key not in ("all", "heroes", "forecasts", "played", "live") and not league_info(key)["current"]
         cur = " aria-current=page" if key == active else ""
-        cls = " class=arch" if arch else " class=right" if key == "forecasts" else ""
+        cls = " class=arch" if arch else " class=right" if key == "live" else ""
         return f"<a href='{e(rel(path, out))}'{cur}{cls}>{e(name)}</a>"
 
     return "<nav class=nav aria-label='Турниры'>" + "".join(a(*x) for x in items) + "</nav>"
@@ -182,10 +184,15 @@ def render_league(lid, name):
 
 def main():
     import heroes_stats
+    import render_live
+    render_live.reset()
     render_all()
     heroes_stats.render_page()
     import render_forecasts
     render_forecasts.render_page()
+    import render_played
+    render_played.render_page()
+    render_live.render_page()
     for lid, name in leagues():
         render_league(lid, name)
 

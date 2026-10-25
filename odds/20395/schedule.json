@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-24 12:17",
+ "fetched": "2026-10-24 23:52",
  "matches": [
   {
    "event_id": 69039564,
@@ -17,52 +17,80 @@
   },
   {
    "event_id": 69211512,
-   "start": 1792839600,
+   "start": 1792840200,
    "a": 9823272,
    "b": 2586976,
    "url": "https://pari.ru/esports/category/dota2/147180/69211512"
   },
   {
    "event_id": 69211530,
-   "start": 1792850400,
+   "start": 1792852740,
    "a": 7119388,
    "b": 8255888,
    "url": "https://pari.ru/esports/category/dota2/147180/69211530"
   },
   {
    "event_id": 69215381,
-   "start": 1792861200,
+   "start": 1792861800,
    "a": 10292107,
    "b": 10291652,
    "url": "https://pari.ru/esports/category/dota2/147180/69215381"
   },
   {
    "event_id": 69249249,
-   "start": 1792918800,
+   "start": 1792915200,
    "a": 2163,
    "b": 2586976,
    "url": "https://pari.ru/esports/category/dota2/147180/69249249"
   },
   {
    "event_id": 69249261,
-   "start": 1792929600,
+   "start": 1792926000,
    "a": 9823272,
    "b": 10182357,
    "url": "https://pari.ru/esports/category/dota2/147180/69249261"
   },
   {
    "event_id": 69249274,
-   "start": 1792940400,
+   "start": 1792936800,
    "a": 7119388,
    "b": 10292107,
    "url": "https://pari.ru/esports/category/dota2/147180/69249274"
   },
   {
    "event_id": 69249286,
-   "start": 1792951200,
+   "start": 1792947600,
    "a": 9824702,
    "b": 8255888,
    "url": "https://pari.ru/esports/category/dota2/147180/69249286"
+  },
+  {
+   "event_id": 69296270,
+   "start": 1793001600,
+   "a": 2586976,
+   "b": 9964962,
+   "url": "https://pari.ru/esports/category/dota2/147180/69296270"
+  },
+  {
+   "event_id": 69296300,
+   "start": 1793012400,
+   "a": 9823272,
+   "b": 2163,
+   "url": "https://pari.ru/esports/category/dota2/147180/69296300"
+  },
+  {
+   "event_id": 69296313,
+   "start": 1793023200,
+   "a": 7119388,
+   "b": 9824702,
+   "url": "https://pari.ru/esports/category/dota2/147180/69296313"
+  },
+  {
+   "event_id": 69296325,
+   "start": 1793034000,
+   "a": 8255888,
+   "b": 10291652,
+   "url": "https://pari.ru/esports/category/dota2/147180/69296325"
   }
  ]
 }

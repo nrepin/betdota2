@@ -17,7 +17,7 @@
   лайв                     — раз в минуту в окне матча: герои, оценка драфтов, страницы;
   прогноз                  — на карту один, как только выбраны все 10 героев: из победы, времени и убийств берётся рынок
                              с наибольшим расхождением «оценка по драфтам против линии» (forecast.from_draft);
-  закрытие                 — через 40 мин после старта, пока есть незакрытые прогнозы, раз в 10 мин: обновить матчи, посчитать результат.
+  закрытие                 — через 40 мин после старта, пока есть незакрытые прогнозы, раз в 5 мин: обновить матчи, посчитать результат.
 """
 import argparse
 import datetime
@@ -32,6 +32,7 @@ import urllib.request
 
 import collect_odds
 import forecast
+import hawk
 import heroes_stats
 import live as livemod
 import prematch
@@ -44,8 +45,9 @@ STATE = ROOT / "auto_state.json"
 LOCK_TTL = 15 * 60
 LIVE_BEFORE, LIVE_AFTER = 10 * 60, 5 * 3600
 SETTLE_AFTER = 25 * 60      # когда начинать искать результат (от старта матча в линии)
-SETTLE_EVERY = 10 * 60
+SETTLE_EVERY = 5 * 60
 SERIES_EVERY = 4 * 60       # пока идёт серия: как часто подтягивать результаты сыгранных карт
+FAST_EVERY, FAST_FOR = 90, 10 * 60   # карта только что закончилась: 10 мин ищем результат каждые 90 с
 LATE_AFTER = 7 * 60         # позже этого времени игры прогноз уже не даём (только начало карты)
 STAKES = forecast.STAKES
 
@@ -131,6 +133,9 @@ def draft_forecast(lid, ev, g, snap, teams, ser, st, now, dry):
         return False
     sr = render_schedule.find_series(ser, ev["a"], ev["b"], ev["start"])
     map_no = (len(sr["maps"]) if sr else 0) + 1
+    if forecast.load(lid, f"{ev['event_id']}L{map_no}"):   # карта уже в прогнозах (например, по hawk.live, потом появилась в OpenDota)
+        st["live_bets"][key] = "прогноз уже есть"
+        return False
     m = next((x for x in snap["matches"] if str(x.get("event_id")) == str(ev["event_id"])), None) if snap else None
     if m and forecast.map_no(m.get("map")) != map_no:
         m = None  # в линии рынки другой карты
@@ -144,9 +149,10 @@ def draft_forecast(lid, ev, g, snap, teams, ser, st, now, dry):
         return False
     if not dry:
         forecast.save(lid, fc)
-    p = fc["picks"][0]
-    st["live_bets"][key] = p["text"]
-    notify(f"Прогноз на карту {fc['map_no']}: {fc['t1']} – {fc['t2']}: {p['text']}, коэф {p['odds']} (перевес: {p['signal']})")
+    p = fc["picks"][0] if fc["picks"] else None
+    st["live_bets"][key] = p["text"] if p else "ставки нет (коэффициенты ниже минимума)"
+    notify(f"Прогноз на карту {fc['map_no']}: {fc['t1']} – {fc['t2']}: "
+           + (f"{p['text']}, коэф {p['odds']} (перевес: {p['signal']})" if p else "ставки нет, коэффициенты ниже минимума"))
     return True
 
 
@@ -157,13 +163,24 @@ def do_live(lid, st, now, events, snap, teams, dry):
         games = livemod.fetch_live()
     except Exception as ex:
         log.warning("лайв: %s", ex)
-        return False
+        games = []   # OpenDota недоступен: пробуем резервный источник
+    extra = hawk.extra_games(games, lid, events, teams)
+    if extra:
+        log.info("[%s] карты нет в OpenDota, лайв с hawk.live: %d", lid, len(extra))
+    games = games + extra
     found = False
     for ev in events:
         g = next((x for x in games if str(x.get("league_id")) == lid and not x.get("deactivate_time")
                   and {x.get("team_id_radiant"), x.get("team_id_dire")} == {ev["a"], ev["b"]}), None)
+        eid = str(ev["event_id"])
+        seen = st.setdefault("live_seen", {})
         if not g:
+            if eid in seen:   # карта была в лайве и пропала: она закончилась, результат нужен сразу
+                del seen[eid]
+                st["fast_until"] = now + FAST_FOR
+                log.info("[%s] карта закончилась (пропала из лайва): быстро ищу результат", lid)
             continue
+        seen[eid] = now
         found = True
         log.info("[%s] лайв: %s – %s, %d:%02d, убийства %d:%d", lid, teams[ev["a"]]["name"], teams[ev["b"]]["name"],
                  g["game_time"] // 60, g["game_time"] % 60, g["radiant_score"], g["dire_score"])
@@ -180,6 +197,7 @@ def live_event_ids(lid, events):
         games = livemod.fetch_live()
     except Exception:
         return None
+    games = games + hawk.extra_games(games, lid, events, render_schedule.teams_of(lid))
     return {str(ev["event_id"]) for ev in events for x in games
             if str(x.get("league_id")) == lid and not x.get("deactivate_time")
             and {x.get("team_id_radiant"), x.get("team_id_dire")} == {ev["a"], ev["b"]}}
@@ -199,7 +217,8 @@ def do_settle(lid, st, now, dry, running=()):
     """Обновить матчи лиги: когда ждут результата прогнозы или идёт серия (страница матча показывает результаты карт)."""
     pend = pending(lid, now)
     run = [m for m in running if m["start"] + SETTLE_AFTER < now]
-    if not (pend or run) or not due(st, "settle_ts", SETTLE_EVERY if pend else SERIES_EVERY, now):
+    every = FAST_EVERY if now < st.get("fast_until", 0) else SETTLE_EVERY if pend else SERIES_EVERY
+    if not (pend or run) or not due(st, "settle_ts", every, now):
         return False
     log.info("[%s] закрытие: ждут результата %d прогнозов, идущих серий %d, обновляю матчи", lid, len(pend), len(run))
     if dry:
@@ -261,6 +280,44 @@ def tick(lid, st, dry):
     return changed
 
 
+RESTART = 3   # код выхода: родитель запускает автопилот заново (подхватить изменённый код)
+
+
+def code_mtimes():
+    return {f.name: f.stat().st_mtime for f in (ROOT / "scripts").glob("*.py")}
+
+
+def supervise():
+    """Родительский процесс цикла: запускает автопилот как дочерний и перезапускает его, когда он завершился кодом RESTART
+    (изменился код в scripts/). Ctrl+C останавливает всё."""
+    env = dict(os.environ, DOTA_AUTO_CHILD="1")
+    while True:
+        try:
+            rc = subprocess.call([sys.executable] + sys.argv, env=env)
+        except KeyboardInterrupt:
+            return 0
+        if rc != RESTART:
+            return rc
+
+
+def windows_tune():
+    """Windows: не давать компьютеру уходить в сон, пока идёт цикл, и выключить «быстрое выделение» консоли
+    (клик мышью по окну cmd/PowerShell ставит программу на паузу, пока не нажать Esc)."""
+    if os.name != "nt":
+        return
+    try:
+        import ctypes
+        k = ctypes.windll.kernel32
+        k.SetThreadExecutionState(0x80000000 | 0x00000001)   # ES_CONTINUOUS | ES_SYSTEM_REQUIRED
+        h = k.GetStdHandle(-10)
+        mode = ctypes.c_uint32()
+        if k.GetConsoleMode(h, ctypes.byref(mode)):
+            k.SetConsoleMode(h, (mode.value | 0x0080) & ~0x0040)   # ENABLE_EXTENDED_FLAGS без ENABLE_QUICK_EDIT_MODE
+        log.info("Windows: сон запрещён на время работы, быстрое выделение консоли выключено")
+    except Exception as ex:
+        log.warning("windows_tune: %s", ex)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--once", action="store_true")
@@ -272,7 +329,15 @@ def main():
     if not (a.once or a.loop):
         ap.error("нужен --once или --loop")
     setup_log()
+    if a.loop and not os.environ.get("DOTA_AUTO_CHILD"):
+        sys.exit(supervise())
+    if a.loop:
+        windows_tune()
+    code_stamp = code_mtimes()
     while True:
+        if a.loop and code_mtimes() != code_stamp:
+            log.info("код скриптов изменился — перезапускаюсь")
+            sys.exit(RESTART)
         if not take_lock():
             log.info("другой экземпляр уже работает (.auto.lock) — пропускаю тик")
         else:

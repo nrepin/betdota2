@@ -15,6 +15,8 @@ import re
 import sys
 import time
 import urllib.request
+
+import netutil
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -35,7 +37,7 @@ def fetch(url, cache=None, refresh=False):
     for attempt in range(5):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "dota-stats/1.0"})
-            with urllib.request.urlopen(req, timeout=60) as r:
+            with netutil.urlopen(req, timeout=60) as r:
                 data = json.loads(r.read().decode("utf-8"))
             break
         except Exception as e:  # 429 / сетевые ошибки — ждём и повторяем

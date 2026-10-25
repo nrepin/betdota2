@@ -9,6 +9,7 @@ from html import escape as e
 
 import forecast
 import heroes_stats
+import netutil
 import urllib.request
 from render_html import CSS, ROOT, head, load_heroes, logo_cls, rel, team_logo
 from render_schedule import MSK, SCHEDULE_CSS, find_series, series_results, teams_of
@@ -26,12 +27,13 @@ MATCH_CSS = """
 .fc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:10px}
 .fc .meta{font:11.5px var(--mono);color:var(--muted);margin-bottom:10px}
 .fc .note{font-size:14px;line-height:1.55;max-width:80ch;margin:12px 0 0}
-.pk{display:grid;grid-template-columns:90px 1fr auto auto auto;gap:6px 16px;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.pk{display:grid;grid-template-columns:90px 1fr auto auto auto auto;gap:6px 16px;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
 .pk:first-of-type{border-top:0}.pk .c{font:600 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
 .pk .tx{font-weight:650}.pk .n{font:13px var(--mono);white-space:nowrap}.pk .n i{font-style:normal;color:var(--muted);margin-right:4px}
-.mark{display:inline-block;min-width:74px;text-align:center;padding:3px 10px;border-radius:6px;font:600 12px var(--mono);background:var(--bar);color:var(--muted)}
+.mark{display:inline-block;min-width:74px;white-space:nowrap;text-align:center;padding:3px 10px;border-radius:6px;font:600 12px var(--mono);background:var(--bar);color:var(--muted)}
 .mark.ok{background:var(--win-bg);color:var(--win)}.mark.no{background:var(--loss-bg);color:var(--loss)}
-@media (max-width:700px){.pk{grid-template-columns:1fr auto}.pk .c{grid-column:1/-1}}
+.pk .mark{grid-column:6}
+@media (max-width:700px){.pk{grid-template-columns:1fr auto}.pk .c{grid-column:1/-1}.pk .mark{grid-column:auto}}
 .res{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:14px;margin-top:2px}.res b{font-family:var(--mono)}
 .mt{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:10px}
 .mt table{width:100%;border-collapse:collapse;font-size:13.5px}
@@ -50,7 +52,7 @@ HERO_CSS = """
 .hc{display:inline-flex;flex-direction:column;align-items:center;gap:2px;font:600 10.5px var(--mono)}
 .hc img{width:56px;height:32px;border-radius:4px;object-fit:cover;border:2px solid transparent}
 .hc.fast img{border-color:var(--win)}.hc.long img{border-color:var(--loss)}.hc.fast i{color:var(--win)}.hc.long i{color:var(--loss)}
-.hc{position:relative}.dr .side .hc b.tw{min-width:0;width:auto;position:absolute;top:-4px;right:-4px;font:700 9px/1 var(--mono);padding:2px 3px;border-radius:4px;color:#fff}.hc b.tw.f{background:#1d7a3e}.hc b.tw.s{background:#b36b00}
+.dr .side b .cup{width:16px;height:16px;vertical-align:-3px;margin-left:5px}.hc{position:relative}.dr .side .hc b.tw{min-width:0;width:auto;position:absolute;top:-4px;right:-4px;font:700 9px/1 var(--mono);padding:2px 3px;border-radius:4px;color:#fff}.hc b.tw.f{background:#1d7a3e}.hc b.tw.s{background:#b36b00}
 .hc i{font-style:normal;color:var(--muted)}.hc s{text-decoration:none;font-weight:500;color:var(--text);white-space:nowrap}
 .verdict{font-size:13px;background:var(--hover);border:1px solid var(--line);border-radius:6px;padding:6px 10px}.tempo{font:600 12px var(--mono);margin-left:auto;color:var(--muted)}
 .livebox .meta{font:11.5px var(--mono);color:var(--muted);margin-bottom:6px}
@@ -62,16 +64,25 @@ const OV=__OVERALL__;
 const sg=v=>(v>0?'+':'')+v;
 const TW=__TWNOTE__;
 const TH=__TH__;
+const W=__WIN__;
 const chip=(id,tid)=>{const h=H[id];if(!h)return '<span class=hc><i>?</i></span>';const r=(TH[tid]||{})[id]||[0,0];
 const tl=r[0]?r[0]+'× · '+Math.round(100*r[1]/r[0])+'%':'0×';
 return '<span class="hc '+h.l+'" title="'+h.n+': ср. '+h.a+' мин, темп '+sg(h.t)+'; команда брала героя '+r[0]+' раз, побед '+r[1]+'"><img src="'+h.i+'" alt="'+h.n+'">'+(h.w?'<b class="tw '+h.w+'">'+(h.w=='f'?'▲':'▼')+'</b>':'')+'<i>'+sg(h.t)+'</i><s>'+tl+'</s></span>'};
 const mm=t=>Math.floor(t/60)+':'+String(Math.abs(t)%60).padStart(2,'0');
 async function tick(){try{const r=await fetch('https://api.opendota.com/api/live');const L=await r.json();
 const g=L.find(x=>T.includes(x.team_id_radiant)&&T.includes(x.team_id_dire)&&x.league_id==__LG__&&!x.deactivate_time);
-if(!g){return}
+if(!g){box.innerHTML='<div class=meta>сейчас карта не идёт · обновлено '+new Date().toLocaleTimeString('ru-RU')+'</div>';return}
 const side=t=>g.players.filter(p=>p.team===t);const nm=t=>t==0?g.team_name_radiant:g.team_name_dire;
 box.innerHTML='<div class=meta>карта идёт: '+mm(g.game_time)+' · убийства '+g.radiant_score+':'+g.dire_score+' · золото '+nm(g.radiant_lead>0?0:1)+' +'+Math.abs(g.radiant_lead)+' · обновлено '+new Date().toLocaleTimeString('ru-RU')+'</div>'+
-[0,1].map(t=>'<div class=dr><span class=c>'+(t==0?'Radiant':'Dire')+'</span><div class=side><b>'+nm(t)+'</b>'+side(t).map(p=>chip(p.hero_id,t==0?g.team_id_radiant:g.team_id_dire)).join('')+'</div></div>').join('')+verdict(g.players)}catch(e){}}
+[0,1].map(t=>'<div class=dr><span class=c>'+(t==0?'Radiant':'Dire')+'</span><div class=side><b>'+nm(t)+'</b>'+side(t).map(p=>chip(p.hero_id,t==0?g.team_id_radiant:g.team_id_dire)).join('')+'</div></div>').join('')+verdict(g.players)+winrow(g)}catch(e){}}
+function winrow(g){const ids=t=>g.players.filter(p=>p.team===t&&p.hero_id).map(p=>p.hero_id);
+const pw=a=>a.length?a.reduce((s,h)=>s+(W.pw[h]||0),0)*5/a.length:0;const ra=ids(0),di=ids(1);
+const base=g.team_id_radiant==T[0]?W.pa:1-W.pa;const hero=W.hw*(pw(ra)-pw(di));
+const fr=W.f[g.team_id_radiant]||[null,'нет данных'],fd=W.f[g.team_id_dire]||[null,'нет данных'];
+const fm=(fr[0]!==null&&fd[0]!==null)?W.fw*(fr[0]-fd[0]):0;const p=Math.min(.95,Math.max(.05,base+hero+fm));
+const win=p>=.5?g.team_name_radiant:g.team_name_dire,pc=Math.round(100*Math.max(p,1-p));const sp=v=>(v>=0?'+':'')+Math.round(v*100);
+const part=Math.min(ra.length,di.length)<5?' <i class=muted>(пики не завершены: выбрано '+ra.length+' + '+di.length+' героев из 5 + 5)</i>':'';
+return '<div class=dr><span class=c></span><div class=side><span class=verdict>Прогноз по драфту: победит <b>'+win+'</b>, '+pc+'%. Команды '+Math.round(100*base)+'% ('+g.team_name_radiant+'), герои '+sp(hero)+' п.п., форма '+sp(fm)+' п.п. (форма: '+g.team_name_radiant+' — '+fr[1]+', '+g.team_name_dire+' — '+fd[1]+').'+part+'</span></div></div>'}
 function verdict(ps){const t=ps.map(p=>H[p.hero_id]).filter(Boolean).map(h=>h.t);if(t.length<6)return '';
 const m=Math.round(t.reduce((a,b)=>a+b,0)/t.length*10)/10,w=m>=1?'затяжная':m<=-1?'быстрая':'средняя';
 const q=ps.map(p=>H[p.hero_id]).filter(Boolean),f=q.filter(h=>h.w=='f').length,s=q.filter(h=>h.w=='s').length;
@@ -118,17 +129,94 @@ def chip(hid, ht, th=None):
             + f"<i>{h['t']:+g}</i>{extra}</span>")
 
 
-def eval_html(ev):
-    if not ev:
+def win_html(win, na, nb, radiant_win=None):
+    """Строка «Прогноз по драфту»: кто победит с учётом команд, героев и формы; для сыгранной карты — сверка."""
+    if not win:
         return ""
+    p = win["p"]
+    fav, pf, fname = (na, p, win["a"]) if p >= 0.5 else (nb, 1 - p, win["b"])
+    sgn = lambda v: f"{v * 100:+.0f}"
+    part = (f" <i class=muted>(пики не завершены: выбрано {win['na']} + {win['nb']} героев из 5 + 5)</i>"
+            if min(win["na"], win["nb"]) < 5 else "")
+    chk = ""
+    if radiant_win is not None:
+        chk = (" <span class='mark ok'>✓ сбылся</span>" if (p >= 0.5) == radiant_win else " <span class='mark no'>✗ не сбылся</span>")
+    return (f"<div class=dr><span class=c></span><div class=side><span class=verdict>Прогноз по драфту: победит <b>{e(fav)}</b>, "
+            f"{pf:.0%}. Команды {win['base']:.0%} ({e(na)}), герои {sgn(win['hero'])} п.п., форма {sgn(win['form'])} п.п. "
+            f"(форма: {e(na)} — {e(win['form_a'])}, {e(nb)} — {e(win['form_b'])}).{chk}{part}</span></div></div>")
+
+
+def frozen_win_html(fc):
+    """Прогноз победителя по драфту, зафиксированный в начале карты (не пересчитывается), со сверкой после игры."""
+    w = fc.get("draft_win")
+    if not w:
+        return ""
+    p = w["p"]
+    fav, pf = (fc["t1"], p) if p >= 0.5 else (fc["t2"], 1 - p)
+    sgn = lambda v: f"{v * 100:+.0f}"
+    res = fc.get("result")
+    chk = ("<span class=mark>ждём</span>" if not res else
+           ("<span class='mark ok'>✓ сбылся</span>" if res["winner_id"] == (fc["t1_id"] if p >= 0.5 else fc["t2_id"])
+            else "<span class='mark no'>✗ не сбылся</span>"))
+    return (f"<div class=pk><span class=c>Прогноз по драфту</span><span class=tx>победит {e(fav)}, {pf:.0%} "
+            f"(команды {w['base']:.0%} за {e(fc['t1'])}, герои {sgn(w['hero'])} п.п., форма {sgn(w['form'])} п.п.; "
+            f"форма: {e(fc['t1'])} — {e(w['form_a'])}, {e(fc['t2'])} — {e(w['form_b'])})</span>{chk}</div>")
+
+
+def totals_html(fc):
+    """Три прогноза после драфтов — тотал убийств, продолжительность, победитель — всегда, с коэффициентом и итогом.
+    Ставка — на одно из трёх (строка «Ставка» выше)."""
+    a = fc.get("after_draft")
+    if not a:
+        return ""
+    res = fc.get("result")
+    bet = a.get("bet")
+
+    def mark(hit, fact=""):
+        if hit is None:
+            return "<span class=mark>ждём</span>"
+        return ((f"<span class=n><i>итог</i>{fact}</span>" if fact else "") +
+                ("<span class='mark ok'>✓ сбылся</span>" if hit else "<span class='mark no'>✗ не сбылся</span>"))
+
+    def row(label, cat, text, odds, hit, fact, extra=""):
+        star = " <i class=muted>(ставка)</i>" if bet == cat else ""
+        cf = f"<span class=n><i>коэф</i>{odds}</span>" if odds else "<span></span>"
+        return f"<div class=pk><span class=c>{label}</span><span class=tx>{text}{star}{extra}</span>{cf}{mark(hit, fact if res else '')}</div>"
+    out = []
+    k, t = a.get("kills"), a.get("time")
+    if k:
+        exp = f" <i class=muted>(ожидание по драфтам ≈ {a['exp_k']:g})</i>" if a.get("exp_k") else ""
+        out.append(row("Прогноз по тоталу", "kills", e(k["text"]), k["odds"], k["hit"], f"{res['kills']} уб." if res else "", exp))
+    if t:
+        exp = f" <i class=muted>(ожидание по драфтам ≈ {a['exp']:g} мин)</i>" if a.get("exp") else ""
+        out.append(row("Прогноз по времени", "time", e(t["text"]), t["odds"], t["hit"], f"{res['duration']:g} мин" if res else "", exp))
+    dw = fc.get("draft_win")
+    w = a.get("win")
+    if dw or w:
+        if dw:
+            p = dw["p"]
+            fav, pf = (fc["t1"], p) if p >= 0.5 else (fc["t2"], 1 - p)
+            sg = lambda v: f"{v * 100:+.0f}"
+            text = (f"победит {e(fav)}, {pf:.0%} <i class=muted>(команды {dw['base']:.0%} за {e(fc['t1'])}, герои {sg(dw['hero'])} п.п., "
+                    f"форма {sg(dw['form'])} п.п.; форма: {e(fc['t1'])} — {e(dw['form_a'])}, {e(fc['t2'])} — {e(dw['form_b'])})</i>")
+            hit = None if not res else (res["winner_id"] == (fc["t1_id"] if p >= 0.5 else fc["t2_id"]))
+        else:
+            text, hit = e(w["text"]), w["hit"]
+        out.append(row("Прогноз по победителю", "win", text, w["odds"] if w else None, hit, "", ""))
+    return "".join(out)
+
+
+def eval_html(ev, win_row=""):
+    if not ev:
+        return win_row
     w = {"затяжной": "затяжная", "быстрый": "быстрая", "средний": "средняя"}[ev["word"]]
     tw = (f" Вышки: драфты <b>{ev['tw_word']}</b>" + (f" (индекс {ev['tw']:+g})" if ev["tw"] is not None else "")
           + (f"; {ev['tw_note']}" if ev.get("tw_note") else "") + ".")
     return (f"<div class=dr><span class=c></span><div class=side><span class=verdict>Оценка драфтов: карта <b>{w}</b> "
-            f"(темп {ev['mean']:+g}), ожидаемая длительность ≈ {ev['exp']:g} мин.{tw}</span></div></div>")
+            f"(темп {ev['mean']:+g}), ожидаемая длительность ≈ {ev['exp']:g} мин.{tw}</span></div></div>" + win_row)
 
 
-def draft_row(m, teams, ht, st, label):
+def draft_row(m, teams, ht, st, label, out):
     """Две строки (Radiant/Dire) героев сыгранной карты + оценка драфтов."""
     rows = []
     for rad in (True, False):
@@ -137,11 +225,17 @@ def draft_row(m, teams, ht, st, label):
         t = heroes_stats.draft_tempo(ids, st)
         th = heroes_stats.team_hero_stats(tid, m["match_id"])
         tw = f"темп драфта: {heroes_stats.tempo_word(t)}" + ("" if t is None else f" ({t:+g})")
+        won = bool(m["radiant_win"]) == rad
+        cup = (f"<img class=cup src='{e(rel(ROOT / 'assets' / 'trophy.svg', out))}' alt='Победитель' title='Победитель карты'>"
+               if won else "")
         rows.append(f"<div class=dr><span class=c>{label if rad else ''}</span><div class=side><b>"
-                    f"{e(teams.get(tid, {}).get('name', ''))}</b>" + "".join(chip(h, ht, th) for h in ids)
+                    f"{e(teams.get(tid, {}).get('name', ''))}{cup}</b>" + "".join(chip(h, ht, th) for h in ids)
                     + f"<span class=tempo>{tw}</span></div></div>")
     ids = lambda rad: [p["hero_id"] for p in m["players"] if bool(p["isRadiant"]) == rad]
-    rows.append(eval_html(heroes_stats.draft_eval(ids(True), ids(False), st)))
+    import forecast
+    wn = forecast.draft_win(m["radiant_team_id"], m["dire_team_id"], ids(True), ids(False), st, m["start_time"])
+    nm = lambda rad: teams.get(m["radiant_team_id"] if rad else m["dire_team_id"], {}).get("name", "")
+    rows.append(eval_html(heroes_stats.draft_eval(ids(True), ids(False), st), win_html(wn, nm(True), nm(False), m["radiant_win"])))
     return "".join(rows)
 
 
@@ -149,7 +243,7 @@ def live_snapshot(lid, ev):
     """Текущая карта серии из OpenDota /live (None, если не идёт или нет связи)."""
     try:
         req = urllib.request.Request("https://api.opendota.com/api/live", headers={"User-Agent": "dota-stats/1.0"})
-        live = json.loads(urllib.request.urlopen(req, timeout=30).read())
+        live = json.loads(netutil.urlopen(req, timeout=30).read())
     except Exception:
         return None
     for g in live:
@@ -232,7 +326,9 @@ def render(lid, ev, teams, ser, snap_rows, stems):
          + f"<a href='https://www.dotabuff.com/esports/leagues/{lid}'>Турнир на Dotabuff</a></div>"]
 
     # прогноз: один на карту, даётся в начале карты, когда выбраны герои обеих команд
-    H.append("<h2>Прогноз ИИ</h2>")
+    hide_fc = bool(s and s["done"]) and not fcs   # у завершённого матча без прогноза блока нет
+    if not hide_fc:
+        H.append("<h2>Прогноз ИИ после драфтов</h2>")
     for f in fcs:
         hits = [p["hit"] for p in f["picks"] if p["hit"] is not None]
         tot = f" · зашло {sum(hits)} из {len(hits)}" if hits else ""
@@ -241,21 +337,16 @@ def render(lid, ev, teams, ser, snap_rows, stems):
                     if f.get("result") else "") + "</div>")
         for p in f["picks"]:
             est = f"<span class=n><i>оценка / линия</i>{p['est']:.0%} / {p['implied']:.0%}</span>" if p.get("est") is not None else ""
-            H.append(f"<div class=pk><span class=c>{e(p['label'])}</span><span class=tx>{e(p['text'])}</span>"
+            dog = (" <i class=muted>(андердог: ставка на перевес над линией, а не на победителя)</i>"
+                   if p["cat"] == "win" and p.get("est") is not None and p["est"] < 0.5 else "")
+            H.append(f"<div class=pk><span class=c>Ставка</span><span class=tx>{e(p['text'])}{dog}</span>"
                      f"<span class=n><i>коэф</i>{p['odds']}</span>{est}"
                      f"<span class=n><i>ставка</i>{p['stake']} $</span>{hit_mark(p['hit'])}</div>")
+        H.append(totals_html(f))
         H.append(f"<p class=note>{e(f['note'])}</p></div>")
-    if not fcs:
+    if not fcs and not hide_fc:
         H.append("<div class=fc>Прогноз будет дан в начале карты, когда обе команды выберут героев: "
-                 "один прогноз — победа, время или убийства (если оценка драфтов заметно расходится с линией).</div>")
-
-    # коэффициенты до матча и форма команд
-    H.append(prematch_html(lid, eid, a, b))
-    import form
-    H.append("<h2>Форма команд</h2>")
-    for tid, tm in ((ev["a"], a), (ev["b"], b)):
-        H.append(form.html(form.form(tid, ev["start"]), tm.get("name") or str(tid)).replace("<div class=card>", "<div class=card style='margin-bottom:10px'>", 1))
-    H.append(f"<div class=sch-note>{form.NOTE}</div>")
+                 "три прогноза (победитель, тотал убийств, время) и ставка 100 $ на один из них: победа — от коэффициента 1.4, тоталы — от 1.7.</div>")
 
     # результат
     r = fc["result"] if fc else None
@@ -285,6 +376,7 @@ def render(lid, ev, teams, ser, snap_rows, stems):
         g = live_snapshot(lid, ev)
         init = "<div class=meta>сейчас карта не идёт</div>"
         if g:
+            import forecast
             ths = {t: heroes_stats.team_hero_stats(g["team_id_radiant"] if t == 0 else g["team_id_dire"]) for t in (0, 1)}
 
             def side(t):
@@ -293,13 +385,16 @@ def render(lid, ev, teams, ser, snap_rows, stems):
                     f"{g['radiant_score']}:{g['dire_score']} · снимок на момент сборки страницы</div>"
                     + "".join(f"<div class=dr><span class=c>{'Radiant' if t == 0 else 'Dire'}</span><div class=side><b>"
                               f"{e(g['team_name_radiant'] if t == 0 else g['team_name_dire'])}</b>{side(t)}</div></div>" for t in (0, 1))
-                    + eval_html(heroes_stats.draft_eval(*[[p["hero_id"] for p in g["players"] if p["team"] == t] for t in (0, 1)], st)))
+                    + eval_html(heroes_stats.draft_eval(*[[p["hero_id"] for p in g["players"] if p["team"] == t] for t in (0, 1)], st),
+                                win_html(forecast.draft_win(g["team_id_radiant"], g["team_id_dire"],
+                                                            *[[p["hero_id"] for p in g["players"] if p["team"] == t] for t in (0, 1)], st),
+                                         g["team_name_radiant"], g["team_name_dire"])))
         H.append(f"<h3 style='margin:0 0 6px;font-size:15px'>Лайв</h3><div id=live class=livebox>{init}</div>")
     if s:
         for i, m in enumerate(s["maps"], 1):
             f = ROOT / "raw" / "matches" / f"{m['match_id']}.json"
             if f.exists():
-                H.append(draft_row(json.loads(f.read_text(encoding="utf-8")), teams, ht, st, f"карта {i}"))
+                H.append(draft_row(json.loads(f.read_text(encoding="utf-8")), teams, ht, st, f"карта {i}", out))
             else:
                 H.append(f"<div class=dr><span class=c>карта {i}</span><div class=side>матч не загружен: "
                          "<code>collect_team.py --refresh</code></div></div>")
@@ -310,6 +405,20 @@ def render(lid, ev, teams, ser, snap_rows, stems):
              f"{st['maps']} карт); число — темп героя в минутах относительно средней карты. "
              "Значок в углу: <b style='color:#1d7a3e'>▲</b> — герой быстро ломает вышки, <b style='color:#b36b00'>▼</b> — медленно (урон по вышкам в минуту относительно позиции). "
              "Подробнее на странице «Герои».</div></div>")
+
+    # предварительный прогноз до матча (сохраняется один раз, пока матч не начался)
+    import preview
+    pv = preview.ensure(lid, ev, teams, now, bool(s and s['done']))
+    if pv:
+        H.append(preview.html(pv, winner, (s or {}).get("maps", [])))
+
+    # коэффициенты до матча и форма команд
+    H.append(prematch_html(lid, eid, a, b))
+    import form
+    H.append("<h2>Форма команд</h2>")
+    for tid, tm in ((ev["a"], a), (ev["b"], b)):
+        H.append(form.html(form.form(tid, ev["start"]), tm.get("name") or str(tid)).replace("<div class=card>", "<div class=card style='margin-bottom:10px'>", 1))
+    H.append(f"<div class=sch-note>{form.NOTE}</div>")
 
     # коэффициенты
     rows = snap_rows if snap_rows is not None else (fc["rows"] if fc else [])
@@ -333,10 +442,23 @@ def render(lid, ev, teams, ser, snap_rows, stems):
     if show_live:
         hjs = json.dumps({str(k): v for k, v in ht.items()}, ensure_ascii=False)
         script = "<script>" + (LIVE_JS.replace("__HEROES__", hjs).replace("__A__", str(ev["a"]))
-                               .replace("__B__", str(ev["b"])).replace("__TH__", json.dumps({str(t): {str(k): v for k, v in heroes_stats.team_hero_stats(t).items()} for t in (ev["a"], ev["b"])})).replace("__LG__", str(int(lid))).replace("__OVERALL__", str(st["overall"])).replace("__TWNOTE__", json.dumps(heroes_stats.tower_note(st), ensure_ascii=False))) + "</script>"
+                               .replace("__B__", str(ev["b"])).replace("__TH__", json.dumps({str(t): {str(k): v for k, v in heroes_stats.team_hero_stats(t).items()} for t in (ev["a"], ev["b"])})).replace("__LG__", str(int(lid))).replace("__WIN__", win_js(ev, st, now)).replace("__OVERALL__", str(st["overall"])).replace("__TWNOTE__", json.dumps(heroes_stats.tower_note(st), ensure_ascii=False))) + "</script>"
     H.append(f"</main>{script}</body></html>")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("".join(H), encoding="utf-8")
+
+
+def win_js(ev, st, now):
+    """Данные для расчёта прогноза по драфту в браузере: база команд, вклад героев, форма."""
+    import forecast
+    import form
+    f = {}
+    for t in (ev["a"], ev["b"]):
+        x = form.form(t, now)
+        f[str(t)] = [x["score"], x["word"]]
+    pw = {str(h): (v["wr"] * v["n"] + 0.5 * forecast.HERO_K) / (v["n"] + forecast.HERO_K) - 0.5 for h, v in st["heroes"].items()}
+    return json.dumps({"pa": form.model_p(ev["a"], ev["b"], now), "hw": forecast.HERO_W, "fw": forecast.FORM_SHOW_W,
+                       "pw": pw, "f": f}, ensure_ascii=False)
 
 
 def build(lid):

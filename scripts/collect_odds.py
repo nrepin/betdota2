@@ -23,6 +23,8 @@ import re
 import sys
 import time
 import urllib.request
+
+import netutil
 from html import escape as e
 
 from render_html import ROOT
@@ -35,7 +37,7 @@ ODDS = ROOT / "odds"
 # ---------------- загрузка ----------------
 def get(url):
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Origin": "https://pari.ru", "Referer": "https://pari.ru/"})
-    with urllib.request.urlopen(req, timeout=60) as r:
+    with netutil.urlopen(req, timeout=60) as r:
         raw = r.read()
     if raw[:2] == bytes([0x1F, 0x8B]):
         raw = gzip.decompress(raw)

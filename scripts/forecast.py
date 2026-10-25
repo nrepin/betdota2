@@ -18,7 +18,9 @@ from render_html import ROOT
 from render_schedule import MSK, find_series, series_results, teams_of
 
 DIR = ROOT / "forecasts"
-STAKES = {"явный": 200, "небольшой": 100, "слабый": 50}  # условная ставка по перевесу, $
+STAKE = 100       # условная ставка на каждый прогноз, $
+STAKES = {"явный": STAKE, "небольшой": STAKE, "слабый": STAKE}
+MIN_ODDS = {"win": 1.4, "time": 1.7, "kills": 1.7}   # ставка ставится, только если коэффициент не ниже порога
 
 
 def path(lid, eid):
@@ -45,7 +47,7 @@ def line_of(market):
 EDGE = {"time": (3.0, 6.0), "kills": (6.0, 10.0), "win": (0.08, 0.15)}   # минуты, убийства, вероятность
 LIVE_SAFE_LEFT = 300   # до линии времени должно оставаться не меньше 5 мин игры
 HERO_K = 8             # сглаживание винрейта героя (как n/(n+K))
-FORM_W = 0.0           # вес формы (form.py) в вероятности победы: на картах базы не подтвердилась, пока только показ
+FORM_W = 0.08          # вес формы (form.py) в вероятности победы на карте (на картах базы эффект не подтверждён: малая выборка)
 HERO_W = 0.1           # вес разницы винрейтов драфтов в вероятности победы
 
 
@@ -62,6 +64,27 @@ def draft_power(ids, st):
         if x:
             t += (x["wr"] * x["n"] + 0.5 * HERO_K) / (x["n"] + HERO_K) - 0.5
     return t
+
+
+FORM_SHOW_W = FORM_W   # вес формы в прогнозе по драфту, показываемом на странице
+
+
+def draft_win(ta, tb, ids_a, ids_b, st, at=None):
+    """Прогноз победы на карте по драфту: команды (винрейт, log5) + герои (HERO_W) + форма (FORM_SHOW_W).
+    ta/tb — id команд, ids_* — герои, at — время карты (None — сейчас). None, если героев меньше пяти."""
+    import form
+    import time
+    ids_a, ids_b = [h for h in ids_a if h], [h for h in ids_b if h]
+    at = at or time.time()
+    base = form.model_p(ta, tb, at)
+    # неполные пики: сумма отклонений героев приводится к пяти героям (среднее × 5), без героев вклад 0
+    pw = lambda ids: draft_power(ids, st) * 5 / len(ids) if ids else 0.0
+    hero = HERO_W * (pw(ids_a) - pw(ids_b))
+    fa, fb = form.form(ta, at), form.form(tb, at)
+    fd = FORM_SHOW_W * (fa["score"] - fb["score"]) if fa["score"] is not None and fb["score"] is not None else 0.0
+    p = min(0.95, max(0.05, base + hero + fd))
+    return {"a": ta, "b": tb, "base": base, "hero": hero, "form": fd, "p": p,
+            "form_a": fa["word"], "form_b": fb["word"], "na": len(ids_a), "nb": len(ids_b)}
 
 
 def team_kpm(team_id):
@@ -133,6 +156,35 @@ def draft_candidates(m, g, st, ids1, ids2):
     return out, {"exp": exp, "exp_k": exp_k, "adv": adv, "adj": adj, "mean": evd["mean"], "form": (f1, f2)}
 
 
+def total_candidates(m, g, exp, exp_k):
+    """Кандидаты прогноза на тотал карты — время и убийства, больше/меньше. По каждому рынку и стороне берётся строка
+    с наименьшим коэффициентом из тех, что не ниже MIN_ODDS; результат — по убыванию перевеса (в долях порога EDGE)."""
+    cands = []
+    for r in m["rows"]:
+        if r["market"].startswith("Время карты больше"):
+            N = line_of(r["market"])
+            if N * 60 - g["game_time"] < LIVE_SAFE_LEFT:
+                continue
+            for side, odds, edge, word in (("Да", r["k1"], exp - N, "больше"), ("нет", r["k2"], N - exp, "меньше")):
+                if edge > 0:
+                    cands.append(dict(cat="time", label="Время карты", edge=edge, r=r, side=side, odds=odds, line=N, est=None,
+                                      text=f"Время карты {word} {N:g} мин", basis=f"драфты: ожидание {exp:g} мин, линия {N:g}", n=0))
+        elif exp_k is not None and r["market"].startswith("Тотал убийств больше"):
+            N = line_of(r["market"])
+            for side, odds, edge, word in (("Б", r["k1"], exp_k - N, "больше"), ("М", r["k2"], N - exp_k, "меньше")):
+                if edge > 0:
+                    cands.append(dict(cat="kills", label="Убийства", edge=edge, r=r, side=side, odds=odds, line=N, est=None,
+                                      text=f"Убийства {word} {N:g}", basis=f"драфты: ожидание {exp_k:g} убийств, линия {N:g}", n=0))
+    best = {}
+    for c in cands:
+        if c["odds"] < MIN_ODDS[c["cat"]]:
+            continue
+        key = (c["cat"], c["side"])
+        if key not in best or c["odds"] < best[key]["odds"]:
+            best[key] = c
+    return sorted(best.values(), key=lambda c: -c["edge"] / EDGE[c["cat"]][1])
+
+
 def from_draft(lid, ev, g, m, st, hero_names):
     """Единственный прогноз на идущую карту: (fc, "") или (None, причина). g — запись /live, m — матч из снимка линии."""
     sides = [[p["hero_id"] for p in g["players"] if p["team"] == t and p["hero_id"]] for t in (0, 1)]
@@ -146,23 +198,41 @@ def from_draft(lid, ev, g, m, st, hero_names):
     cands, info = draft_candidates(m, g, st, ids1, ids2)
     if not info:
         return None, "нет данных по героям"
-    if not cands:  # перевеса нет нигде: ставим на фаворита карты (слабый перевес, ставка 50)
-        for r in m["rows"]:
-            if r["market"].startswith("Победа на карте") and r.get("est") is not None:
-                p1 = min(0.95, max(0.05, r["est"] + info["adj"]))
-                side, odds, p = ("1", r["k1"], p1) if p1 >= 0.5 else ("2", r["k2"], 1 - p1)
-                cands.append(dict(cat="win", label="Победа на карте", edge=0.0, r=r, side=side, odds=odds, line=None,
-                                  est=round(p, 3), n=r["n"], text=f"Победа на карте: {m['t1'] if side == '1' else m['t2']}",
-                                  basis=f"перевеса над линией нет, фаворит по оценке ({p:.0%}; команды {r['est']:.0%}, линия {r['line']:.0%})"))
-                break
-    if not cands:
+    # три события, прогноз по каждому показывается всегда: тотал убийств, продолжительность, победитель
+    pool = total_candidates(m, g, info["exp"], info["exp_k"])
+    ev3 = {}
+    for cat, name, exp, unit in (("kills", "тотал убийств", info["exp_k"], ""), ("time", "продолжительность", info["exp"], "мин")):
+        cc = next((x for x in pool if x["cat"] == cat), None)
+        if cc is None:   # нет рынка с нужным коэффициентом: только ожидание по драфтам
+            cc = next((x for x in sorted((x for x in cands if x["cat"] == cat), key=lambda x: abs(x["odds"] - MIN_ODDS[cat]))), None)
+        ev3[cat] = ({"text": cc["text"], "market": cc["r"]["market"], "side": cc["side"], "line": cc["line"], "odds": cc["odds"],
+                     "basis": cc["basis"], "edge": cc["edge"], "hit": None} if cc else
+                    {"text": f"{name}: ожидание по драфтам ≈ {exp:g} {unit}".strip() if exp else f"{name}: нет данных", "market": None,
+                     "side": None, "line": None, "odds": None, "basis": "", "edge": None, "hit": None})
+    win = None
+    for r in m["rows"]:
+        if r["market"].startswith("Победа на карте") and r.get("est") is not None:
+            p1 = min(0.95, max(0.05, r["est"] + info["adj"]))
+            side, odds, p, imp = ("1", r["k1"], p1, r["line"]) if p1 >= 0.5 else ("2", r["k2"], 1 - p1, 1 - r["line"])
+            win = {"text": f"Победа на карте: {m['t1'] if side == '1' else m['t2']}", "market": r["market"], "side": side, "line": None,
+                   "odds": odds, "est": round(p, 3), "implied": round(imp, 3), "edge": p - imp, "n": r["n"], "hit": None,
+                   "basis": f"команды {r['est']:.0%} (по картам), с учётом героев и формы {p1:.0%}, линия {r['line']:.0%}"}
+            break
+    # ставка — на одно из трёх событий с наибольшим перевесом; коэффициент не ниже MIN_ODDS (победа 1.4, тоталы 1.7)
+    cand3 = [(c, ev3[c]) for c in ("kills", "time") if ev3[c]["odds"] and ev3[c]["odds"] >= MIN_ODDS[c]]
+    if win and win["odds"] >= MIN_ODDS["win"]:
+        cand3.append(("win", win))
+    cat, picks, pick = None, [], None
+    if cand3:
+        cat, c = max(cand3, key=lambda x: x[1]["edge"] / EDGE[x[0]][1])
+        signal = ("явный" if c["edge"] >= EDGE[cat][1] else "небольшой" if c["edge"] >= EDGE[cat][0] else "слабый")
+        pick = {"cat": cat, "label": {"kills": "Убийства", "time": "Время карты", "win": "Победа на карте"}[cat], "text": c["text"],
+                "market": c["market"], "side": c["side"], "line": c["line"], "odds": c["odds"], "est": c.get("est"),
+                "implied": round(1 / c["odds"], 3), "n": c.get("n", 0), "basis": c["basis"], "signal": signal, "ev": None,
+                "stake": STAKE, "hit": None}
+        picks = [pick]
+    elif not (win or any(ev3[c]["odds"] for c in ("kills", "time"))):
         return None, "в линии нет подходящих рынков"
-    c = max(cands, key=lambda c: c["edge"] / EDGE[c["cat"]][1])
-    signal = ("явный" if c["edge"] >= EDGE[c["cat"]][1] else "небольшой" if c["edge"] >= EDGE[c["cat"]][0] else "слабый")
-    r = c["r"]
-    pick = {"cat": c["cat"], "label": c["label"], "text": c["text"], "market": r["market"], "side": c["side"], "line": c["line"],
-            "odds": c["odds"], "est": c["est"], "implied": round(1 / c["odds"], 3), "n": c["n"], "basis": c["basis"],
-            "signal": signal, "ev": None, "stake": STAKES[signal], "hit": None}
     nm = lambda ids: [hero_names.get(str(h), {}).get("localized_name", "?") for h in ids]
     t1, t2 = nm(ids1), nm(ids2)
     note = (f"Прогноз в начале карты, когда выбраны все герои. {m['t1']}: {', '.join(t1)}. {m['t2']}: {', '.join(t2)}. "
@@ -170,25 +240,51 @@ def from_draft(lid, ev, g, m, st, hero_names):
             + (f", убийств ≈ {info['exp_k']:g}" if info["exp_k"] else "")
             + f". Форма: {m['t1']} — {info['form'][0]['word']}" + (f" ({info['form'][0]['score']:+g})" if info['form'][0]['score'] is not None else "")
             + f", {m['t2']} — {info['form'][1]['word']}" + (f" ({info['form'][1]['score']:+g})" if info['form'][1]['score'] is not None else "")
-            + f". Выбрано: {c['text']} (коэф {c['odds']}, {c['basis']}, перевес: {signal}). "
-            f"Из трёх рынков взят один с наибольшим перевесом; героев с данными в базе: {n_known} из 10. "
+            + ". " + (f"Ставка на одно из трёх событий (победитель, тотал убийств, время) — с наибольшим перевесом: "
+                      f"{pick['text']} (коэф {pick['odds']}, {pick['basis']}, перевес: {pick['signal']}). " if pick else
+                      "Ставки нет: коэффициент ни одного события не дотягивает до минимума. ")
+            + f"Минимальный коэффициент ставки: победа {MIN_ODDS['win']}, тоталы {MIN_ODDS['time']}. "
+            f"Героев с данными в базе: {n_known} из 10. "
             "Выборки малые, маржа букмекера около 8%: это разбор статистики, а не гарантия.")
     mno = map_no(m["map"])
+    after = {"exp": info["exp"], "exp_k": info["exp_k"], "time": ev3["time"], "kills": ev3["kills"], "win": win, "bet": cat}
+    dw = draft_win(m["t1_id"], m["t2_id"], ids1, ids2, st)
     fc = {"event_id": f"{ev['event_id']}L{mno}", "match_event_id": str(ev["event_id"]), "league": lid, "live_bet": True,
           "created": datetime.datetime.now(MSK).strftime("%Y-%m-%d %H:%M"), "after_start": True,
           "t1": m["t1"], "t2": m["t2"], "t1_id": m["t1_id"], "t2_id": m["t2_id"], "start": ev["start"], "map_no": mno,
-          "series_win": m.get("series_win") or [], "url": ev.get("url"), "picks": [pick], "note": note,
-          "draft": {"t1": t1, "t2": t2}, "rows": m["rows"], "result": None}
+          "series_win": m.get("series_win") or [], "url": ev.get("url"), "picks": picks, "note": note,
+          "draft": {"t1": t1, "t2": t2}, "draft_win": dw, "after_draft": after, "rows": m["rows"], "result": None}
     return fc, ""
 
 
+def fill_totals(fc, dur, kills, winner_id=None):
+    """Итоги трёх прогнозов после драфтов (тотал убийств, продолжительность, победитель). True, если что-то проставлено."""
+    changed = False
+    a = fc.get("after_draft") or {}
+    for cat, ok in (("time", lambda t: (dur > t["line"]) == (t["side"] == "Да")),
+                    ("kills", lambda t: (kills > t["line"]) == (t["side"] == "Б"))):
+        t = a.get(cat)
+        if t and t["hit"] is None and t.get("line") is not None:
+            t["hit"] = ok(t)
+            changed = True
+    w = a.get("win")
+    if w and w["hit"] is None and winner_id is not None:
+        w["hit"] = (winner_id == (fc["t1_id"] if w["side"] == "1" else fc["t2_id"]))
+        changed = True
+    return changed
+
+
 def settle(lid):
-    """Подставить результат карты и отметить попадания прогнозов."""
+    """Подставить результат карты и отметить попадания прогнозов (включая тоталы после драфтов, и у уже закрытых карт)."""
     ser = series_results(lid, 3)
     done = 0
     for f in sorted((DIR / lid).glob("*.json")) if (DIR / lid).exists() else []:
         fc = json.loads(f.read_text(encoding="utf-8"))
-        if fc["result"] or not fc.get("live_bet"):
+        if not fc.get("live_bet"):
+            continue
+        if fc["result"]:   # карта закрыта раньше: добить итоги, которых не хватает
+            if fill_totals(fc, fc["result"]["duration"], fc["result"]["kills"], fc["result"]["winner_id"]):
+                save(lid, fc)
             continue
         s = find_series(ser, fc["t1_id"], fc["t2_id"], fc["start"])
         if not s or len(s["maps"]) < fc["map_no"]:
@@ -203,6 +299,7 @@ def settle(lid):
                 p["hit"] = (dur > p["line"]) == (p["side"] == "Да")
             else:
                 p["hit"] = (kills > p["line"]) == (p["side"] == "Б")
+        fill_totals(fc, dur, kills, win_id)
         fc["result"] = {"match_id": mp["match_id"], "winner_id": win_id, "kills": kills,
                         "kills_for": {"t1": mp["radiant_score"] if mp["radiant_team_id"] == fc["t1_id"] else mp["dire_score"],
                                       "t2": mp["radiant_score"] if mp["radiant_team_id"] == fc["t2_id"] else mp["dire_score"]},

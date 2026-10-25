@@ -1,6 +1,6 @@
 """Страница «Прогнозы ИИ» (forecasts.html): условный учёт ставок по сохранённым прогнозам.
 
-Ставка по прогнозу: перевес «явный» — 200 $, «небольшой» — 100 $ (STAKES). Это бухгалтерия прогнозов,
+Ставка на каждый прогноз — 100 $ (STAKE). Это бухгалтерия прогнозов,
 реальные ставки не делаются. Выигрыш = ставка × (коэффициент − 1), проигрыш = −ставка. Прогноз — один на карту, в её начале (герои обеих команд выбраны).
 
     python scripts/render_forecasts.py
@@ -13,7 +13,8 @@ from html import escape as e
 from render_html import ROOT, SORT_JS, rel
 
 OUT = ROOT / "forecasts.html"
-STAKES = {"явный": 200, "небольшой": 100, "слабый": 50}
+STAKE = 100
+STAKES = {"явный": STAKE, "небольшой": STAKE, "слабый": STAKE}
 MSK = datetime.timezone(datetime.timedelta(hours=3))
 CATS = {"win": "Победа на карте", "time": "Время карты", "kills": "Убийства"}
 
@@ -43,6 +44,14 @@ def cls(v):
     return "pos" if v > 0 else "neg" if v < 0 else ""
 
 
+def played_at(r):
+    """Время карты: начало сыгранной карты, иначе время создания прогноза (идущая карта)."""
+    fc = r["fc"]
+    if fc.get("result"):
+        return fc["result"]["start_time"]
+    return datetime.datetime.strptime(fc["created"], "%Y-%m-%d %H:%M").replace(tzinfo=MSK).timestamp()
+
+
 def collect():
     rows = []
     for f in sorted((ROOT / "forecasts").glob("*/*.json")):
@@ -51,11 +60,11 @@ def collect():
             continue  # доматчевых прогнозов больше нет: старые файлы в учёт не идут
         lname = json.loads((ROOT / "raw" / f"league_{fc['league']}.json").read_text(encoding="utf-8"))["name"]
         for p in fc["picks"]:
-            stake = p.get("stake") or STAKES.get(p["signal"], 100)
+            stake = STAKE   # на все прогнозы — одинаковая условная ставка
             profit = None if p["hit"] is None else (stake * (p["odds"] - 1) if p["hit"] else -stake)
             rows.append({"fc": fc, "league": lname, "p": p, "stake": stake, "profit": profit,
                          "counted": True, "live": True})
-    rows.sort(key=lambda r: r["fc"]["start"], reverse=True)
+    rows.sort(key=played_at, reverse=True)   # последние сыгранные (и идущие) карты — в начале
     return rows
 
 
@@ -73,9 +82,9 @@ def render_page():
     t = agg(rows)
     pending = [r for r in rows if r["counted"] and r["profit"] is None]
     out_of = [r for r in rows if not r["counted"]]
-    body = [f"<div class=page-h><h2>Прогнозы ИИ</h2><div class=sub>Условный учёт: перевес «явный» — 200 $, «небольшой» — 100 $, «слабый» — 50 $ "
-            f"на прогноз. Реальные ставки не делаются. Выигрыш = ставка × (коэффициент − 1), проигрыш = −ставка. "
-            f"Один прогноз на каждую карту, в её начале, когда выбраны герои обеих команд: победа, время или убийства.</div></div>"]
+    body = [f"<div class=page-h><h2>Прогнозы ИИ</h2><div class=sub>Условный учёт: 100 $ "
+            f"на каждый прогноз. Реальные ставки не делаются. Выигрыш = ставка × (коэффициент − 1), проигрыш = −ставка. "
+            f"На каждой карте, когда выбраны герои обеих команд, ИИ даёт три прогноза (победитель, тотал убийств, время) и ставит на один из них — с наибольшим перевесом над линией. Ставка на победу — от коэффициента 1.4, на тоталы — от 1.7.</div></div>"]
     hr = f"{t['hit'] / t['n']:.0%}" if t["n"] else "—"
     body.append(
         "<div class=fk>"

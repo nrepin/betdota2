@@ -1,0 +1,144 @@
+<!doctype html><html lang=ru><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>BETBOOM TEAM – LEGION</title><meta name=description content='Матч BETBOOM TEAM – LEGION: коэффициенты, прогноз ИИ и результат'><link rel=icon href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314161b'/%3E%3Cpath d='M10 23V9h5.5a7 7 0 010 14z' fill='none' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href='https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap'><style>
+:root{--bg:#f4f5f7;--card:#fff;--text:#14161b;--muted:#646b78;--line:#e4e6ea;--win:#1f63b5;--loss:#c23434;
+--win-bg:#e3eefc;--loss-bg:#fbe6e4;--accent:#14161b;--on-accent:#fff;--bar:#e6e8ec;--hover:#f7f8fa;
+--shadow:0 1px 2px rgba(20,24,34,.04),0 4px 14px -6px rgba(20,24,34,.08);--ring:0 0 0 3px rgba(20,22,27,.18);
+--v-win:#2a78d6;--v-loss:#e34948;--v-opp:#c9cbd1;--v-grid:#ebecef;--v-axis:#c3c2b7;--v-tick:#898781;
+--v-track:#cde2fb;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 "Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+:root{--mono:"Geist Mono",ui-monospace,"SF Mono",Consolas,monospace}
+.num,td.num,.kpi .v,.viz .gl span,.viz .cap,.tot input,.tot .res b,.tot .dot,.pill,.chip b,.mrow .vl,.prob,.fact{font-family:var(--mono)}
+a{color:inherit;text-underline-offset:3px}a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:none;box-shadow:var(--ring);border-radius:6px}
+h1,h2,h3{text-wrap:balance}p,li{text-wrap:pretty}
+.wrap{max-width:1200px;margin:0 auto;padding:24px 16px 48px}
+h1{margin:0;font-size:34px;line-height:1.1;letter-spacing:-.025em;font-weight:700}
+.head{display:flex;align-items:center;gap:14px}.logo{width:56px;height:56px;object-fit:contain}
+.logo.dark{background:#111;border-radius:12px;padding:6px}
+.tour{display:inline-block;margin-bottom:12px;padding:4px 10px;border-radius:6px;background:var(--bar);font-size:12.5px;font-weight:600}
+.back{display:block;width:max-content;margin-bottom:14px;color:var(--muted);text-decoration:none;font-weight:500;transition:color .2s}.back:hover{color:var(--text)}h2{font-size:20px;letter-spacing:-.015em;font-weight:650;margin:40px 0 14px}
+.sub{color:var(--muted);margin-top:6px}.sub a{color:var(--text)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));grid-auto-flow:dense;gap:1px;margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.kpi.wide{grid-column:span 2}.kpi .v{white-space:nowrap}
+.kpi .v small{font-size:.62em;font-weight:500;color:var(--muted);letter-spacing:0}
+.kpi{background:var(--card);padding:14px 16px;outline:1px solid var(--line)}
+.kpi.main{grid-column:span 2;background:var(--accent);color:var(--on-accent)}
+.kpi.main .l,.kpi.main .s{color:inherit;opacity:.7}.kpi.main .v{font-size:40px;letter-spacing:-.05em}
+.kpi .l{color:var(--muted);font-size:12.5px;font-weight:500}
+.kpi .v{font-size:24px;font-weight:600;letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi .s{color:var(--muted);font-size:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;vertical-align:middle}
+th{font-size:12px;color:var(--muted);font-weight:500;position:sticky;top:0;background:var(--card);cursor:pointer;user-select:none;transition:color .2s}
+th[data-asc="1"]::after{content:" ↑"}th[data-asc="0"]::after{content:" ↓"}
+tbody tr{transition:background-color .15s}tbody tr:hover{background:var(--hover)}
+th:hover{color:var(--text)}th:active{transform:translateY(1px)}tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right}
+.w{color:var(--win);font-weight:650}.lo{color:var(--loss);font-weight:650}
+.pill{display:inline-block;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:650}
+.pill.w{background:var(--win-bg)}.pill.lo{background:var(--loss-bg)}
+.series{display:flex;flex-wrap:wrap;gap:8px}
+.ser{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px 12px;display:flex;gap:10px;align-items:center}
+.heroes{display:flex;gap:3px}
+td.links{white-space:nowrap;font-size:12.5px;line-height:1.7}
+.hero{width:44px;height:25px;border-radius:4px;object-fit:cover;background:var(--line)}
+.hero.ban{filter:grayscale(1);opacity:.55}
+.hcell{display:flex;align-items:center;gap:8px}
+.bar{height:8px;border-radius:4px;background:var(--v-track);position:relative;min-width:120px}
+.bar span{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--s1)}
+.viz{position:relative;padding:18px 18px 14px;overflow:visible}
+.viz .lg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--muted);margin-bottom:14px}
+.viz .lg span{display:inline-flex;align-items:center;gap:6px}.viz .lg i{width:10px;height:10px;border-radius:2px;flex:none}
+.viz .sc{overflow-x:auto;overflow-y:hidden;padding:22px 6px 2px 58px;margin-left:-6px}
+.viz .in{min-width:calc(var(--n)*38px)}
+.viz .plot{position:relative;height:190px;border-bottom:1px solid var(--v-axis)}
+.viz .gl{position:absolute;left:0;right:0;border-top:1px solid var(--v-grid)}
+.viz .gl span{position:absolute;right:calc(100% + 8px);top:-8px;font-size:11px;color:var(--v-tick);font-variant-numeric:tabular-nums;white-space:nowrap}
+.viz .avg{position:absolute;left:0;right:0;border-top:1px solid var(--text);opacity:.5;z-index:2;pointer-events:none}
+.viz .avg span{position:absolute;right:0;bottom:2px;font-size:11px;font-weight:600;color:var(--text);background:var(--card);padding:0 4px}
+.viz .cols{position:absolute;inset:0;display:flex;z-index:1}
+.viz .c{flex:1;min-width:38px;position:relative;display:flex;justify-content:center;align-items:flex-end;outline:none;cursor:default}
+.viz .c:hover,.viz .c:focus-visible{background:color-mix(in srgb,var(--text) 5%,transparent)}
+.viz .c:focus-visible{box-shadow:inset var(--ring)}
+.viz .stk{width:min(24px,62%);display:flex;flex-direction:column;gap:2px}
+.viz .sg{width:100%}.viz .sg:first-child{border-radius:4px 4px 0 0}
+.viz .sg.w{background:var(--v-win)}.viz .sg.lo{background:var(--v-loss)}.viz .sg.opp{background:var(--v-opp)}
+.viz .cap{position:absolute;left:0;right:0;text-align:center;font-size:11px;font-weight:650;color:var(--text);padding-bottom:3px;font-variant-numeric:tabular-nums}
+.viz .xa{display:flex;margin-top:6px}
+.viz .xa div{flex:1;min-width:38px;text-align:center;font-size:10.5px;line-height:1.35;color:var(--muted);white-space:nowrap}
+.viz .xa b{display:block;font-size:10px;font-weight:700}.viz .xa b.w{color:var(--win)}.viz .xa b.lo{color:var(--loss)}
+.viz .tip{position:absolute;z-index:5;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:8px;
+box-shadow:var(--shadow);padding:8px 10px;font-size:12px;min-width:150px;opacity:0;transition:opacity .12s}
+.viz .tip.on{opacity:1}.viz .tip .h{color:var(--muted);margin-bottom:4px;font-size:11.5px}
+.viz .tip .r{display:flex;align-items:center;gap:8px;margin-top:2px}.viz .tip .r i{width:12px;height:2px;border-radius:1px;flex:none}
+.viz .tip .r b{font-weight:650;font-variant-numeric:tabular-nums}.viz .tip .r span{color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:800px){.grid2{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px}
+.chip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:6px;padding:3px 8px 3px 3px;font-size:13px}
+.chip img{width:36px;height:20px;border-radius:4px;object-fit:cover}
+.chip b{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+
+.sch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;align-items:start}
+.sch-box{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.sch-box table{width:100%;border-collapse:collapse;font-size:13.5px}
+.sch-box th{font:600 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+.sch-box td{padding:9px 12px;border-bottom:1px solid var(--line)}.sch-box tr:last-child td{border-bottom:0}
+.sch-box td.n,.sch-box th.n{text-align:right;font-family:var(--mono);white-space:nowrap}
+.sch-box .tm{display:flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font-weight:600}
+.sch-box .tm img{width:22px;height:22px;object-fit:contain}.sch-box .tm img.dark{background:#111;border-radius:4px;padding:2px}
+.sch-box a.tm:hover span{text-decoration:underline}
+.sch-box tr.dim td{color:var(--muted)}
+.sch-day{padding:8px 12px;font:600 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--hover);border-bottom:1px solid var(--line)}
+.sch-m{display:grid;grid-template-columns:54px 1fr;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line)}
+.sch-m:last-child{border-bottom:0}.sch-m time{font:600 13px var(--mono)}
+.sch-m .vs{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}.sch-m .vs i{font-style:normal;color:var(--muted);font-size:12px}
+.sch-m.live time{color:var(--win)}.sch-m .live-b{font:600 11px var(--mono);color:var(--win);margin-left:auto}
+.sch-m{color:inherit;text-decoration:none}a.sch-m:hover{background:var(--hover)}a.sch-m:active{transform:scale(.995)}
+.sch-m .sc{font-family:var(--mono)}
+.sch-note{font-size:12.5px;color:var(--muted);margin-top:8px;max-width:80ch}
+
+.mh{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-top:16px}
+.mh .t{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;color:inherit;text-decoration:none;font-weight:650;font-size:18px}
+.mh .t img{width:72px;height:72px;object-fit:contain}.mh .t img.dark{background:#111;border-radius:12px;padding:6px}
+.mh .t:hover span{text-decoration:underline}.mh .t.win{color:var(--win)}
+.mh .mid{text-align:center;font:600 13px var(--mono);color:var(--muted)}.mh .mid b{display:block;font-size:32px;color:var(--text);letter-spacing:.02em}
+.mh .mid .st{display:inline-block;margin-top:6px;padding:3px 8px;border-radius:6px;background:var(--bar)}
+.mh .mid .st.live{background:var(--accent);color:var(--on-accent)}
+@media (max-width:620px){.mh{grid-template-columns:1fr;gap:10px}.mh .t{flex-direction:row;justify-content:center}.mh .t img{width:44px;height:44px}}
+.mlinks{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font-size:13px}
+.fc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:10px}
+.fc .meta{font:11.5px var(--mono);color:var(--muted);margin-bottom:10px}
+.fc .note{font-size:14px;line-height:1.55;max-width:80ch;margin:12px 0 0}
+.pk{display:grid;grid-template-columns:90px 1fr auto auto auto auto;gap:6px 16px;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.pk:first-of-type{border-top:0}.pk .c{font:600 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.pk .tx{font-weight:650}.pk .n{font:13px var(--mono);white-space:nowrap}.pk .n i{font-style:normal;color:var(--muted);margin-right:4px}
+.mark{display:inline-block;min-width:74px;white-space:nowrap;text-align:center;padding:3px 10px;border-radius:6px;font:600 12px var(--mono);background:var(--bar);color:var(--muted)}
+.mark.ok{background:var(--win-bg);color:var(--win)}.mark.no{background:var(--loss-bg);color:var(--loss)}
+.pk .mark{grid-column:6}
+@media (max-width:700px){.pk{grid-template-columns:1fr auto}.pk .c{grid-column:1/-1}.pk .mark{grid-column:auto}}
+.res{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:14px;margin-top:2px}.res b{font-family:var(--mono)}
+.mt{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:10px}
+.mt table{width:100%;border-collapse:collapse;font-size:13.5px}
+.mt th{font:600 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+.mt td{padding:9px 12px;border-bottom:1px solid var(--line)}.mt tr:last-child td{border-bottom:0}
+.mt td.k{font-family:var(--mono);white-space:nowrap}.mt td.k i{font-style:normal;color:var(--muted);font-size:11.5px;margin:0 4px 0 8px}.mt td.k i:first-child{margin-left:0}
+.mt td.num,.mt th.num{text-align:right;font-family:var(--mono);white-space:nowrap}
+.mt tr.pick td{background:var(--hover);font-weight:600}.mt tr.noise td{color:var(--muted)}
+.mt td.d.pos{color:var(--win)}.mt td.d.neg{color:var(--loss)}
+
+.dr{display:grid;grid-template-columns:90px 1fr;gap:8px 14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.dr:first-of-type{border-top:0}.dr .c{font:600 11.5px var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.dr .side{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}.dr .side b{font-size:13px;min-width:110px}
+.hc{display:inline-flex;flex-direction:column;align-items:center;gap:2px;font:600 10.5px var(--mono)}
+.hc img{width:56px;height:32px;border-radius:4px;object-fit:cover;border:2px solid transparent}
+.hc.fast img{border-color:var(--win)}.hc.long img{border-color:var(--loss)}.hc.fast i{color:var(--win)}.hc.long i{color:var(--loss)}
+.dr .side b .cup{width:16px;height:16px;vertical-align:-3px;margin-left:5px}.hc{position:relative}.dr .side .hc b.tw{min-width:0;width:auto;position:absolute;top:-4px;right:-4px;font:700 9px/1 var(--mono);padding:2px 3px;border-radius:4px;color:#fff}.hc b.tw.f{background:#1d7a3e}.hc b.tw.s{background:#b36b00}
+.hc i{font-style:normal;color:var(--muted)}.hc s{text-decoration:none;font-weight:500;color:var(--text);white-space:nowrap}
+.verdict{font-size:13px;background:var(--hover);border:1px solid var(--line);border-radius:6px;padding:6px 10px}.tempo{font:600 12px var(--mono);margin-left:auto;color:var(--muted)}
+.livebox .meta{font:11.5px var(--mono);color:var(--muted);margin-bottom:6px}
+@media (max-width:700px){.dr{grid-template-columns:1fr}}
+</style></head><body><main class=wrap><a class=back href='../../tournaments/20395.html'>← страница турнира</a><div class=mh><a class='t' href='../../reports/20395/betboom-team.html'><img class=logo src='../../assets/teams/8255888.png' alt=''><span>BETBOOM TEAM</span></a><div class=mid>26.10 пн 20:00 МСК<b>vs</b><span class='st'>ожидается</span></div><a class='t' href='../../reports/20395/legion.html'><img class=logo src='../../assets/teams/10291652.png' alt=''><span>LEGION</span></a></div><div class=mlinks><a href='https://pari.ru/esports/category/dota2/147180/69296325'>Матч на PARI</a><a href='https://www.dotabuff.com/esports/leagues/20395'>Турнир на Dotabuff</a></div><h2>Прогноз ИИ после драфтов</h2><div class=fc>Прогноз будет дан в начале карты, когда обе команды выберут героев: три прогноза (победитель, тотал убийств, время) и ставка 100 $ на один из них: победа — от коэффициента 1.4, тоталы — от 1.7.</div><h2>Герои по картам</h2><div class=fc><div class=meta>Карты ещё не сыграны.</div><div class=sch-note>Рамка: <b style='color:var(--win)'>синяя</b> — герой быстрый, <b style='color:var(--loss)'>красная</b> — затяжной (по сыгранным картам турниров, 112 карт); число — темп героя в минутах относительно средней карты. Значок в углу: <b style='color:#1d7a3e'>▲</b> — герой быстро ломает вышки, <b style='color:#b36b00'>▼</b> — медленно (урон по вышкам в минуту относительно позиции). Подробнее на странице «Герои».</div></div><h2>Предварительный прогноз ИИ</h2><div class=fc><div class=meta>до матча, 2026-10-24 23:06 МСК · выборка 12 / 6 карт</div><div class=pk><span class=c>Фаворит</span><span class=tx>BETBOOM TEAM: небольшое преимущество. Карта 58%, серия BO3 61% (против LEGION)</span></div><div class=pk><span class=c>Длительность</span><span class=tx>ожидаются быстрые карты: в среднем 42 мин (по турниру 46); &gt; 30 мин 100%, &gt; 35 мин 67%, &gt; 40 мин 42%, &gt; 45 мин 33%, &gt; 50 мин 17%</span></div><div class=pk><span class=c>Убийства</span><span class=tx>обычные по убийствам: ожидается 58 за карту (по турниру 62)</span></div><div class=pk><span class=c>Первая кровь</span><span class=tx>BETBOOM TEAM 58% · LEGION 0% карт</span></div><div class=pk><span class=c>Первая башня</span><span class=tx>BETBOOM TEAM 60% · LEGION 0% карт</span></div><h3 style='margin:12px 0 6px;font-size:15px'>Статистика по времени карты</h3><div class=pk><span class=c>BETBOOM TEAM</span><span class=tx>в среднем 46.2 мин за 12 карт: > 30 мин 100%, > 35 мин 83%, > 40 мин 50%, > 45 мин 50%, > 50 мин 17%</span></div><div class=pk><span class=c>LEGION</span><span class=tx>в среднем 38.5 мин за 6 карт: > 30 мин 100%, > 35 мин 50%, > 40 мин 33%, > 45 мин 17%, > 50 мин 17%</span></div><p class=note>Оценка по статистике команд (винрейт карт, log5, длительность и убийства); состав и драфт не учтены. Не гарантия исхода: выборки малы. Для BETBOOM TEAM на турнире мало карт — взяты карты со всех турниров.</p></div><h2>Коэффициенты до матча</h2><div class=mt><table><thead><tr><th>Рынок</th><th>Открытие</th><th>Закрытие</th></tr></thead><tbody><tr><td>Победа в серии</td><td>BETBOOM TEAM 1.22 · LEGION 4.3<div class=muted>2026-10-24 23:05 МСК</div></td><td>BETBOOM TEAM 1.22 · LEGION 4.3<div class=muted>2026-10-24 23:52 МСК</div></td></tr><tr><td>Карта 1</td><td>Победа на карте: BETBOOM TEAM: 1.32 / 3.4<div class=muted>2026-10-24 23:05 МСК</div></td><td>Победа на карте: BETBOOM TEAM: 1.32 / 3.4<br>Тотал убийств больше 52.5: 1.77 / 1.93<br>Тотал убийств больше 53.5: 1.87 / 1.83<br>Тотал убийств больше 54.5: 1.94 / 1.76<div class=muted>2026-10-24 23:52 МСК</div></td></tr></tbody></table></div><div class=sch-note>Открытие — первый снимок линии, закрытие — последний до старта матча (карты). Сохраняется навсегда, после старта линия в PARI меняется на лайвовую.</div><h2>Форма команд</h2><div class=card style='margin-bottom:10px'><div style='padding:14px 16px 6px'><b>BETBOOM TEAM</b> форма <span class='pill lo'>плохая -0.32</span> <span class=muted style='font-size:12.5px'>· фавориты (≥55%): проиграно 1 из 1; андердоги (≤45%): выиграно 1 из 5; по линии букмекера 2 из 8 карт</span></div><table><thead><tr><th>Дата</th><th>Соперник</th><th>Итог</th><th class=num>Ожидание победы</th><th>Источник</th><th class=num>Очки</th></tr></thead><tbody><tr><td>24.10</td><td>Team Spirit</td><td><span class='pill lo'>L</span></td><td class=num>38%</td><td class=muted>линия карты</td><td class='num lo'>-0.38</td></tr><tr><td>24.10</td><td>Team Spirit</td><td><span class='pill lo'>L</span></td><td class=num>24%</td><td class=muted>линия карты</td><td class='num lo'>-0.24</td></tr><tr><td>23.10</td><td>Astra Invicta</td><td><span class='pill lo'>L</span></td><td class=num>46%</td><td class=muted>модель</td><td class='num lo'>-0.45</td></tr><tr><td>23.10</td><td>Astra Invicta</td><td><span class='pill lo'>L</span></td><td class=num>59%</td><td class=muted>модель</td><td class='num lo'>-0.59</td></tr><tr><td>02.10</td><td>OG</td><td><span class='pill lo'>L</span></td><td class=num>41%</td><td class=muted>модель</td><td class='num lo'>-0.41</td></tr><tr><td>02.10</td><td>OG</td><td><span class='pill lo'>L</span></td><td class=num>50%</td><td class=muted>модель</td><td class='num lo'>-0.50</td></tr><tr><td>02.10</td><td>OG</td><td><span class='pill w'>W</span></td><td class=num>39%</td><td class=muted>модель</td><td class='num w'>+0.61</td></tr><tr><td>01.10</td><td>Team Yandex</td><td><span class='pill lo'>L</span></td><td class=num>29%</td><td class=muted>модель</td><td class='num lo'>-0.29</td></tr></tbody></table></div><div class=card style='margin-bottom:10px'><div style='padding:14px 16px 6px'><b>LEGION</b> форма <span class='pill lo'>плохая -0.26</span> <span class=muted style='font-size:12.5px'>· фавориты (≥55%): проиграно 0 из 0; андердоги (≤45%): выиграно 0 из 3; по линии букмекера 0 из 4 карт</span></div><table><thead><tr><th>Дата</th><th>Соперник</th><th>Итог</th><th class=num>Ожидание победы</th><th>Источник</th><th class=num>Очки</th></tr></thead><tbody><tr><td>23.10</td><td>PARIVISION</td><td><span class='pill lo'>L</span></td><td class=num>14%</td><td class=muted>модель</td><td class='num lo'>-0.14</td></tr><tr><td>23.10</td><td>PARIVISION</td><td><span class='pill lo'>L</span></td><td class=num>18%</td><td class=muted>модель</td><td class='num lo'>-0.18</td></tr><tr><td>22.10</td><td>Team Spirit</td><td><span class='pill lo'>L</span></td><td class=num>34%</td><td class=muted>модель</td><td class='num lo'>-0.34</td></tr><tr><td>22.10</td><td>Team Spirit</td><td><span class='pill lo'>L</span></td><td class=num>46%</td><td class=muted>модель</td><td class='num lo'>-0.46</td></tr></tbody></table></div><div class=sch-note>Форма: очко карты = результат − ожидаемая вероятность победы до карты (линия букмекера без маржи, а если её не сохранили — модель по винрейтам). Фаворит проиграл — сильный минус, фаворит выиграл — небольшой плюс, андердог выиграл — большой плюс. Форма — взвешенное среднее последних 8 карт (свежие весят больше). В прогноз пока не входит: на сыгранных картах базы она не улучшает оценку победы.</div><h2>Коэффициенты</h2><div class=mt><table><thead><tr><th>Рынок</th><th>Коэффициенты</th><th class=num>Линия</th><th class=num>Статистика</th><th class=num>Разница</th><th>Основание</th><th>Перевес</th></tr></thead><tbody><tr class='noise'><td>Победа на карте: BETBOOM TEAM</td><td class=k><i>1</i>1.32<i>2</i>3.4</td><td class=num>72%</td><td class=num>62%</td><td class='num d neg'>-10 п.п.</td><td>винрейт 25% / 17%</td><td>нет перевеса</td></tr><tr class='noise'><td>Тотал убийств больше 52.5</td><td class=k><i>Б</i>1.77<i>М</i>1.93</td><td class=num>52%</td><td class=num>61%</td><td class='num d pos'>+9 п.п.</td><td>11 из 18 карт</td><td>нет перевеса</td></tr><tr class=''><td>Тотал убийств больше 53.5</td><td class=k><i>Б</i>1.87<i>М</i>1.83</td><td class=num>49%</td><td class=num>61%</td><td class='num d pos'>+12 п.п.</td><td>11 из 18 карт</td><td>небольшой</td></tr><tr class=''><td>Тотал убийств больше 54.5</td><td class=k><i>Б</i>1.94<i>М</i>1.76</td><td class=num>48%</td><td class=num>61%</td><td class='num d pos'>+14 п.п.</td><td>11 из 18 карт</td><td>небольшой</td></tr><tr class='noise'><td>Будут мегакрипы</td><td class=k><i>Да</i>2.1<i>нет</i>1.65</td><td class=num>44%</td><td class=num>39%</td><td class='num d neg'>-5 п.п.</td><td>7 из 18 карт</td><td>нет перевеса</td></tr><tr class=''><td>Будет Ultrakill</td><td class=k><i>Да</i>4.7<i>нет</i>1.15</td><td class=num>20%</td><td class=num>6%</td><td class='num d neg'>-14 п.п.</td><td>1 из 18 карт</td><td>явный</td></tr><tr class='noise'><td>Будет Rampage</td><td class=k><i>Да</i>11.0<i>нет</i>1.02</td><td class=num>8%</td><td class=num>6%</td><td class='num d neg'>-3 п.п.</td><td>1 из 18 карт</td><td>нет перевеса</td></tr><tr class=''><td>Будет Beyond Godlike</td><td class=k><i>Да</i>2.05<i>нет</i>1.68</td><td class=num>45%</td><td class=num>28%</td><td class='num d neg'>-17 п.п.</td><td>5 из 18 карт</td><td>небольшой</td></tr></tbody></table></div><div class=sch-note>«Линия» — вероятность первого исхода без маржи букмекера; «Статистика» — частота по картам обеих команд. Выделена строка прогноза. Это разбор статистики, не гарантия исхода.</div></main></body></html>
