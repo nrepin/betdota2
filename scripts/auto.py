@@ -50,6 +50,9 @@ SETTLE_EVERY = 5 * 60
 SERIES_EVERY = 4 * 60       # пока идёт серия: как часто подтягивать результаты сыгранных карт
 FAST_EVERY, FAST_FOR = 90, 10 * 60   # карта только что закончилась: 10 мин ищем результат каждые 90 с
 STALE_AFTER, STALE_EVERY = 6 * 3600, 30 * 60   # результат не находится 6 ч: искать реже, но не бросать
+WAIT_EVERY = 15             # пока идёт матч и прогноза на карту ещё нет: лайв каждые 15 с, после прогноза — обычный ритм
+WAIT_START = 45 * 60        # драфт первой карты ждём до 45 мин от старта серии
+WAIT_GAP = 10 * 60          # после конца карты ждём драфт следующей до 10 мин
 LATE_AFTER = 7 * 60         # позже этого времени игры прогноз уже не даём (только начало карты)
 STAKES = forecast.STAKES
 
@@ -171,6 +174,7 @@ def do_live(lid, st, now, events, snap, teams, dry):
         log.info("[%s] карты нет в OpenDota, лайв с hawk.live: %d", lid, len(extra))
     games = games + extra
     found = False
+    waiting = False
     for ev in events:
         g = next((x for x in games if str(x.get("league_id")) == lid and not x.get("deactivate_time")
                   and {x.get("team_id_radiant"), x.get("team_id_dire")} == {ev["a"], ev["b"]}), None)
@@ -179,8 +183,11 @@ def do_live(lid, st, now, events, snap, teams, dry):
         if not g:
             if eid in seen:   # карта была в лайве и пропала: она закончилась, результат нужен сразу
                 del seen[eid]
+                st["gap_until"] = now + WAIT_GAP
                 st["fast_until"] = now + FAST_FOR
                 log.info("[%s] карта закончилась (пропала из лайва): быстро ищу результат", lid)
+            if ev["start"] <= now <= ev["start"] + WAIT_START or now < st.get("gap_until", 0):
+                waiting = True   # матч начался, карты в лайве ещё нет (драфт)
             continue
         seen[eid] = now
         found = True
@@ -190,6 +197,9 @@ def do_live(lid, st, now, events, snap, teams, dry):
             draft_forecast(lid, ev, g, snap, teams, ser, st, now, dry)
         except Exception as ex:
             log.exception("прогноз по драфту: %s", ex)
+        if str(g["match_id"]) not in st.get("live_bets", {}):
+            waiting = True       # карта идёт, прогноза (или отказа) ещё нет
+    st["fc_wait"] = waiting
     return found
 
 
@@ -269,7 +279,7 @@ def tick(lid, st, dry):
               and not (render_schedule.find_series(ser, m["a"], m["b"], m["start"]) or {}).get("done")]
     active = [m for m in events if m["start"] - LIVE_BEFORE <= now <= m["start"] + LIVE_AFTER]
     soon = [m for m in events if 0 <= m["start"] - now <= 3 * 3600]
-    every = 180 if active else 300 if soon else 1200
+    every = 60 if s.get("fc_wait") else 180 if active else 300 if soon else 1200
     snap = None
     if due(s, "odds_ts", every, now):
         try:
@@ -281,7 +291,9 @@ def tick(lid, st, dry):
     if snap is None:
         f = ROOT / "odds" / lid / "latest.json"
         snap = json.loads(f.read_text(encoding="utf-8")) if f.exists() else None
-    if active and due(s, "live_ts", 55, now):
+    if not active:
+        s["fc_wait"] = False
+    if active and due(s, "live_ts", WAIT_EVERY if s.get("fc_wait") else 55, now):
         s["live_ts"] = now
         changed |= do_live(lid, s, now, active, snap, teams, dry)
     if fresh and snap and not dry:   # коэффициенты до матча/карты: открытие и закрытие линии
@@ -384,7 +396,7 @@ def main():
                 LOCK.unlink(missing_ok=True)
         if a.once:
             break
-        time.sleep(30)
+        time.sleep(WAIT_EVERY if any(isinstance(v, dict) and v.get("fc_wait") for v in load_state().values()) else 30)
 
 
 if __name__ == "__main__":

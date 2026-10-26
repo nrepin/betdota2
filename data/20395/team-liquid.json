@@ -1213,29 +1213,202 @@
       ],
       "patch": 60,
       "dotabuff": "https://www.dotabuff.com/matches/9061129248"
+    },
+    {
+      "match_id": 9062824489,
+      "series_id": 1160053,
+      "start_time": 1793019865,
+      "opponent_id": 9823272,
+      "opponent": "Team Yandex",
+      "side": "Radiant",
+      "win": false,
+      "duration_sec": 2274,
+      "duration": "37:54",
+      "kills_for": 21,
+      "kills_against": 28,
+      "total_kills": 49,
+      "first_pick": false,
+      "first_blood": false,
+      "first_blood_time": 112,
+      "gold_adv_10min": null,
+      "max_gold_lead": null,
+      "max_gold_deficit": null,
+      "roshans": 0,
+      "towers": null,
+      "picks": [
+        "Nature's Prophet",
+        "Hoodwink",
+        "Sand King",
+        "Mirana",
+        "Largo"
+      ],
+      "bans": [
+        "Earth Spirit",
+        "Bounty Hunter",
+        "Necrophos",
+        "Lone Druid",
+        "Timbersaw",
+        "Slardar",
+        "Centaur Warrunner"
+      ],
+      "opp_picks": [
+        "Techies",
+        "Pangolier",
+        "Keeper of the Light",
+        "Kez",
+        "Dawnbreaker"
+      ],
+      "opp_bans": [
+        "Enigma",
+        "Earthshaker",
+        "Windranger",
+        "Batrider",
+        "Dazzle",
+        "Axe",
+        "Doom"
+      ],
+      "players": [
+        {
+          "account_id": 16497807,
+          "name": "tOfu",
+          "hero": "Mirana",
+          "position": null,
+          "kills": 4,
+          "deaths": 7,
+          "assists": 11,
+          "last_hits": 92,
+          "denies": 3,
+          "gpm": 299,
+          "xpm": 435,
+          "net_worth": 8180,
+          "hero_damage": 14692,
+          "tower_damage": 0,
+          "hero_healing": 2183,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 898455820,
+          "name": "Malr1ne",
+          "hero": "Sand King",
+          "position": null,
+          "kills": 3,
+          "deaths": 6,
+          "assists": 8,
+          "last_hits": 305,
+          "denies": 5,
+          "gpm": 484,
+          "xpm": 618,
+          "net_worth": 16993,
+          "hero_damage": 21872,
+          "tower_damage": 206,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 292921272,
+          "name": "Wisper",
+          "hero": "Largo",
+          "position": null,
+          "kills": 3,
+          "deaths": 3,
+          "assists": 11,
+          "last_hits": 263,
+          "denies": 10,
+          "gpm": 494,
+          "xpm": 664,
+          "net_worth": 17127,
+          "hero_damage": 13570,
+          "tower_damage": 370,
+          "hero_healing": 2371,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 77490514,
+          "name": "Boxi",
+          "hero": "Hoodwink",
+          "position": null,
+          "kills": 1,
+          "deaths": 7,
+          "assists": 9,
+          "last_hits": 79,
+          "denies": 5,
+          "gpm": 266,
+          "xpm": 388,
+          "net_worth": 7053,
+          "hero_damage": 12806,
+          "tower_damage": 49,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        },
+        {
+          "account_id": 152962063,
+          "name": "m1CKe",
+          "hero": "Nature's Prophet",
+          "position": null,
+          "kills": 10,
+          "deaths": 5,
+          "assists": 4,
+          "last_hits": 531,
+          "denies": 10,
+          "gpm": 738,
+          "xpm": 916,
+          "net_worth": 27045,
+          "hero_damage": 22867,
+          "tower_damage": 533,
+          "hero_healing": 0,
+          "obs_placed": null,
+          "sen_placed": null,
+          "stuns": null,
+          "roshans_killed": null,
+          "teamfight_participation": null,
+          "firstblood_claimed": null
+        }
+      ],
+      "patch": 60,
+      "dotabuff": "https://www.dotabuff.com/matches/9062824489"
     }
   ],
   "summary": {
-    "games": 7,
+    "games": 8,
     "wins": 3,
-    "losses": 4,
-    "winrate": 42.9,
-    "avg_duration": "53:31",
+    "losses": 5,
+    "winrate": 37.5,
+    "avg_duration": "51:34",
     "avg_duration_win": "45:26",
-    "avg_duration_loss": "59:34",
+    "avg_duration_loss": "55:14",
     "shortest": "26:35",
     "longest": "76:59",
-    "avg_kills_for": 35.6,
-    "avg_kills_against": 32.3,
-    "avg_total_kills": 67.9,
-    "kills_per_min": 0.66,
-    "first_blood_rate": 42.9,
+    "avg_kills_for": 33.8,
+    "avg_kills_against": 31.8,
+    "avg_total_kills": 65.5,
+    "kills_per_min": 0.65,
+    "first_blood_rate": 37.5,
     "avg_gold_adv_10min": -113,
-    "avg_roshans": 0.43,
+    "avg_roshans": 0.38,
     "radiant": {
-      "games": 5,
+      "games": 6,
       "wins": 3,
-      "winrate": 60.0
+      "winrate": 50.0
     },
     "dire": {
       "games": 2,
@@ -1248,9 +1421,9 @@
       "winrate": 25.0
     },
     "second_pick": {
-      "games": 3,
+      "games": 4,
       "wins": 2,
-      "winrate": 66.7
+      "winrate": 50.0
     },
     "series": [
       {
@@ -1270,10 +1443,22 @@
         "opponent": "OG",
         "score": "1-2",
         "won": false
+      },
+      {
+        "series_id": 1160053,
+        "opponent": "Team Yandex",
+        "score": "0-1",
+        "won": false
       }
     ],
-    "series_record": "1-2",
+    "series_record": "1-3",
     "hero_picks": [
+      {
+        "hero": "Hoodwink",
+        "games": 4,
+        "wins": 0,
+        "winrate": 0.0
+      },
       {
         "hero": "Earthshaker",
         "games": 3,
@@ -1285,12 +1470,6 @@
         "games": 3,
         "wins": 2,
         "winrate": 66.7
-      },
-      {
-        "hero": "Hoodwink",
-        "games": 3,
-        "wins": 0,
-        "winrate": 0.0
       },
       {
         "hero": "Techies",
@@ -1323,7 +1502,19 @@
         "winrate": 50.0
       },
       {
+        "hero": "Nature's Prophet",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
         "hero": "Timbersaw",
+        "games": 2,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Largo",
         "games": 2,
         "wins": 0,
         "winrate": 0.0
@@ -1365,12 +1556,6 @@
         "winrate": 100.0
       },
       {
-        "hero": "Nature's Prophet",
-        "games": 1,
-        "wins": 0,
-        "winrate": 0.0
-      },
-      {
         "hero": "Nyx Assassin",
         "games": 1,
         "wins": 0,
@@ -1384,12 +1569,6 @@
       },
       {
         "hero": "Snapfire",
-        "games": 1,
-        "wins": 0,
-        "winrate": 0.0
-      },
-      {
-        "hero": "Largo",
         "games": 1,
         "wins": 0,
         "winrate": 0.0
@@ -1411,6 +1590,18 @@
         "games": 1,
         "wins": 0,
         "winrate": 0.0
+      },
+      {
+        "hero": "Sand King",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
+      },
+      {
+        "hero": "Mirana",
+        "games": 1,
+        "wins": 0,
+        "winrate": 0.0
       }
     ],
     "bans_by_team": [
@@ -1427,12 +1618,12 @@
         5
       ],
       [
-        "Slark",
+        "Lone Druid",
         4
       ],
       [
-        "Lone Druid",
-        3
+        "Slark",
+        4
       ],
       [
         "Dragon Knight",
@@ -1443,15 +1634,23 @@
         3
       ],
       [
+        "Timbersaw",
+        2
+      ],
+      [
+        "Bounty Hunter",
+        2
+      ],
+      [
+        "Necrophos",
+        2
+      ],
+      [
         "Zeus",
         2
       ],
       [
         "Nature's Prophet",
-        1
-      ],
-      [
-        "Timbersaw",
         1
       ],
       [
@@ -1467,10 +1666,6 @@
         1
       ],
       [
-        "Bounty Hunter",
-        1
-      ],
-      [
         "Enigma",
         1
       ],
@@ -1480,10 +1675,6 @@
       ],
       [
         "Witch Doctor",
-        1
-      ],
-      [
-        "Necrophos",
         1
       ],
       [
@@ -1513,6 +1704,18 @@
       [
         "Viper",
         1
+      ],
+      [
+        "Earth Spirit",
+        1
+      ],
+      [
+        "Slardar",
+        1
+      ],
+      [
+        "Centaur Warrunner",
+        1
       ]
     ],
     "bans_against_team": [
@@ -1521,15 +1724,15 @@
         6
       ],
       [
-        "Bounty Hunter",
-        4
-      ],
-      [
         "Enigma",
-        4
+        5
       ],
       [
         "Earthshaker",
+        5
+      ],
+      [
+        "Bounty Hunter",
         4
       ],
       [
@@ -1549,16 +1752,24 @@
         3
       ],
       [
+        "Doom",
+        2
+      ],
+      [
+        "Axe",
+        2
+      ],
+      [
         "Nature's Prophet",
         2
       ],
       [
-        "Doom",
-        1
+        "Windranger",
+        2
       ],
       [
-        "Axe",
-        1
+        "Dazzle",
+        2
       ],
       [
         "Tiny",
@@ -1569,19 +1780,11 @@
         1
       ],
       [
-        "Windranger",
-        1
-      ],
-      [
         "Tidehunter",
         1
       ],
       [
         "Mars",
-        1
-      ],
-      [
-        "Dazzle",
         1
       ],
       [
@@ -1615,6 +1818,10 @@
       [
         "Ursa",
         1
+      ],
+      [
+        "Batrider",
+        1
       ]
     ],
     "vs_heroes": [
@@ -1625,7 +1832,19 @@
         "our_winrate": 0.0
       },
       {
+        "hero": "Techies",
+        "games": 3,
+        "our_wins": 1,
+        "our_winrate": 33.3
+      },
+      {
         "hero": "Earth Spirit",
+        "games": 3,
+        "our_wins": 2,
+        "our_winrate": 66.7
+      },
+      {
+        "hero": "Kez",
         "games": 3,
         "our_wins": 2,
         "our_winrate": 66.7
@@ -1643,12 +1862,6 @@
         "our_winrate": 0.0
       },
       {
-        "hero": "Techies",
-        "games": 2,
-        "our_wins": 1,
-        "our_winrate": 50.0
-      },
-      {
         "hero": "Enigma",
         "games": 2,
         "our_wins": 1,
@@ -1656,12 +1869,6 @@
       },
       {
         "hero": "Nyx Assassin",
-        "games": 2,
-        "our_wins": 2,
-        "our_winrate": 100.0
-      },
-      {
-        "hero": "Kez",
         "games": 2,
         "our_wins": 2,
         "our_winrate": 100.0
@@ -1722,6 +1929,24 @@
       },
       {
         "hero": "Outworld Devourer",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Pangolier",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Keeper of the Light",
+        "games": 1,
+        "our_wins": 0,
+        "our_winrate": 0.0
+      },
+      {
+        "hero": "Dawnbreaker",
         "games": 1,
         "our_wins": 0,
         "our_winrate": 0.0
@@ -1801,16 +2026,16 @@
         "account_id": 898455820,
         "name": "Malr1ne",
         "position": 2,
-        "games": 7,
-        "avg_kills": 8.3,
-        "avg_deaths": 4.7,
-        "avg_assists": 15.7,
-        "kda": 5.09,
-        "avg_gpm": 733,
-        "avg_xpm": 981,
-        "avg_last_hits": 575,
-        "avg_hero_damage": 40885,
-        "avg_wards": 1.4,
+        "games": 8,
+        "avg_kills": 7.6,
+        "avg_deaths": 4.9,
+        "avg_assists": 14.8,
+        "kda": 4.59,
+        "avg_gpm": 702,
+        "avg_xpm": 936,
+        "avg_last_hits": 541,
+        "avg_hero_damage": 38508,
+        "avg_wards": 1.2,
         "heroes": [
           {
             "hero": "Earthshaker",
@@ -1836,23 +2061,154 @@
             "hero": "Dragon Knight",
             "games": 1,
             "wins": 0
+          },
+          {
+            "hero": "Sand King",
+            "games": 1,
+            "wins": 0
+          }
+        ]
+      },
+      {
+        "account_id": 77490514,
+        "name": "Boxi",
+        "position": 4,
+        "games": 8,
+        "avg_kills": 3.8,
+        "avg_deaths": 7.4,
+        "avg_assists": 16.8,
+        "kda": 2.78,
+        "avg_gpm": 358,
+        "avg_xpm": 539,
+        "avg_last_hits": 131,
+        "avg_hero_damage": 21516,
+        "avg_wards": 12.1,
+        "heroes": [
+          {
+            "hero": "Techies",
+            "games": 2,
+            "wins": 1
+          },
+          {
+            "hero": "Hoodwink",
+            "games": 2,
+            "wins": 0
+          },
+          {
+            "hero": "Bounty Hunter",
+            "games": 2,
+            "wins": 1
+          },
+          {
+            "hero": "Spirit Breaker",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Nyx Assassin",
+            "games": 1,
+            "wins": 0
+          }
+        ]
+      },
+      {
+        "account_id": 16497807,
+        "name": "tOfu",
+        "position": 5,
+        "games": 8,
+        "avg_kills": 4.4,
+        "avg_deaths": 10.1,
+        "avg_assists": 17.9,
+        "kda": 2.2,
+        "avg_gpm": 324,
+        "avg_xpm": 506,
+        "avg_last_hits": 81,
+        "avg_hero_damage": 15195,
+        "avg_wards": 23.4,
+        "heroes": [
+          {
+            "hero": "Witch Doctor",
+            "games": 3,
+            "wins": 2
+          },
+          {
+            "hero": "Hoodwink",
+            "games": 2,
+            "wins": 0
+          },
+          {
+            "hero": "Warlock",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Largo",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Mirana",
+            "games": 1,
+            "wins": 0
+          }
+        ]
+      },
+      {
+        "account_id": 152962063,
+        "name": "m1CKe",
+        "position": null,
+        "games": 6,
+        "avg_kills": 12.5,
+        "avg_deaths": 3.2,
+        "avg_assists": 10.0,
+        "kda": 7.11,
+        "avg_gpm": 737,
+        "avg_xpm": 908,
+        "avg_last_hits": 576,
+        "avg_hero_damage": 43941,
+        "avg_wards": 0.0,
+        "heroes": [
+          {
+            "hero": "Tiny",
+            "games": 2,
+            "wins": 1
+          },
+          {
+            "hero": "Windranger",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Lifestealer",
+            "games": 1,
+            "wins": 1
+          },
+          {
+            "hero": "Necrophos",
+            "games": 1,
+            "wins": 0
+          },
+          {
+            "hero": "Nature's Prophet",
+            "games": 1,
+            "wins": 0
           }
         ]
       },
       {
         "account_id": 292921272,
         "name": "Wisper",
-        "position": 3,
-        "games": 7,
-        "avg_kills": 6.7,
-        "avg_deaths": 5.3,
-        "avg_assists": 16.1,
-        "kda": 4.32,
-        "avg_gpm": 665,
-        "avg_xpm": 834,
-        "avg_last_hits": 536,
-        "avg_hero_damage": 29016,
-        "avg_wards": 0.7,
+        "position": null,
+        "games": 8,
+        "avg_kills": 6.2,
+        "avg_deaths": 5.0,
+        "avg_assists": 15.5,
+        "kda": 4.35,
+        "avg_gpm": 644,
+        "avg_xpm": 813,
+        "avg_last_hits": 502,
+        "avg_hero_damage": 27086,
+        "avg_wards": 0.6,
         "heroes": [
           {
             "hero": "Batrider",
@@ -1878,120 +2234,9 @@
             "hero": "Doom",
             "games": 1,
             "wins": 0
-          }
-        ]
-      },
-      {
-        "account_id": 77490514,
-        "name": "Boxi",
-        "position": 4,
-        "games": 7,
-        "avg_kills": 4.1,
-        "avg_deaths": 7.4,
-        "avg_assists": 17.9,
-        "kda": 2.96,
-        "avg_gpm": 372,
-        "avg_xpm": 560,
-        "avg_last_hits": 139,
-        "avg_hero_damage": 22760,
-        "avg_wards": 13.9,
-        "heroes": [
-          {
-            "hero": "Techies",
-            "games": 2,
-            "wins": 1
-          },
-          {
-            "hero": "Bounty Hunter",
-            "games": 2,
-            "wins": 1
-          },
-          {
-            "hero": "Spirit Breaker",
-            "games": 1,
-            "wins": 1
-          },
-          {
-            "hero": "Nyx Assassin",
-            "games": 1,
-            "wins": 0
-          },
-          {
-            "hero": "Hoodwink",
-            "games": 1,
-            "wins": 0
-          }
-        ]
-      },
-      {
-        "account_id": 16497807,
-        "name": "tOfu",
-        "position": 5,
-        "games": 7,
-        "avg_kills": 4.4,
-        "avg_deaths": 10.6,
-        "avg_assists": 18.9,
-        "kda": 2.2,
-        "avg_gpm": 328,
-        "avg_xpm": 516,
-        "avg_last_hits": 79,
-        "avg_hero_damage": 15266,
-        "avg_wards": 26.7,
-        "heroes": [
-          {
-            "hero": "Witch Doctor",
-            "games": 3,
-            "wins": 2
-          },
-          {
-            "hero": "Hoodwink",
-            "games": 2,
-            "wins": 0
-          },
-          {
-            "hero": "Warlock",
-            "games": 1,
-            "wins": 1
           },
           {
             "hero": "Largo",
-            "games": 1,
-            "wins": 0
-          }
-        ]
-      },
-      {
-        "account_id": 152962063,
-        "name": "m1CKe",
-        "position": null,
-        "games": 5,
-        "avg_kills": 13.0,
-        "avg_deaths": 2.8,
-        "avg_assists": 11.2,
-        "kda": 8.64,
-        "avg_gpm": 737,
-        "avg_xpm": 906,
-        "avg_last_hits": 585,
-        "avg_hero_damage": 48156,
-        "avg_wards": 0.0,
-        "heroes": [
-          {
-            "hero": "Tiny",
-            "games": 2,
-            "wins": 1
-          },
-          {
-            "hero": "Windranger",
-            "games": 1,
-            "wins": 1
-          },
-          {
-            "hero": "Lifestealer",
-            "games": 1,
-            "wins": 1
-          },
-          {
-            "hero": "Necrophos",
             "games": 1,
             "wins": 0
           }
