@@ -17,7 +17,8 @@
   лайв                     — раз в минуту в окне матча: герои, оценка драфтов, страницы;
   прогноз                  — на карту один, как только выбраны все 10 героев: из победы, времени и убийств берётся рынок
                              с наибольшим расхождением «оценка по драфтам против линии» (forecast.from_draft);
-  закрытие                 — через 40 мин после старта, пока есть незакрытые прогнозы, раз в 5 мин: обновить матчи, посчитать результат.
+  закрытие                 — через 25 мин после старта, пока есть незакрытые прогнозы, раз в 5 мин (через 6 ч — раз в 30 мин): обновить матчи, посчитать результат;
+                             при запуске незакрытые прогнозы закрываются сразу (после простоя), несыгранные карты серии не ждутся.
 """
 import argparse
 import datetime
@@ -48,6 +49,7 @@ SETTLE_AFTER = 25 * 60      # когда начинать искать резу�
 SETTLE_EVERY = 5 * 60
 SERIES_EVERY = 4 * 60       # пока идёт серия: как часто подтягивать результаты сыгранных карт
 FAST_EVERY, FAST_FOR = 90, 10 * 60   # карта только что закончилась: 10 мин ищем результат каждые 90 с
+STALE_AFTER, STALE_EVERY = 6 * 3600, 30 * 60   # результат не находится 6 ч: искать реже, но не бросать
 LATE_AFTER = 7 * 60         # позже этого времени игры прогноз уже не даём (только начало карты)
 STAKES = forecast.STAKES
 
@@ -204,11 +206,18 @@ def live_event_ids(lid, events):
 
 
 def pending(lid, now):
+    """Незакрытые прогнозы по картам. Карты, которых не было (серия закончилась раньше), не считаются: их не дождаться."""
     d = ROOT / "forecasts" / lid
     out = []
+    ser = None
     for f in sorted(d.glob("*.json")) if d.exists() else []:
         fc = json.loads(f.read_text(encoding="utf-8"))
         if fc.get("live_bet") and fc["result"] is None and fc["start"] + SETTLE_AFTER < now:
+            if ser is None:
+                ser = render_schedule.series_results(lid, 3)
+            s = render_schedule.find_series(ser, fc["t1_id"], fc["t2_id"], fc["start"])
+            if s and s["done"] and len(s["maps"]) < fc["map_no"]:
+                continue
             out.append(fc)
     return out
 
@@ -218,14 +227,19 @@ def do_settle(lid, st, now, dry, running=()):
     pend = pending(lid, now)
     run = [m for m in running if m["start"] + SETTLE_AFTER < now]
     every = FAST_EVERY if now < st.get("fast_until", 0) else SETTLE_EVERY if pend else SERIES_EVERY
+    if pend and all(fc["start"] + STALE_AFTER < now for fc in pend):
+        every = max(every, STALE_EVERY)
     if not (pend or run) or not due(st, "settle_ts", every, now):
         return False
     log.info("[%s] закрытие: ждут результата %d прогнозов, идущих серий %d, обновляю матчи", lid, len(pend), len(run))
     if dry:
         return False
     st["settle_ts"] = now
-    subprocess.run([sys.executable, str(ROOT / "scripts" / "collect_team.py"), "--league", lid, "--all", "--refresh"],
-                   cwd=ROOT, timeout=25 * 60, check=False, capture_output=True)
+    try:
+        subprocess.run([sys.executable, str(ROOT / "scripts" / "collect_team.py"), "--league", lid, "--all", "--refresh"],
+                       cwd=ROOT, timeout=25 * 60, check=False, capture_output=True)
+    except subprocess.TimeoutExpired:
+        log.warning("[%s] обновление матчей не уложилось в 25 мин, считаю по тому, что есть", lid)
     before = {fc["event_id"] for fc in pend}
     n = forecast.settle(lid)
     log.info("[%s] закрыто прогнозов: %d", lid, n)
@@ -334,6 +348,11 @@ def main():
     if a.loop:
         windows_tune()
     code_stamp = code_mtimes()
+    if not a.dry:   # после остановки автопилота зависшие прогнозы закрываются сразу, а не по расписанию
+        st0 = load_state()
+        for lid in leagues(a.league):
+            st0.setdefault(lid, {})["settle_ts"] = 0
+        save_state(st0)
     while True:
         if a.loop and code_mtimes() != code_stamp:
             log.info("код скриптов изменился — перезапускаюсь")
